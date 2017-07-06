@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/et_username"
+        android:layout_width="match_parent"
+        android:background="@drawable/rec_ova_stroke_black"
+        android:layout_marginTop="100dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:hint="登录账号"
+        android:padding="10dp"
+        android:layout_height="50dp" />
+
+    <EditText
+        android:id="@+id/et_password"
+        android:layout_width="match_parent"
+        android:background="@drawable/rec_ova_stroke_black"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:hint="登录密码"
+        android:padding="10dp"
+        android:layout_marginRight="20dp"
+        android:layout_height="50dp" />
+
+    <TextView
+        android:id="@+id/tv_login"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:text="登录"
+        android:gravity="center"
+        android:textSize="18dp"
+        android:background="@drawable/rec_ova_stroke_black"
+        android:textColor="@drawable/selector_string_green_white_check"
+        android:layout_marginTop="30dp"/>
+</LinearLayout>
