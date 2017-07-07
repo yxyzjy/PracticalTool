@@ -76,8 +76,8 @@ public class HttpManager {
 
         /*rx处理*/
         ProgressSubscriber subscriber = new ProgressSubscriber(basePar,onNextListener,appCompatActivity);
-        HttpService service = retrofit.create(HttpService.class);
-        Observable observable = basePar.getObservable(service)
+
+        Observable observable = basePar.getObservable(retrofit)
                  /*失败后的retry配置*/
                 .retryWhen(new RetryWhenNetworkException(basePar.getRetryCount(),
                         basePar.getRetryDelay(), basePar.getRetryIncreaseDelay()))

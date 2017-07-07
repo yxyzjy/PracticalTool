@@ -1,6 +1,6 @@
 package com.yxy.practicaltool.entity.api;
 
-import com.wzgiceman.rxretrofitlibrary.retrofit_rx.http.HttpService;
+import com.yxy.practicaltool.entity.HttpService;
 
 import retrofit2.Retrofit;
 import rx.Observable;
@@ -36,8 +36,9 @@ public class LoginApi extends PCBaseApi {
     }
 
     @Override
-    public Observable getObservable(HttpService httpService) {
-        return httpService.login(username,password,"0003");
+    public Observable getObservable(Retrofit retrofit) {
+        HttpService service = retrofit.create(HttpService.class);
+        return service.login(username,password,"0003");
     }
 
     @Override

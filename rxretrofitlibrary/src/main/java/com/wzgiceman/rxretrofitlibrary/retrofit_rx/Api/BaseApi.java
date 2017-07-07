@@ -3,7 +3,6 @@ package com.wzgiceman.rxretrofitlibrary.retrofit_rx.Api;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 import com.wzgiceman.rxretrofitlibrary.retrofit_rx.common.Constants;
 import com.wzgiceman.rxretrofitlibrary.retrofit_rx.exception.HttpTimeException;
-import com.wzgiceman.rxretrofitlibrary.retrofit_rx.http.HttpService;
 import com.wzgiceman.rxretrofitlibrary.retrofit_rx.listener.HttpOnNextListener;
 
 import java.lang.ref.SoftReference;
@@ -63,7 +62,7 @@ public abstract class BaseApi<T> implements Func1<BaseResultEntity<T>, T> {
      *
      * @return
      */
-    public abstract Observable getObservable(HttpService httpService);
+    public abstract Observable getObservable(Retrofit retrofit);
 
 
     public int getCookieNoNetWorkTime() {

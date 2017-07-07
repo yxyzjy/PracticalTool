@@ -1,11 +1,9 @@
-package com.wzgiceman.rxretrofitlibrary.retrofit_rx.http;
+package com.yxy.practicaltool.entity;
 
 
-
-import com.yxy.practicaltool.entity.LoginRes;
+import com.yxy.practicaltool.entity.resulte.LoginRes;
 
 import retrofit2.http.GET;
-import retrofit2.http.POST;
 import retrofit2.http.Query;
 import rx.Observable;
 
@@ -15,6 +13,6 @@ import rx.Observable;
 
 public interface HttpService {
 
-    @POST("WebService.asmx/Login")
+    @GET("WebService.asmx/Login")
     Observable<LoginRes> login(@Query("txtUserName") String username, @Query("txtUserPwd") String password, @Query("random")String random);
 }
