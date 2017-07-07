@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +18,9 @@ import com.wzgiceman.rxretrofitlibrary.retrofit_rx.common.HttpCode;
 import com.wzgiceman.rxretrofitlibrary.retrofit_rx.common.L;
 import com.wzgiceman.rxretrofitlibrary.retrofit_rx.http.HttpManager;
 import com.wzgiceman.rxretrofitlibrary.retrofit_rx.listener.HttpOnNextListener;
+import com.yxy.practicaltool.utils.JsonUtils;
 import com.yxy.practicaltool.R;
+import com.yxy.practicaltool.common.ToastUtils;
 
 import org.json.JSONObject;
 
@@ -38,6 +41,7 @@ public class BaseActivity extends RxAppCompatActivity implements HttpOnNextListe
 
     TextView tv_title;
     LinearLayout ll_title_bar_left,ll_empty_content;
+    RelativeLayout title_bar;
     public Context mContext;
     public HttpManager httpManager;
 
@@ -68,6 +72,9 @@ public class BaseActivity extends RxAppCompatActivity implements HttpOnNextListe
         View v = LayoutInflater.from(this).inflate(
                 R.layout.activity_base, null);
         initMyView(v);
+        if (TextUtils.isEmpty(title)){
+            title_bar.setVisibility(View.GONE);
+        }
         RelativeLayout.LayoutParams p1 = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         p1.addRule(RelativeLayout.BELOW,v.getId());
         View contentView = LayoutInflater.from(this).inflate(layoutResID, null);
@@ -77,6 +84,7 @@ public class BaseActivity extends RxAppCompatActivity implements HttpOnNextListe
     }
 
     public void initMyView(View v) {
+        title_bar = (RelativeLayout) v.findViewById(R.id.title_bar);
         tv_title = (TextView) v.findViewById(R.id.tv_title_bar_center);
         ll_title_bar_left = (LinearLayout) v.findViewById(R.id.ll_title_bar_left);
         ll_empty_content  = (LinearLayout) v.findViewById(R.id.ll_empty_content);
@@ -186,46 +194,33 @@ public class BaseActivity extends RxAppCompatActivity implements HttpOnNextListe
     }
 
     private  String deliver(String resulte){
-        /*if (!result.startsWith("{")) {
-            return result;
-        } else {
-            JSONObject jsonObject = JsonUtils.parseFromJson(result);
-            if (null != jsonObject) {
-                Iterator<String> it = jsonObject.keys();
-                List<String> keyListstr = new ArrayList<String>();
-                while (it.hasNext()) {
-                    String key = it.next().toString() + "";
-                    keyListstr.add(key);
-                }
 
-                boolean containsMsg = keyListstr.contains("msg");
-                boolean containsData = keyListstr.contains("dat");
-
-                if (containsMsg) {
-                    if (containsData) {
-                        String data = JsonUtils.getJsonString(jsonObject, "dat");
-                        if (data == null) {
-                            data = "";
-                            return data;
-                        } else {
-                            if (data.startsWith("[")) {
-                                return result;
-                            } else {
-                                return data;
-                            }
-                        }
-
-                    } else {
-                        return result;
-                    }
-                } else {
-                    return result;
-                }
-            } else {
-                return result;
+        if (!resulte.startsWith("{")){
+            return resulte;
+        }
+        JSONObject jsonObject = JsonUtils.parseFromJson(resulte);
+        if (jsonObject !=null){
+            Iterator<String> it = jsonObject.keys();
+            List<String> keyListstr = new ArrayList<String>();
+            while (it.hasNext()) {
+                String key = it.next().toString() + "";
+                keyListstr.add(key);
             }
-        }*/
-
-        return resulte;
+            boolean containsRet = keyListstr.contains("ret");
+            boolean containsMsg = keyListstr.contains("msg");
+            if (containsRet && JsonUtils.getJsonInt(jsonObject, "ret") != 200){
+                if (containsMsg && !TextUtils.isEmpty(JsonUtils.getJsonString(jsonObject, "msg"))){
+                    ToastUtils.showToast(mContext,JsonUtils.getJsonString(jsonObject, "msg"));
+                }
+            }
+            boolean containsData = keyListstr.contains("data");
+            if (containsData){
+                return JsonUtils.getJsonString(jsonObject, "data");
+            }else{
+                return resulte;
+            }
+        }else{
+            return resulte;
+        }
     }
 }

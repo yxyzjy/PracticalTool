@@ -1,5 +1,6 @@
 package com.yxy.practicaltool.entity.api;
 
+import com.wzgiceman.rxretrofitlibrary.retrofit_rx.utils.Utils;
 import com.yxy.practicaltool.entity.HttpService;
 
 import retrofit2.Retrofit;
@@ -38,7 +39,7 @@ public class LoginApi extends PCBaseApi {
     @Override
     public Observable getObservable(Retrofit retrofit) {
         HttpService service = retrofit.create(HttpService.class);
-        return service.login(username,password,"0003");
+        return service.login(username,password, Utils.getRandom());
     }
 
     @Override

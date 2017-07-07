@@ -20,4 +20,8 @@ public class MyApplication extends Application {
         app = getApplicationContext();
         RxRetrofitApp.init(this, BuildConfig.DEBUG);
     }
+
+    public static  Context getAppContext(){
+        return app;
+    }
 }
