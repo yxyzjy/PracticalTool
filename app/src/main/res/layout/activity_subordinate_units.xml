@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.yxy.practicaltool.activity.upload_resources.SubordinateUnitsActivity">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginLeft="10dp"
+        android:layout_height="40dp"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/iv_labrary_my"
+        android:layout_toRightOf="@+id/title_back"
+        android:background="@drawable/rec_bg_gray_alpha"
+        android:gravity="center">
+
+        <EditText
+            android:id="@+id/et_library_search"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
+            android:background="@null"
+            android:hint="搜索"
+            android:maxLength="10"
+            android:textColorHint="@color/text_gray2" />
+
+        <ImageView
+            android:id="@+id/btn_library_search"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:scaleType="center"
+            android:src="@mipmap/top_search_02" />
+    </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:gravity="center_vertical"
+            android:textColor="@color/text_color"
+            tools:text="添加一个单位" />
+    </LinearLayout>
+
+</LinearLayout>

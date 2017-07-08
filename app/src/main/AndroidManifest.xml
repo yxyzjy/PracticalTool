@@ -32,7 +32,8 @@
             android:name=".activity.BaseActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".activity.MainActivity" />
-        <activity android:name=".activity.upload_resources.UploadResourcesActivity"></activity>
+        <activity android:name=".activity.upload_resources.UploadResourcesActivity" />
+        <activity android:name=".activity.upload_resources.SubordinateUnitsActivity"></activity>
     </application>
 
 </manifest>
