@@ -1,5 +1,6 @@
 package com.yxy.practicaltool.activity.upload_resources;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.GridView;
@@ -60,6 +61,7 @@ public class UploadResourcesActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_upload_1:
+                startActivity(new Intent(mContext,SubordinateUnitsActivity.class));
                 break;
             case R.id.ll_upload_2:
                 break;

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.yxy.practicaltool.activity.upload_resources.SubordinateUnitsActivity">
 
     <LinearLayout
@@ -24,7 +24,7 @@
         android:gravity="center">
 
         <EditText
-            android:id="@+id/et_library_search"
+            android:id="@+id/et_sub_units_search"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
@@ -36,7 +36,7 @@
             android:textColorHint="@color/text_gray2" />
 
         <ImageView
-            android:id="@+id/btn_library_search"
+            android:id="@+id/btn_sub_units_search"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:scaleType="center"
@@ -44,6 +44,7 @@
     </LinearLayout>
 
         <TextView
+            android:id="@+id/tv_add_units"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
@@ -51,5 +52,12 @@
             android:textColor="@color/text_color"
             tools:text="添加一个单位" />
     </LinearLayout>
+
+    <com.yxy.practicaltool.myview.CustomRecyclerView
+        android:id="@+id/rv_subordinate_unit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
 
 </LinearLayout>

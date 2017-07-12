@@ -16,5 +16,6 @@
     <color name="orange">#FF9900</color>
     <color name="transparent">#00000000</color>
     <color name="main_gray">#CCCCCC</color>
+    <color name="bg_gray">#eeeeee</color>
     <color name="main_bgColor">#ECF1F4</color>
 </resources>
