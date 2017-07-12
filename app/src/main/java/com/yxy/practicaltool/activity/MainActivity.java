@@ -34,6 +34,7 @@ public class MainActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_main_1:
+                startActivity(new Intent(mContext, UploadResourcesActivity.class));
                 break;
             case R.id.tv_main_2:
                 break;
