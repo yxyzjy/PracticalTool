@@ -2,6 +2,7 @@ package com.yxy.practicaltool.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.yxy.practicaltool.R;
@@ -27,13 +28,11 @@ public class SubordinateUnitsAdapter extends CommonAdapter<CompanyListRes.DataBe
     @Override
     public void convert(ViewHolder holder, CompanyListRes.DataBean infoBean) {
         ImageView iv_duihao = holder.getView(R.id.iv_duihao);
-        holder.setText(R.id.tv_name, infoBean.CName);
-
-        /*Glide.with(context)
-                .load(infoBean)
-                .placeholder(R.mipmap.photo_200x200)
-                .error(R.mipmap.photo_200x200)
-                .bitmapTransform(new RoundedCornersTransformation(context, CommonUtil.dip2px(context, 8), 0))
-                .into(iv_image);*/
+        holder.setText(R.id.tv_name, infoBean.CName+"("+infoBean.Phone+")");
+        if (infoBean.isSelect){
+            iv_duihao.setVisibility(View.VISIBLE);
+        }else {
+            iv_duihao.setVisibility(View.GONE);
+        }
     }
 }

@@ -5,8 +5,8 @@
     android:orientation="horizontal"
     android:background="@color/white"
     android:gravity="center_vertical"
-    android:layout_marginLeft="10dp"
-    android:layout_marginRight="10dp"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
     android:layout_height="40dp">
 
     <TextView
@@ -14,7 +14,6 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:layout_marginLeft="10dp"
         android:gravity="center_vertical"
         android:textColor="@color/text_color"
         tools:text="名字（手机号）" />
@@ -22,6 +21,6 @@
     <ImageView
         android:id="@+id/iv_duihao"
         android:background="@mipmap/nearby_duihao"
-        android:layout_width="30dp"
-        android:layout_height="30dp" />
+        android:layout_width="25dp"
+        android:layout_height="25dp" />
 </LinearLayout>

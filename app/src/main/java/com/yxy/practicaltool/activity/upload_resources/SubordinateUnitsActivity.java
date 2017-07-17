@@ -3,6 +3,8 @@ package com.yxy.practicaltool.activity.upload_resources;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -14,6 +16,7 @@ import com.yxy.practicaltool.adapter.SubordinateUnitsAdapter;
 import com.yxy.practicaltool.entity.api.GetCompanyListApi;
 import com.yxy.practicaltool.entity.resulte.CompanyListRes;
 import com.yxy.practicaltool.myview.CustomRecyclerView;
+import com.zhy.base.adapter.recyclerview.OnItemClickListener;
 
 import java.util.ArrayList;
 
@@ -34,6 +37,7 @@ public class SubordinateUnitsActivity extends BaseActivity {
     private SubordinateUnitsAdapter adapter;
     private ArrayList<CompanyListRes.DataBean> list = new ArrayList<>();
     private GetCompanyListApi companyListApi;
+    private int lastClickPos =-1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,12 +63,21 @@ public class SubordinateUnitsActivity extends BaseActivity {
         companyListApi = new GetCompanyListApi();
         httpManager.doHttpDeal(companyListApi);
 
-        /*for (int i = 0;i<10;i++){
-            UseDemoBean useDemoBean = new UseDemoBean();
-            useDemoBean.name = "名字"+i;
-            list.add(useDemoBean);
-        }
-        adapter.notifyDataSetChanged();*/
+        adapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(ViewGroup parent, View view, Object o, int position) {
+                list.get(position).isSelect = true;
+                if (lastClickPos!=-1) {
+                    list.get(lastClickPos).isSelect = false;
+                }
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public boolean onItemLongClick(ViewGroup parent, View view, Object o, int position) {
+                return false;
+            }
+        });
     }
 
     @Override

@@ -28,5 +28,6 @@ public class CompanyListRes {
         public int ID;
         public String CName;
         public String Phone;
+        public boolean isSelect;
     }
 }
