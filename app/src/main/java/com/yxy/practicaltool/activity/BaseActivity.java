@@ -105,7 +105,7 @@ public class BaseActivity extends RxAppCompatActivity implements HttpOnNextListe
 
     @Override
     public void onNext(String resulte, String mothead) {
-        processSuccessResult(deliver(resulte), mothead);
+        processSuccessResult(resulte, mothead);
     }
 
 

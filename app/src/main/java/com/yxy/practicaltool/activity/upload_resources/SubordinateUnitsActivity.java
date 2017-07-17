@@ -7,10 +7,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONObject;
 import com.yxy.practicaltool.R;
 import com.yxy.practicaltool.activity.BaseActivity;
 import com.yxy.practicaltool.adapter.SubordinateUnitsAdapter;
-import com.yxy.practicaltool.bean.UseDemoBean;
+import com.yxy.practicaltool.entity.api.GetCompanyListApi;
+import com.yxy.practicaltool.entity.resulte.CompanyListRes;
 import com.yxy.practicaltool.myview.CustomRecyclerView;
 
 import java.util.ArrayList;
@@ -30,7 +32,8 @@ public class SubordinateUnitsActivity extends BaseActivity {
     @Bind(R.id.rv_subordinate_unit)
     CustomRecyclerView rvSubordinateUnit;
     private SubordinateUnitsAdapter adapter;
-    private ArrayList<UseDemoBean> list = new ArrayList<>();
+    private ArrayList<CompanyListRes.DataBean> list = new ArrayList<>();
+    private GetCompanyListApi companyListApi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,12 +56,25 @@ public class SubordinateUnitsActivity extends BaseActivity {
     public void initData() {
         super.initData();
 
-        for (int i = 0;i<10;i++){
+        companyListApi = new GetCompanyListApi();
+        httpManager.doHttpDeal(companyListApi);
+
+        /*for (int i = 0;i<10;i++){
             UseDemoBean useDemoBean = new UseDemoBean();
             useDemoBean.name = "名字"+i;
             list.add(useDemoBean);
         }
-        adapter.notifyDataSetChanged();
+        adapter.notifyDataSetChanged();*/
+    }
+
+    @Override
+    protected void processSuccessResult(String resulte, String mothead) {
+        super.processSuccessResult(resulte, mothead);
+        if (mothead.equals(companyListApi.getMethod())){
+            CompanyListRes res = JSONObject.parseObject(resulte, CompanyListRes.class);
+            list.addAll(res.data);
+            adapter.notifyDataSetChanged();
+        }
     }
 
     @OnClick(R.id.btn_sub_units_search)

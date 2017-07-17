@@ -72,8 +72,8 @@ public class LoginActivity extends BaseActivity {
         super.processSuccessResult(resulte, mothead);
         if (mothead.equals(loginApi.getMethod())) {
             LoginRes res = JSONObject.parseObject(resulte, LoginRes.class);
-            SPUtil.put("real_name", res.real_name);
-            SPUtil.put("desUserId", res.desUserId);
+            SPUtil.put("real_name", res.data.real_name);
+            SPUtil.put("desUserId", res.data.desUserId);
             SPUtil.put("loginSuccess", true);
             startActivity(new Intent(mContext, MainActivity.class));
             finish();

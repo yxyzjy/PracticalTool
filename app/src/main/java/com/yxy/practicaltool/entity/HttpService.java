@@ -13,6 +13,11 @@ import rx.Observable;
 
 public interface HttpService {
 
-    @GET("WebService.asmx/Login")
+    @GET("Login")
     Observable<LoginRes> login(@Query("txtUserName") String username, @Query("txtUserPwd") String password, @Query("random")String random);
+
+    @GET("GetCompanyList")
+    Observable<LoginRes> getCompanyList(@Query("random") String random, @Query("desUserId") String desUserId);
+
+
 }

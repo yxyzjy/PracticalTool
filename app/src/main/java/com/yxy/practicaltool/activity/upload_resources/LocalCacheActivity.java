@@ -1,14 +1,12 @@
 package com.yxy.practicaltool.activity.upload_resources;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 
 import com.yxy.practicaltool.R;
 import com.yxy.practicaltool.activity.BaseActivity;
 import com.yxy.practicaltool.adapter.LocalCacheAdapter;
-import com.yxy.practicaltool.adapter.SubordinateUnitsAdapter;
 import com.yxy.practicaltool.bean.UseDemoBean;
 import com.yxy.practicaltool.myview.CustomRecyclerView;
 

@@ -3,14 +3,13 @@ package com.yxy.practicaltool.activity.upload_resources;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.yxy.practicaltool.R;
 import com.yxy.practicaltool.activity.BaseActivity;
-import com.yxy.practicaltool.adapter.SubordinateUnitsAdapter;
+import com.yxy.practicaltool.adapter.SubordinateUnitsTestAdapter;
 import com.yxy.practicaltool.bean.UseDemoBean;
 import com.yxy.practicaltool.myview.CustomRecyclerView;
 
@@ -30,7 +29,7 @@ public class SubordinatePinZhongActivity extends BaseActivity {
     TextView tvAddUnits;
     @Bind(R.id.rv_subordinate_unit)
     CustomRecyclerView rvSubordinateUnit;
-    private SubordinateUnitsAdapter adapter;
+    private SubordinateUnitsTestAdapter adapter;
     private ArrayList<UseDemoBean> list = new ArrayList<>();
 
     @Override
@@ -45,7 +44,7 @@ public class SubordinatePinZhongActivity extends BaseActivity {
         super.initView();
         rvSubordinateUnit.setLayoutManager(new GridLayoutManager(mContext, 3));
         rvSubordinateUnit.setItemAnimator(new DefaultItemAnimator());
-        adapter = new SubordinateUnitsAdapter(this, R.layout.item_subordinate_units, list);
+        adapter = new SubordinateUnitsTestAdapter(this, R.layout.item_subordinate_units, list);
         rvSubordinateUnit.setAdapter(adapter);
     }
 

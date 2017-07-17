@@ -6,7 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 
 import com.yxy.practicaltool.R;
 import com.yxy.practicaltool.activity.BaseActivity;
-import com.yxy.practicaltool.adapter.SubordinateUnitsAdapter;
+import com.yxy.practicaltool.adapter.SubordinateUnitsTestAdapter;
 import com.yxy.practicaltool.bean.UseDemoBean;
 import com.yxy.practicaltool.myview.CustomRecyclerView;
 
@@ -21,7 +21,7 @@ public class SubordinateAttributeActivity extends BaseActivity {
     CustomRecyclerView rvLeft;
     @Bind(R.id.rv_right)
     CustomRecyclerView rvRight;
-    private SubordinateUnitsAdapter adapter;
+    private SubordinateUnitsTestAdapter adapter;
     private ArrayList<UseDemoBean> liftList, rightList;
 
     @Override
@@ -38,7 +38,7 @@ public class SubordinateAttributeActivity extends BaseActivity {
         liftList = new ArrayList<>();
         rvLeft.setLayoutManager(new LinearLayoutManager(this));
         rvLeft.setItemAnimator(new DefaultItemAnimator());
-        adapter = new SubordinateUnitsAdapter(this, R.layout.item_subordinate_units, liftList);
+        adapter = new SubordinateUnitsTestAdapter(this, R.layout.item_subordinate_units, liftList);
         rvLeft.setAdapter(adapter);
     }
 
