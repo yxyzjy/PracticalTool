@@ -5,4 +5,5 @@
     <string name="fbal">发布案例</string>
     <string name="bdhc">本地缓存</string>
     <string name="tcdl">退出登录</string>
+    <string name="bnwk">不能为空</string>
 </resources>

@@ -52,8 +52,6 @@ public class BaseActivity extends RxAppCompatActivity implements HttpOnNextListe
 
         mContext = this;
         httpManager = new HttpManager(this,this);
-        initView();
-        initData();
     }
 
     public void initData() {
@@ -81,6 +79,9 @@ public class BaseActivity extends RxAppCompatActivity implements HttpOnNextListe
         ll_empty_content.addView(contentView, p1);
         setContentView(v);
         tv_title.setText(title);
+        ButterKnife.bind(this);
+        initView();
+        initData();
     }
 
     public void initMyView(View v) {

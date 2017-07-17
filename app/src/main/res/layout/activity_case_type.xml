@@ -1,18 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/bg_gray">
+    tools:context="com.yxy.practicaltool.activity.upload_resources.SubordinateUnitsActivity">
 
-    <EditText
-        android:id="@+id/et_phone"
+
+    <com.yxy.practicaltool.myview.CustomRecyclerView
         android:layout_marginTop="10dp"
+        android:id="@+id/rv_subordinate_unit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/l_top_bar"
-        android:background="@color/white"
-        android:gravity="top|left"
-        android:padding="10dp" />
+        />
 
 
 </LinearLayout>

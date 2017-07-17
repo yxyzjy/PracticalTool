@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="10dp"
+    android:orientation="horizontal">
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="2">
+
+        <com.yxy.practicaltool.myview.CustomRecyclerView
+            android:id="@+id/rv_left"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:background="@color/bg_gray"
+            android:divider="@color/white"
+            android:listSelector="@color/transparent"
+            android:scrollbars="none" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="6dp"
+        android:layout_weight="3">
+
+        <com.yxy.practicaltool.myview.CustomRecyclerView
+            android:id="@+id/rv_right"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:divider="@color/bg_gray"
+            android:dividerHeight="1dp"
+            android:scrollbars="none" />
+    </RelativeLayout>
+</LinearLayout>

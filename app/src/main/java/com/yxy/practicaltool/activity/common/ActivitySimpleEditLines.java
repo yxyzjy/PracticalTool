@@ -21,7 +21,7 @@ import butterknife.ButterKnife;
 /**
  * @author yxy Create at 17/7/14 14:10
  */
-public class ActivitySimpleEdit extends BaseActivity implements View.OnClickListener {
+public class ActivitySimpleEditLines extends BaseActivity implements View.OnClickListener {
     private EditText et_phone;
     private Button btn_save;
     private TextView titleTv, tv_enture;
@@ -36,7 +36,8 @@ public class ActivitySimpleEdit extends BaseActivity implements View.OnClickList
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        setTopBar(R.layout.activity_simple_edit, titleStr);
+        ButterKnife.bind(this);
         Bundle bundle = this.getIntent().getExtras();
         if (bundle != null) {
             titleStr = bundle.getString("title");
@@ -46,12 +47,11 @@ public class ActivitySimpleEdit extends BaseActivity implements View.OnClickList
             maxLength = bundle.getInt("maxLength");
             orderNum = bundle.getString("orderNum");
         }
-        setTopBar(R.layout.activity_simple_edit, titleStr);
-        ButterKnife.bind(this);
+
     }
 
     public static void startSimpleEdit(Context context, String titleStr, String hintStr, String oldText, int inputType, int maxLength) {
-        Intent intent = new Intent(context, ActivitySimpleEdit.class);
+        Intent intent = new Intent(context, ActivitySimpleEditLines.class);
         intent.putExtra("title", titleStr);
         intent.putExtra("hint", hintStr);
         intent.putExtra("old_text", oldText);

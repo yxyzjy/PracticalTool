@@ -272,8 +272,6 @@
             android:numColumns="5"
             android:paddingLeft="10dp"
             android:paddingRight="10dp" />
-
-
     </LinearLayout>
 
 </com.yxy.practicaltool.myview.NoConfilictScrollView>

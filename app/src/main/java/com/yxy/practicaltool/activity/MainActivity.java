@@ -6,6 +6,9 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.yxy.practicaltool.R;
+import com.yxy.practicaltool.activity.release_case.ReleaseCaseActivity;
+import com.yxy.practicaltool.activity.upload_resources.LocalCacheActivity;
+import com.yxy.practicaltool.activity.upload_resources.UploadResourcesActivity;
 import com.yxy.practicaltool.utils.SPUtil;
 
 import butterknife.Bind;
@@ -37,8 +40,10 @@ public class MainActivity extends BaseActivity {
                 startActivity(new Intent(mContext, UploadResourcesActivity.class));
                 break;
             case R.id.tv_main_2:
+                startActivity(new Intent(mContext, LocalCacheActivity.class));
                 break;
             case R.id.tv_main_3:
+                startActivity(new Intent(mContext, ReleaseCaseActivity.class));
                 break;
             case R.id.tv_main_4:
                 SPUtil.clear();

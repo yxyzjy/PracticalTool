@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import com.yxy.practicaltool.R;
 import com.yxy.practicaltool.activity.BaseActivity;
+import com.yxy.practicaltool.activity.common.ActivitySimpleEdit;
+import com.yxy.practicaltool.activity.common.ActivitySimpleEditLines;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -64,14 +66,22 @@ public class UploadResourcesActivity extends BaseActivity {
                 startActivity(new Intent(mContext,SubordinateUnitsActivity.class));
                 break;
             case R.id.ll_upload_2:
+                ActivitySimpleEdit.startSimpleEdit(mContext,"产品名","输入产品名","",ActivitySimpleEdit.INPUT_NAME,20);
                 break;
             case R.id.ll_upload_3:
+                startActivity(new Intent(mContext,SubordinatePinZhongActivity.class));
                 break;
             case R.id.ll_upload_4:
+                ActivitySimpleEdit.startSimpleEdit(mContext,"产品数量","输入产品数量","",ActivitySimpleEdit.INPUT_NUM,8);
                 break;
             case R.id.ll_upload_5:
+                ActivitySimpleEdit.startSimpleEdit(mContext,"质量描述","输入质量描述","", ActivitySimpleEditLines.INPUT_NUM,200);
                 break;
             case R.id.ll_upload_6:
+                ActivitySimpleEdit.startSimpleEdit(mContext,"产品备注","输入产品备注","", ActivitySimpleEditLines.INPUT_NUM,200);
+                break;
+            case R.id.ll_upload_7:
+                startActivity(new Intent(mContext,SubordinateAttributeActivity.class));
                 break;
             case R.id.rb_1:
                 break;

@@ -1,8 +1,8 @@
-package com.yxy.practicaltool.activity.upload_resources;
+package com.yxy.practicaltool.activity.release_case;
 
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -19,14 +19,8 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class SubordinateUnitsActivity extends BaseActivity {
+public class CaseTypeActivity extends BaseActivity {
 
-    @Bind(R.id.et_sub_units_search)
-    EditText etSubUnitsSearch;
-    @Bind(R.id.btn_sub_units_search)
-    ImageView btnSubUnitsSearch;
-    @Bind(R.id.tv_add_units)
-    TextView tvAddUnits;
     @Bind(R.id.rv_subordinate_unit)
     CustomRecyclerView rvSubordinateUnit;
     private SubordinateUnitsAdapter adapter;
@@ -35,15 +29,14 @@ public class SubordinateUnitsActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTopBar(R.layout.activity_subordinate_units, "所属单位");
+        setTopBar(R.layout.activity_case_type, "案例分类");
         ButterKnife.bind(this);
     }
 
     @Override
     public void initView() {
         super.initView();
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        rvSubordinateUnit.setLayoutManager(linearLayoutManager);
+        rvSubordinateUnit.setLayoutManager(new GridLayoutManager(mContext, 3));
         rvSubordinateUnit.setItemAnimator(new DefaultItemAnimator());
         adapter = new SubordinateUnitsAdapter(this, R.layout.item_subordinate_units, list);
         rvSubordinateUnit.setAdapter(adapter);
@@ -52,7 +45,6 @@ public class SubordinateUnitsActivity extends BaseActivity {
     @Override
     public void initData() {
         super.initData();
-
         for (int i = 0;i<10;i++){
             UseDemoBean useDemoBean = new UseDemoBean();
             useDemoBean.name = "名字"+i;
@@ -61,7 +53,4 @@ public class SubordinateUnitsActivity extends BaseActivity {
         adapter.notifyDataSetChanged();
     }
 
-    @OnClick(R.id.btn_sub_units_search)
-    public void onViewClicked() {
-    }
 }

@@ -2,6 +2,7 @@ package com.yxy.practicaltool.activity.upload_resources;
 
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -19,7 +20,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class SubordinateUnitsActivity extends BaseActivity {
+public class SubordinatePinZhongActivity extends BaseActivity {
 
     @Bind(R.id.et_sub_units_search)
     EditText etSubUnitsSearch;
@@ -42,8 +43,7 @@ public class SubordinateUnitsActivity extends BaseActivity {
     @Override
     public void initView() {
         super.initView();
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        rvSubordinateUnit.setLayoutManager(linearLayoutManager);
+        rvSubordinateUnit.setLayoutManager(new GridLayoutManager(mContext, 3));
         rvSubordinateUnit.setItemAnimator(new DefaultItemAnimator());
         adapter = new SubordinateUnitsAdapter(this, R.layout.item_subordinate_units, list);
         rvSubordinateUnit.setAdapter(adapter);
@@ -52,7 +52,6 @@ public class SubordinateUnitsActivity extends BaseActivity {
     @Override
     public void initData() {
         super.initData();
-
         for (int i = 0;i<10;i++){
             UseDemoBean useDemoBean = new UseDemoBean();
             useDemoBean.name = "名字"+i;
