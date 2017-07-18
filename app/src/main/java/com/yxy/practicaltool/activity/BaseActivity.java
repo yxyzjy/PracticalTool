@@ -102,6 +102,9 @@ public class BaseActivity extends RxAppCompatActivity implements HttpOnNextListe
     }
 
 
+    public void rightClickSave(View view){
+
+    }
 
     @Override
     public void onNext(String resulte, String mothead) {

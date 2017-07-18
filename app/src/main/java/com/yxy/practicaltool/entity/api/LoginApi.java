@@ -1,6 +1,6 @@
 package com.yxy.practicaltool.entity.api;
 
-import com.wzgiceman.rxretrofitlibrary.retrofit_rx.utils.Utils;
+import com.yxy.practicaltool.utils.Utils;
 import com.yxy.practicaltool.entity.HttpService;
 import com.yxy.practicaltool.utils.SPUtil;
 

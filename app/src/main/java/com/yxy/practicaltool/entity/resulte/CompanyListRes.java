@@ -1,12 +1,13 @@
 package com.yxy.practicaltool.entity.resulte;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by yxy on 2017/7/17 0017.
  */
 
-public class CompanyListRes {
+public class CompanyListRes implements Serializable {
 
     /**
      * ret : 200
@@ -18,7 +19,7 @@ public class CompanyListRes {
     public String msg;
     public List<DataBean> data;
 
-    public static class DataBean {
+    public static class DataBean implements Serializable {
         /**
          * ID : 91
          * CName : 1

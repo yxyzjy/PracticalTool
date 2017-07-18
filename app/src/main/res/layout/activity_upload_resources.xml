@@ -242,6 +242,7 @@
                 android:text="售卖状态：" />
 
             <RadioGroup
+                android:id="@+id/rg_upload"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"

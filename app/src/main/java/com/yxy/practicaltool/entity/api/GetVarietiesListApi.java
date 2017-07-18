@@ -10,20 +10,20 @@ import rx.Observable;
  * Created by yxy on 2017/7/4 0004.
  */
 
-public class GetCompanyListApi extends PCBaseApi {
+public class GetVarietiesListApi extends PCBaseApi {
 
-    public String companySearch;
+    public String varietiesSearch;
 
-    public GetCompanyListApi() {
+    public GetVarietiesListApi() {
         super();
-        setMethod("GetCompanyList");
+        setMethod("GetVarietiesList");
     }
 
 
     @Override
     public Observable getObservable(Retrofit retrofit) {
         HttpService service = retrofit.create(HttpService.class);
-        return service.getCompanyList(SPUtil.getString("random",""), SPUtil.getString("desUserId",""),companySearch);
+        return service.getVarietiesList(SPUtil.getString("random",""), SPUtil.getString("desUserId",""),varietiesSearch);
     }
 
     @Override

@@ -1,8 +1,10 @@
 package com.yxy.practicaltool.activity.upload_resources;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -13,6 +15,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.yxy.practicaltool.R;
 import com.yxy.practicaltool.activity.BaseActivity;
 import com.yxy.practicaltool.adapter.SubordinateUnitsAdapter;
+import com.yxy.practicaltool.common.ToastUtils;
 import com.yxy.practicaltool.entity.api.GetCompanyListApi;
 import com.yxy.practicaltool.entity.resulte.CompanyListRes;
 import com.yxy.practicaltool.myview.CustomRecyclerView;
@@ -37,7 +40,8 @@ public class SubordinateUnitsActivity extends BaseActivity {
     private SubordinateUnitsAdapter adapter;
     private ArrayList<CompanyListRes.DataBean> list = new ArrayList<>();
     private GetCompanyListApi companyListApi;
-    private int lastClickPos =-1;
+    private int lastClickPos = -1;
+    private String companySearch ="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,17 +63,16 @@ public class SubordinateUnitsActivity extends BaseActivity {
     @Override
     public void initData() {
         super.initData();
-
         companyListApi = new GetCompanyListApi();
-        httpManager.doHttpDeal(companyListApi);
-
+        doHttp();
         adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(ViewGroup parent, View view, Object o, int position) {
                 list.get(position).isSelect = true;
-                if (lastClickPos!=-1) {
+                if (lastClickPos != -1) {
                     list.get(lastClickPos).isSelect = false;
                 }
+                lastClickPos = position;
                 adapter.notifyDataSetChanged();
             }
 
@@ -80,10 +83,15 @@ public class SubordinateUnitsActivity extends BaseActivity {
         });
     }
 
+    private void doHttp() {
+        companyListApi.companySearch = companySearch;
+        httpManager.doHttpDeal(companyListApi);
+    }
+
     @Override
     protected void processSuccessResult(String resulte, String mothead) {
         super.processSuccessResult(resulte, mothead);
-        if (mothead.equals(companyListApi.getMethod())){
+        if (mothead.equals(companyListApi.getMethod())) {
             CompanyListRes res = JSONObject.parseObject(resulte, CompanyListRes.class);
             list.addAll(res.data);
             adapter.notifyDataSetChanged();
@@ -92,5 +100,22 @@ public class SubordinateUnitsActivity extends BaseActivity {
 
     @OnClick(R.id.btn_sub_units_search)
     public void onViewClicked() {
+        if (TextUtils.isEmpty(etSubUnitsSearch.getText().toString())) {
+            ToastUtils.showToast(mContext, "请输入搜索内容");
+        } else {
+            companySearch = etSubUnitsSearch.getText().toString();
+            doHttp();
+        }
+    }
+
+    @Override
+    public void rightClickSave(View view) {
+        super.rightClickSave(view);
+        Intent intent = new Intent();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("units", list.get(lastClickPos));
+        intent.putExtras(bundle);
+        setResult(RESULT_OK, intent);
+        finish();
     }
 }

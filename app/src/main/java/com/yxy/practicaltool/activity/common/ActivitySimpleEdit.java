@@ -1,5 +1,6 @@
 package com.yxy.practicaltool.activity.common;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -58,6 +59,16 @@ public class ActivitySimpleEdit extends BaseActivity implements View.OnClickList
         intent.putExtra("input_type", inputType);
         intent.putExtra("maxLength", maxLength);
         context.startActivity(intent);
+    }
+
+    public static void startSimpleEdit(Activity context, String titleStr, String hintStr, String oldText, int inputType, int maxLength, int requestCode) {
+        Intent intent = new Intent(context, ActivitySimpleEdit.class);
+        intent.putExtra("title", titleStr);
+        intent.putExtra("hint", hintStr);
+        intent.putExtra("old_text", oldText);
+        intent.putExtra("input_type", inputType);
+        intent.putExtra("maxLength", maxLength);
+        context.startActivityForResult(intent,requestCode);
     }
 
     @Override

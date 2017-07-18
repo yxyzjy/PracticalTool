@@ -1,5 +1,6 @@
 package com.yxy.practicaltool.activity.common;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -36,7 +37,7 @@ public class ActivitySimpleEditLines extends BaseActivity implements View.OnClic
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTopBar(R.layout.activity_simple_edit, titleStr);
+        setTopBar(R.layout.activity_simple_lines, titleStr);
         ButterKnife.bind(this);
         Bundle bundle = this.getIntent().getExtras();
         if (bundle != null) {
@@ -58,6 +59,16 @@ public class ActivitySimpleEditLines extends BaseActivity implements View.OnClic
         intent.putExtra("input_type", inputType);
         intent.putExtra("maxLength", maxLength);
         context.startActivity(intent);
+    }
+
+    public static void startSimpleEdit(Activity context, String titleStr, String hintStr, String oldText, int inputType, int maxLength, int requestCode) {
+        Intent intent = new Intent(context, ActivitySimpleEditLines.class);
+        intent.putExtra("title", titleStr);
+        intent.putExtra("hint", hintStr);
+        intent.putExtra("old_text", oldText);
+        intent.putExtra("input_type", inputType);
+        intent.putExtra("maxLength", maxLength);
+        context.startActivityForResult(intent,requestCode);
     }
 
     @Override
@@ -90,16 +101,6 @@ public class ActivitySimpleEditLines extends BaseActivity implements View.OnClic
                     intent.putExtra("result", result);
                     setResult(RESULT_OK, intent);
                     finish();
-                    /*if (Tools.isfilterEmoji(result)) {
-                        ToastUtils.showToast(this, getResources().getString(R.string.bhtszf));
-                        return;
-                    }*/
-                    /*if (titleStr.equals(getString(R.string.srshbh))) {
-                        String code = MD5.getMessageDigest(result.toString().getBytes());
-                        httpManager.verifyShopNum(orderNum, code);
-                    } else {
-                        httpManager.edit("text", "post", null, result, "userEditorHandler", "nickname", "", null);
-                    }*/
                 }
                 break;
         }
