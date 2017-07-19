@@ -6,6 +6,7 @@ import android.widget.ImageView;
 
 import com.yxy.practicaltool.R;
 import com.yxy.practicaltool.bean.UseDemoBean;
+import com.yxy.practicaltool.gen.UploadResourcesDao;
 import com.zhy.base.adapter.ViewHolder;
 import com.zhy.base.adapter.recyclerview.CommonAdapter;
 
@@ -14,20 +15,20 @@ import java.util.List;
 /**
  * Created by yxy on 2016/7/26 0026.
  */
-public class LocalCacheAdapter extends CommonAdapter<UseDemoBean> {
+public class LocalCacheAdapter extends CommonAdapter<UploadResourcesDao> {
 
     private Intent intent = new Intent();
     private Context context;
 
-    public LocalCacheAdapter(Context context, int layoutId, List<UseDemoBean> datas) {
+    public LocalCacheAdapter(Context context, int layoutId, List<UploadResourcesDao> datas) {
         super(context, layoutId, datas);
         this.context = context;
     }
 
     @Override
-    public void convert(ViewHolder holder, UseDemoBean infoBean) {
+    public void convert(ViewHolder holder, UploadResourcesDao infoBean) {
         ImageView iv_cache_pic = holder.getView(R.id.iv_cache_pic);
-        holder.setText(R.id.tv_cache_name, infoBean.name);
+        holder.setText(R.id.tv_cache_name, infoBean.getName2());
 
         /*Glide.with(context)
                 .load(infoBean)

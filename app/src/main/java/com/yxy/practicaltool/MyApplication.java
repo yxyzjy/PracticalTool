@@ -4,10 +4,10 @@ import android.app.Application;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.afa.tourism.greendao.gen.DaoMaster;
+import com.afa.tourism.greendao.gen.DaoSession;
 import com.wzgiceman.rxretrofitlibrary.BuildConfig;
 import com.wzgiceman.rxretrofitlibrary.retrofit_rx.RxRetrofitApp;
-import com.wzgiceman.rxretrofitlibrary.retrofit_rx.download.DaoMaster;
-import com.wzgiceman.rxretrofitlibrary.retrofit_rx.download.DaoSession;
 
 /**
  * Created by yxy on 2017/7/4 0004.
@@ -16,16 +16,17 @@ import com.wzgiceman.rxretrofitlibrary.retrofit_rx.download.DaoSession;
 public class MyApplication extends Application {
 
     public static Context app;
-    private DaoMaster daoMaster;
     private DaoSession daoSession;
     private SQLiteDatabase db;
     private DaoMaster.DevOpenHelper mHelper;
     public static MyApplication instances;
+    private DaoMaster daoMaster;
 
     @Override
     public void onCreate() {
         super.onCreate();
         app = getApplicationContext();
+        instances = this;
         RxRetrofitApp.init(this, BuildConfig.DEBUG);
         setDatabase();
     }

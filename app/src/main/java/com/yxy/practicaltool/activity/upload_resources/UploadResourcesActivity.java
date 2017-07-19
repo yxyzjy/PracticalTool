@@ -12,6 +12,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.afa.tourism.greendao.gen.UploadResourcesDaoDao;
 import com.wzgiceman.rxretrofitlibrary.retrofit_rx.download.DaoMaster;
 import com.wzgiceman.rxretrofitlibrary.retrofit_rx.download.DaoSession;
 import com.yxy.practicaltool.MyApplication;
@@ -22,6 +23,7 @@ import com.yxy.practicaltool.activity.common.ActivitySimpleEditLines;
 import com.yxy.practicaltool.common.ToastUtils;
 import com.yxy.practicaltool.entity.resulte.AttributeListRes;
 import com.yxy.practicaltool.entity.resulte.CompanyListRes;
+import com.yxy.practicaltool.gen.UploadResourcesDao;
 import com.yxy.practicaltool.utils.Utils;
 
 import butterknife.Bind;
@@ -74,6 +76,8 @@ public class UploadResourcesActivity extends BaseActivity implements RadioGroup.
     private int sallState = -1;
     private CompanyListRes.DataBean pinzhongData;
 
+    private UploadResourcesDaoDao dao;
+    private SQLiteDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +89,9 @@ public class UploadResourcesActivity extends BaseActivity implements RadioGroup.
     public void initData() {
         super.initData();
         rgUpload.setOnCheckedChangeListener(this);
+
+        dao = MyApplication.getInstances().getDaoSession().getUploadResourcesDaoDao();
+        db = MyApplication.getInstances().getDb();
     }
 
     @OnClick({R.id.ll_upload_1, R.id.ll_upload_2, R.id.ll_upload_3, R.id.ll_upload_4, R.id.ll_upload_5, R.id.ll_upload_6, R.id.ll_upload_7, R.id.rb_1, R.id.rb_2})
@@ -103,10 +110,10 @@ public class UploadResourcesActivity extends BaseActivity implements RadioGroup.
                 ActivitySimpleEdit.startSimpleEdit(this, "产品数量", "输入产品数量", "", ActivitySimpleEdit.INPUT_NUM, 8, 104);
                 break;
             case R.id.ll_upload_5:
-                ActivitySimpleEditLines.startSimpleEdit(this, "质量描述", "输入质量描述", "", ActivitySimpleEditLines.INPUT_NUM, 200, 105);
+                ActivitySimpleEditLines.startSimpleEdit(this, "质量描述", "输入质量描述", "", ActivitySimpleEditLines.INPUT_NAME, 200, 105);
                 break;
             case R.id.ll_upload_6:
-                ActivitySimpleEditLines.startSimpleEdit(this, "产品备注", "输入产品备注", "", ActivitySimpleEditLines.INPUT_NUM, 200, 106);
+                ActivitySimpleEditLines.startSimpleEdit(this, "产品备注", "输入产品备注", "", ActivitySimpleEditLines.INPUT_NAME, 200, 106);
                 break;
             case R.id.ll_upload_7:
                 startActivityForResult(new Intent(this, SubordinateAttributeActivity.class), 107);
@@ -169,13 +176,32 @@ public class UploadResourcesActivity extends BaseActivity implements RadioGroup.
     public void rightClickSave(View view) {
         super.rightClickSave(view);
         if (checkEditAll()) {
-            if (Utils.isWifiConnected(mContext)) {
+//            if (Utils.isWifiConnected(mContext)) {
 //            提交数据
-                MyApplication.getInstances().getDaoSession();
-            } else {
+
+//            } else {
+            db.beginTransaction();
+            try {
+
+                insertData();
+                finish();
+
+            } catch (Exception e) {
+            } finally {
+                db.endTransaction();
             }
-        } else {
+            }
         }
+
+        /**
+         * add
+         */
+
+    private void insertData() {
+        UploadResourcesDao usdao = new UploadResourcesDao(unitsData.ID, tvContent1.getText().toString(),
+                name2, pinzhongData.ID, pinzhongData.CName, num4, des5, tip6, sallState, attributeData.ID, tvContent7.getText().toString());
+
+        dao.insert(usdao);
     }
 
     private boolean checkEditAll() {
@@ -187,22 +213,22 @@ public class UploadResourcesActivity extends BaseActivity implements RadioGroup.
             ToastUtils.showToast(mContext, "请输入产品名称");
             return false;
         }
-        if (TextUtils.isEmpty(num4)) {
-            ToastUtils.showToast(mContext, "请输入产品数量");
-            return false;
-        }
-        if (TextUtils.isEmpty(des5)) {
-            ToastUtils.showToast(mContext, "请输入质量描述");
-            return false;
-        }
-        if (TextUtils.isEmpty(tip6)) {
-            ToastUtils.showToast(mContext, "请输入产品备注");
-            return false;
-        }
-        if (attributeData == null) {
-            ToastUtils.showToast(mContext, "请选择产品属性");
-            return false;
-        }
+//        if (TextUtils.isEmpty(num4)) {
+//            ToastUtils.showToast(mContext, "请输入产品数量");
+//            return false;
+//        }
+//        if (TextUtils.isEmpty(des5)) {
+//            ToastUtils.showToast(mContext, "请输入质量描述");
+//            return false;
+//        }
+//        if (TextUtils.isEmpty(tip6)) {
+//            ToastUtils.showToast(mContext, "请输入产品备注");
+//            return false;
+//        }
+//        if (attributeData == null) {
+//            ToastUtils.showToast(mContext, "请选择产品属性");
+//            return false;
+//        }
         return true;
     }
 

@@ -4,13 +4,17 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 
+import com.afa.tourism.greendao.gen.UploadResourcesDaoDao;
+import com.yxy.practicaltool.MyApplication;
 import com.yxy.practicaltool.R;
 import com.yxy.practicaltool.activity.BaseActivity;
 import com.yxy.practicaltool.adapter.LocalCacheAdapter;
 import com.yxy.practicaltool.bean.UseDemoBean;
+import com.yxy.practicaltool.gen.UploadResourcesDao;
 import com.yxy.practicaltool.myview.CustomRecyclerView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -20,7 +24,8 @@ public class LocalCacheActivity extends BaseActivity {
     @Bind(R.id.rv_local_cache)
     CustomRecyclerView rvLocalCache;
     private LocalCacheAdapter cacheAdapter;
-    private ArrayList<UseDemoBean> list = new ArrayList<>();
+    private ArrayList<UploadResourcesDao> list = new ArrayList<>();
+    private UploadResourcesDaoDao dao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,17 +41,16 @@ public class LocalCacheActivity extends BaseActivity {
         rvLocalCache.setItemAnimator(new DefaultItemAnimator());
         cacheAdapter = new LocalCacheAdapter(this, R.layout.item_local_cache, list);
         rvLocalCache.setAdapter(cacheAdapter);
+
     }
 
     @Override
     public void initData() {
         super.initData();
+        dao = MyApplication.getInstances().getDaoSession().getUploadResourcesDaoDao();
 
-        for (int i = 0;i<10;i++){
-            UseDemoBean useDemoBean = new UseDemoBean();
-            useDemoBean.name = "名字"+i;
-            list.add(useDemoBean);
-        }
+        list= (ArrayList<UploadResourcesDao>) dao.loadAll();
+
         cacheAdapter.notifyDataSetChanged();
     }
 }

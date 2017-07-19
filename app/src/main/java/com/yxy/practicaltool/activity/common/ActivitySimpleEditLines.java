@@ -37,8 +37,6 @@ public class ActivitySimpleEditLines extends BaseActivity implements View.OnClic
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTopBar(R.layout.activity_simple_lines, titleStr);
-        ButterKnife.bind(this);
         Bundle bundle = this.getIntent().getExtras();
         if (bundle != null) {
             titleStr = bundle.getString("title");
@@ -48,6 +46,9 @@ public class ActivitySimpleEditLines extends BaseActivity implements View.OnClic
             maxLength = bundle.getInt("maxLength");
             orderNum = bundle.getString("orderNum");
         }
+        setTopBar(R.layout.activity_simple_lines, titleStr);
+        ButterKnife.bind(this);
+
 
     }
 
