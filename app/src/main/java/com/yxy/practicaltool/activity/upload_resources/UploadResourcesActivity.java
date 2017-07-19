@@ -1,6 +1,7 @@
 package com.yxy.practicaltool.activity.upload_resources;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.text.TextUtils;
@@ -11,6 +12,9 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.wzgiceman.rxretrofitlibrary.retrofit_rx.download.DaoMaster;
+import com.wzgiceman.rxretrofitlibrary.retrofit_rx.download.DaoSession;
+import com.yxy.practicaltool.MyApplication;
 import com.yxy.practicaltool.R;
 import com.yxy.practicaltool.activity.BaseActivity;
 import com.yxy.practicaltool.activity.common.ActivitySimpleEdit;
@@ -70,6 +74,7 @@ public class UploadResourcesActivity extends BaseActivity implements RadioGroup.
     private int sallState = -1;
     private CompanyListRes.DataBean pinzhongData;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,7 +97,7 @@ public class UploadResourcesActivity extends BaseActivity implements RadioGroup.
                 ActivitySimpleEdit.startSimpleEdit(this, "产品名", "输入产品名", "", ActivitySimpleEdit.INPUT_NAME, 20, 102);
                 break;
             case R.id.ll_upload_3:
-                startActivityForResult(new Intent(mContext, SubordinatePinZhongActivity.class),103);
+                startActivityForResult(new Intent(mContext, SubordinatePinZhongActivity.class), 103);
                 break;
             case R.id.ll_upload_4:
                 ActivitySimpleEdit.startSimpleEdit(this, "产品数量", "输入产品数量", "", ActivitySimpleEdit.INPUT_NUM, 8, 104);
@@ -125,7 +130,7 @@ public class UploadResourcesActivity extends BaseActivity implements RadioGroup.
                 name2 = data.getStringExtra("result");
                 tvContent2.setText(name2);
             }
-            if (requestCode == 103){
+            if (requestCode == 103) {
                 pinzhongData = (CompanyListRes.DataBean) data.getSerializableExtra("pinzhong");
                 tvContent3.setText(pinzhongData.CName);
             }
@@ -166,6 +171,7 @@ public class UploadResourcesActivity extends BaseActivity implements RadioGroup.
         if (checkEditAll()) {
             if (Utils.isWifiConnected(mContext)) {
 //            提交数据
+                MyApplication.getInstances().getDaoSession();
             } else {
             }
         } else {
@@ -198,6 +204,7 @@ public class UploadResourcesActivity extends BaseActivity implements RadioGroup.
             return false;
         }
         return true;
-
     }
+
+
 }
