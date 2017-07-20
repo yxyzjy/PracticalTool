@@ -1,6 +1,15 @@
 apply plugin: 'com.android.application'
 apply plugin:'org.greenrobot.greendao'
 
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'org.greenrobot:greendao-gradle-plugin:3.1.0'
+    }
+}
+
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.3"
@@ -23,11 +32,12 @@ android {
         resolutionStrategy.force 'com.google.code.findbugs:jsr305:1.3.9'
     }
 
-    greendao{
-        schemaVersion 1
-        daoPackage'com.afa.tourism.greendao.gen'
-        targetGenDir'src/main/java'
-    }
+
+}
+greendao{
+    schemaVersion 1
+    daoPackage'com.yxy.practicaltool.dao'
+    targetGenDir'src/main/java'
 }
 
 dependencies {

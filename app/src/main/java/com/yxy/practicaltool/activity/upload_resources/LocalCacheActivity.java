@@ -4,12 +4,14 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 
-import com.afa.tourism.greendao.gen.UploadResourcesDaoDao;
 import com.yxy.practicaltool.MyApplication;
 import com.yxy.practicaltool.R;
 import com.yxy.practicaltool.activity.BaseActivity;
 import com.yxy.practicaltool.adapter.LocalCacheAdapter;
-import com.yxy.practicaltool.bean.UseDemoBean;
+import com.yxy.practicaltool.common.L;
+import com.yxy.practicaltool.dao.TestDao;
+import com.yxy.practicaltool.dao.UploadResourcesDaoDao;
+import com.yxy.practicaltool.gen.Test;
 import com.yxy.practicaltool.gen.UploadResourcesDao;
 import com.yxy.practicaltool.myview.CustomRecyclerView;
 
@@ -26,6 +28,7 @@ public class LocalCacheActivity extends BaseActivity {
     private LocalCacheAdapter cacheAdapter;
     private ArrayList<UploadResourcesDao> list = new ArrayList<>();
     private UploadResourcesDaoDao dao;
+    private TestDao testDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +51,11 @@ public class LocalCacheActivity extends BaseActivity {
     public void initData() {
         super.initData();
         dao = MyApplication.getInstances().getDaoSession().getUploadResourcesDaoDao();
+
+        testDao = MyApplication.getInstances().getDaoSession().getTestDao();
+
+        List<Test> tests = testDao.loadAll();
+        L.e(tests.size()+"=======");
 
         list= (ArrayList<UploadResourcesDao>) dao.loadAll();
 

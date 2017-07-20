@@ -12,19 +12,21 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import com.afa.tourism.greendao.gen.UploadResourcesDaoDao;
-import com.wzgiceman.rxretrofitlibrary.retrofit_rx.download.DaoMaster;
-import com.wzgiceman.rxretrofitlibrary.retrofit_rx.download.DaoSession;
 import com.yxy.practicaltool.MyApplication;
 import com.yxy.practicaltool.R;
 import com.yxy.practicaltool.activity.BaseActivity;
 import com.yxy.practicaltool.activity.common.ActivitySimpleEdit;
 import com.yxy.practicaltool.activity.common.ActivitySimpleEditLines;
+import com.yxy.practicaltool.common.L;
 import com.yxy.practicaltool.common.ToastUtils;
+import com.yxy.practicaltool.dao.TestDao;
+import com.yxy.practicaltool.dao.UploadResourcesDaoDao;
 import com.yxy.practicaltool.entity.resulte.AttributeListRes;
 import com.yxy.practicaltool.entity.resulte.CompanyListRes;
+import com.yxy.practicaltool.gen.Test;
 import com.yxy.practicaltool.gen.UploadResourcesDao;
-import com.yxy.practicaltool.utils.Utils;
+
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -78,6 +80,7 @@ public class UploadResourcesActivity extends BaseActivity implements RadioGroup.
 
     private UploadResourcesDaoDao dao;
     private SQLiteDatabase db;
+    private TestDao testDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +95,7 @@ public class UploadResourcesActivity extends BaseActivity implements RadioGroup.
 
         dao = MyApplication.getInstances().getDaoSession().getUploadResourcesDaoDao();
         db = MyApplication.getInstances().getDb();
+        testDao = MyApplication.getInstances().getDaoSession().getTestDao();
     }
 
     @OnClick({R.id.ll_upload_1, R.id.ll_upload_2, R.id.ll_upload_3, R.id.ll_upload_4, R.id.ll_upload_5, R.id.ll_upload_6, R.id.ll_upload_7, R.id.rb_1, R.id.rb_2})
@@ -175,22 +179,31 @@ public class UploadResourcesActivity extends BaseActivity implements RadioGroup.
     @Override
     public void rightClickSave(View view) {
         super.rightClickSave(view);
-        if (checkEditAll()) {
-//            if (Utils.isWifiConnected(mContext)) {
-//            提交数据
 
-//            } else {
-            db.beginTransaction();
-            try {
+        Test test = new Test("aaa");
 
-                insertData();
-                finish();
+        testDao.insert(test);
 
-            } catch (Exception e) {
-            } finally {
-                db.endTransaction();
-            }
-            }
+        List<Test> tests = testDao.loadAll();
+        L.e("=tests.size()=="+tests.size());
+        finish();
+
+//        if (checkEditAll()) {
+////            if (Utils.isWifiConnected(mContext)) {
+////            提交数据
+//
+////            } else {
+//            db.beginTransaction();
+//            try {
+//
+//                insertData();
+//                finish();
+//
+//            } catch (Exception e) {
+//            } finally {
+//                db.endTransaction();
+//            }
+//            }
         }
 
         /**

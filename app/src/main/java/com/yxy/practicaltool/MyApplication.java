@@ -4,10 +4,10 @@ import android.app.Application;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.afa.tourism.greendao.gen.DaoMaster;
-import com.afa.tourism.greendao.gen.DaoSession;
 import com.wzgiceman.rxretrofitlibrary.BuildConfig;
 import com.wzgiceman.rxretrofitlibrary.retrofit_rx.RxRetrofitApp;
+import com.yxy.practicaltool.dao.DaoMaster;
+import com.yxy.practicaltool.dao.DaoSession;
 
 /**
  * Created by yxy on 2017/7/4 0004.
