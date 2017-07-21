@@ -51,7 +51,7 @@
             android:layout_marginLeft="10dp"
             android:gravity="center_vertical"
             android:textColor="@color/text_color"
-            tools:text="添加一个单位" />
+            android:text="添加一个单位" />
     </LinearLayout>
 
     <com.yxy.practicaltool.myview.CustomRecyclerView

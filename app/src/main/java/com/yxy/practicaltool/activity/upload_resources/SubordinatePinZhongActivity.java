@@ -14,6 +14,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.yxy.practicaltool.R;
 import com.yxy.practicaltool.activity.BaseActivity;
 import com.yxy.practicaltool.adapter.SubordinateUnitsAdapter;
+import com.yxy.practicaltool.common.ToastUtils;
 import com.yxy.practicaltool.entity.api.GetVarietiesListApi;
 import com.yxy.practicaltool.entity.resulte.CompanyListRes;
 import com.yxy.practicaltool.myview.CustomRecyclerView;
@@ -89,6 +90,8 @@ public class SubordinatePinZhongActivity extends BaseActivity {
     protected void processSuccessResult(String resulte, String mothead) {
         super.processSuccessResult(resulte, mothead);
         if (mothead.equals(varietiesListApi.getMethod())) {
+            list.clear();
+            lastClickPos =-1;
             CompanyListRes res = JSONObject.parseObject(resulte, CompanyListRes.class);
             list.addAll(res.data);
             adapter.notifyDataSetChanged();
@@ -98,6 +101,10 @@ public class SubordinatePinZhongActivity extends BaseActivity {
     @Override
     public void rightClickSave(View view) {
         super.rightClickSave(view);
+        if (lastClickPos == -1) {
+            ToastUtils.showToast(mContext, "请选择所属品种");
+            return;
+        }
         Intent intent = new Intent();
         Bundle bundle = new Bundle();
         bundle.putSerializable("pinzhong", list.get(lastClickPos));

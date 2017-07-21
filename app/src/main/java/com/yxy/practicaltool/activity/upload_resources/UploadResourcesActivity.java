@@ -185,7 +185,7 @@ public class UploadResourcesActivity extends BaseActivity implements RadioGroup.
         testDao.insert(test);
 
         List<Test> tests = testDao.loadAll();
-        L.e("=tests.size()=="+tests.size());
+        L.e("=tests.size()==" + tests.size());
         finish();
 
 //        if (checkEditAll()) {
@@ -204,11 +204,11 @@ public class UploadResourcesActivity extends BaseActivity implements RadioGroup.
 //                db.endTransaction();
 //            }
 //            }
-        }
+    }
 
-        /**
-         * add
-         */
+    /**
+     * add
+     */
 
     private void insertData() {
         UploadResourcesDao usdao = new UploadResourcesDao(unitsData.ID, tvContent1.getText().toString(),

@@ -18,4 +18,6 @@
     <color name="main_gray">#CCCCCC</color>
     <color name="bg_gray">#eeeeee</color>
     <color name="main_bgColor">#ECF1F4</color>
+    <color name="viewfinder_mask">#60000000</color>
+
 </resources>

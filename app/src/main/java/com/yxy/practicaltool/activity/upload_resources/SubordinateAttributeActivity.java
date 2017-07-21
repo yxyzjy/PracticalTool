@@ -11,6 +11,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.yxy.practicaltool.R;
 import com.yxy.practicaltool.activity.BaseActivity;
 import com.yxy.practicaltool.adapter.AttributeAdapter;
+import com.yxy.practicaltool.common.ToastUtils;
 import com.yxy.practicaltool.entity.api.GetAttributeListApi;
 import com.yxy.practicaltool.entity.resulte.AttributeListRes;
 import com.yxy.practicaltool.myview.CustomRecyclerView;
@@ -125,6 +126,10 @@ public class SubordinateAttributeActivity extends BaseActivity {
     @Override
     public void rightClickSave(View view) {
         super.rightClickSave(view);
+        if (rightLastPos == -1) {
+            ToastUtils.showToast(mContext, "请选择产品属性");
+            return;
+        }
         Intent intent = new Intent();
         Bundle bundle = new Bundle();
         bundle.putSerializable("attribute", rightList.get(rightLastPos));

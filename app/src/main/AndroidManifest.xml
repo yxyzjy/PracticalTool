@@ -33,14 +33,24 @@
             android:screenOrientation="portrait" />
         <activity android:name=".activity.MainActivity" />
         <activity android:name=".activity.upload_resources.UploadResourcesActivity" />
-        <activity android:name=".activity.upload_resources.SubordinateUnitsActivity" />
-        <activity android:name=".activity.upload_resources.SubordinatePinZhongActivity" />
-        <activity android:name=".activity.common.ActivitySimpleEditLines" />
-        <activity android:name=".activity.common.ActivitySimpleEdit" />
+        <activity
+            android:name=".activity.upload_resources.SubordinateUnitsActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".activity.upload_resources.SubordinatePinZhongActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".activity.common.ActivitySimpleEditLines"
+            android:windowSoftInputMode="stateVisible" />
+        <activity
+            android:name=".activity.common.ActivitySimpleEdit"
+            android:windowSoftInputMode="stateVisible" />
         <activity android:name=".activity.upload_resources.SubordinateAttributeActivity" />
-        <activity android:name=".activity.upload_resources.LocalCacheActivity"></activity>
+        <activity android:name=".activity.upload_resources.LocalCacheActivity" />
         <activity android:name=".activity.release_case.ReleaseCaseActivity" />
         <activity android:name=".activity.release_case.CaseTypeActivity" />
+        <activity android:name=".activity.upload_resources.AddUnitsTypeOneActivity" />
+        <activity android:name=".activity.upload_resources.AddUnitsTypeTwoActivity" />
     </application>
 
 </manifest>

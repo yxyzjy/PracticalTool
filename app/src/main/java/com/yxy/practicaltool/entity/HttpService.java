@@ -29,6 +29,10 @@ public interface HttpService {
     Observable<AttributeListRes> getAttributeList(@Query("random") String random, @Query("desUserId") String desUserId, @Query("parentId") String parentId);
 
 
+    @GET("CheckCompanyPhone")
+    Observable<AttributeListRes> checkCompanyPhone(@Query("random") String random, @Query("desUserId") String desUserId, @Query("phone") String phone);
+
+
 
 
 }

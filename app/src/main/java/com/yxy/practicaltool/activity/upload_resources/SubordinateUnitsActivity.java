@@ -41,7 +41,7 @@ public class SubordinateUnitsActivity extends BaseActivity {
     private ArrayList<CompanyListRes.DataBean> list = new ArrayList<>();
     private GetCompanyListApi companyListApi;
     private int lastClickPos = -1;
-    private String companySearch ="";
+    private String companySearch = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +64,6 @@ public class SubordinateUnitsActivity extends BaseActivity {
     public void initData() {
         super.initData();
         companyListApi = new GetCompanyListApi();
-        doHttp();
         adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(ViewGroup parent, View view, Object o, int position) {
@@ -83,6 +82,12 @@ public class SubordinateUnitsActivity extends BaseActivity {
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        doHttp();
+    }
+
     private void doHttp() {
         companyListApi.companySearch = companySearch;
         httpManager.doHttpDeal(companyListApi);
@@ -92,24 +97,20 @@ public class SubordinateUnitsActivity extends BaseActivity {
     protected void processSuccessResult(String resulte, String mothead) {
         super.processSuccessResult(resulte, mothead);
         if (mothead.equals(companyListApi.getMethod())) {
+            list.clear();
+            lastClickPos = -1;
             CompanyListRes res = JSONObject.parseObject(resulte, CompanyListRes.class);
             list.addAll(res.data);
             adapter.notifyDataSetChanged();
         }
     }
 
-    @OnClick(R.id.btn_sub_units_search)
-    public void onViewClicked() {
-        if (TextUtils.isEmpty(etSubUnitsSearch.getText().toString())) {
-            ToastUtils.showToast(mContext, "请输入搜索内容");
-        } else {
-            companySearch = etSubUnitsSearch.getText().toString();
-            doHttp();
-        }
-    }
-
     @Override
     public void rightClickSave(View view) {
+        if (lastClickPos == -1) {
+            ToastUtils.showToast(mContext, "请选择所属单位");
+            return;
+        }
         super.rightClickSave(view);
         Intent intent = new Intent();
         Bundle bundle = new Bundle();
@@ -117,5 +118,22 @@ public class SubordinateUnitsActivity extends BaseActivity {
         intent.putExtras(bundle);
         setResult(RESULT_OK, intent);
         finish();
+    }
+
+    @OnClick({R.id.btn_sub_units_search, R.id.tv_add_units})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.btn_sub_units_search:
+                if (TextUtils.isEmpty(etSubUnitsSearch.getText().toString())) {
+                    ToastUtils.showToast(mContext, "请输入搜索内容");
+                } else {
+                    companySearch = etSubUnitsSearch.getText().toString();
+                    doHttp();
+                }
+                break;
+            case R.id.tv_add_units:
+                startActivity(new Intent(mContext, AddUnitsTypeOneActivity.class));
+                break;
+        }
     }
 }
