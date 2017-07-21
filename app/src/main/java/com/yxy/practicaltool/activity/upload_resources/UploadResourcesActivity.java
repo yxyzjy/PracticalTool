@@ -79,7 +79,6 @@ public class UploadResourcesActivity extends BaseActivity implements RadioGroup.
     private CompanyListRes.DataBean pinzhongData;
 
     private UploadResourcesDaoDao dao;
-    private SQLiteDatabase db;
     private TestDao testDao;
 
     @Override
@@ -94,7 +93,6 @@ public class UploadResourcesActivity extends BaseActivity implements RadioGroup.
         rgUpload.setOnCheckedChangeListener(this);
 
         dao = MyApplication.getInstances().getDaoSession().getUploadResourcesDaoDao();
-        db = MyApplication.getInstances().getDb();
         testDao = MyApplication.getInstances().getDaoSession().getTestDao();
     }
 
@@ -180,13 +178,10 @@ public class UploadResourcesActivity extends BaseActivity implements RadioGroup.
     public void rightClickSave(View view) {
         super.rightClickSave(view);
 
-        Test test = new Test("aaa");
-
-        testDao.insert(test);
-
-        List<Test> tests = testDao.loadAll();
-        L.e("=tests.size()==" + tests.size());
-        finish();
+//        Test test = new Test("aaa");
+//        testDao.insert(test);
+//        List<Test> tests = testDao.loadAll();
+//        finish();
 
 //        if (checkEditAll()) {
 ////            if (Utils.isWifiConnected(mContext)) {
@@ -211,7 +206,7 @@ public class UploadResourcesActivity extends BaseActivity implements RadioGroup.
      */
 
     private void insertData() {
-        UploadResourcesDao usdao = new UploadResourcesDao(unitsData.ID, tvContent1.getText().toString(),
+        UploadResourcesDao usdao = new UploadResourcesDao(unitsData.ID, unitsData.CName,unitsData.Phone,
                 name2, pinzhongData.ID, pinzhongData.CName, num4, des5, tip6, sallState, attributeData.ID, tvContent7.getText().toString());
 
         dao.insert(usdao);

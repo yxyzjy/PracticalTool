@@ -28,7 +28,7 @@ public class LocalCacheActivity extends BaseActivity {
     private LocalCacheAdapter cacheAdapter;
     private ArrayList<UploadResourcesDao> list = new ArrayList<>();
     private UploadResourcesDaoDao dao;
-    private TestDao testDao;
+    private UploadResourcesDaoDao testDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,9 +52,9 @@ public class LocalCacheActivity extends BaseActivity {
         super.initData();
         dao = MyApplication.getInstances().getDaoSession().getUploadResourcesDaoDao();
 
-        testDao = MyApplication.getInstances().getDaoSession().getTestDao();
+        testDao = MyApplication.getInstances().getDaoSession().getUploadResourcesDaoDao();
 
-        List<Test> tests = testDao.loadAll();
+        List<UploadResourcesDao> tests = testDao.loadAll();
         L.e(tests.size()+"=======");
 
         list= (ArrayList<UploadResourcesDao>) dao.loadAll();

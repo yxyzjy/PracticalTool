@@ -15,6 +15,7 @@ public class UploadResourcesDao {
 
     private int unitsId;
     private String unitsName;
+    private String phone;
     private String name2;
     private int pinzhongId;
     private String pinzhongName;
@@ -78,6 +79,12 @@ public class UploadResourcesDao {
     public void setName2(String name2) {
         this.name2 = name2;
     }
+    public String getPhone() {
+        return this.phone;
+    }
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
     public String getUnitsName() {
         return this.unitsName;
     }
@@ -90,12 +97,14 @@ public class UploadResourcesDao {
     public void setUnitsId(int unitsId) {
         this.unitsId = unitsId;
     }
-    @Generated(hash = 158559394)
-    public UploadResourcesDao(int unitsId, String unitsName, String name2,
-            int pinzhongId, String pinzhongName, String num4, String des5,
-            String tip6, int H_State, int attributeId, String attributeName) {
+    @Generated(hash = 1389302706)
+    public UploadResourcesDao(int unitsId, String unitsName, String phone,
+            String name2, int pinzhongId, String pinzhongName, String num4,
+            String des5, String tip6, int H_State, int attributeId,
+            String attributeName) {
         this.unitsId = unitsId;
         this.unitsName = unitsName;
+        this.phone = phone;
         this.name2 = name2;
         this.pinzhongId = pinzhongId;
         this.pinzhongName = pinzhongName;
@@ -109,5 +118,7 @@ public class UploadResourcesDao {
     @Generated(hash = 91416941)
     public UploadResourcesDao() {
     }
+
+
 
 }

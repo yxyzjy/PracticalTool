@@ -19,10 +19,12 @@ import com.yxy.practicaltool.common.L;
 import com.yxy.practicaltool.common.ToastUtils;
 import com.yxy.practicaltool.dao.TestDao;
 import com.yxy.practicaltool.dao.UploadResourcesDaoDao;
+import com.yxy.practicaltool.entity.api.AddCompanyApi;
 import com.yxy.practicaltool.entity.resulte.AttributeListRes;
 import com.yxy.practicaltool.entity.resulte.CompanyListRes;
 import com.yxy.practicaltool.gen.Test;
 import com.yxy.practicaltool.gen.UploadResourcesDao;
+import com.yxy.practicaltool.utils.AppManager;
 
 import java.util.List;
 
@@ -44,10 +46,15 @@ public class AddUnitsTypeTwoActivity extends BaseActivity {
     TextView tvAddUnitsNexttype;
     private String phone;
 
+    private AddCompanyApi addCompanyApi;
+    private AppManager appManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTopBar(R.layout.activity_add_units_type_two, "添加单位", false);
+        appManager = AppManager.getAppManager();
+        appManager.addActivity(this);
     }
 
     @Override
@@ -55,10 +62,46 @@ public class AddUnitsTypeTwoActivity extends BaseActivity {
         super.initData();
         phone = getIntent().getStringExtra("phone");
         tvTypeTwo1.setText(phone);
+
+        addCompanyApi = new AddCompanyApi();
     }
 
 
     @OnClick(R.id.tv_add_units_nexttype)
     public void onViewClicked() {
+
+        if (checkEdit()) {
+            addCompanyApi.name = etTypeTwo2.getText().toString().trim();
+            addCompanyApi.charge = etTypeTwo3.getText().toString().trim();
+            addCompanyApi.address = etTypeTwo4.getText().toString().trim();
+            addCompanyApi.phone = phone;
+            httpManager.doHttpDeal(addCompanyApi);
+        }
+    }
+
+    @Override
+    protected void processSuccessResult(String resulte, String mothead) {
+        super.processSuccessResult(resulte, mothead);
+        if (mothead.equals(addCompanyApi.getMethod())) {
+            ToastUtils.showToast(mContext, "添加成功");
+            appManager.finishAllActivity();
+        }
+    }
+
+    private boolean checkEdit() {
+        if (TextUtils.isEmpty(etTypeTwo2.getText().toString().trim())) {
+            ToastUtils.showToast(mContext, "请输入单位名称");
+            return false;
+        }
+        if (TextUtils.isEmpty(etTypeTwo3.getText().toString().trim())) {
+            ToastUtils.showToast(mContext, "请输入负责人姓名");
+            return false;
+        }
+        if (TextUtils.isEmpty(etTypeTwo4.getText().toString().trim())) {
+            ToastUtils.showToast(mContext, "请输入单位地址");
+            return false;
+        }
+        return true;
+
     }
 }

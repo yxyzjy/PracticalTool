@@ -2,6 +2,7 @@ package com.yxy.practicaltool.entity;
 
 
 import com.yxy.practicaltool.entity.resulte.AttributeListRes;
+import com.yxy.practicaltool.entity.resulte.CheckCompanyPhoneRes;
 import com.yxy.practicaltool.entity.resulte.CompanyListRes;
 import com.yxy.practicaltool.entity.resulte.LoginRes;
 
@@ -30,8 +31,11 @@ public interface HttpService {
 
 
     @GET("CheckCompanyPhone")
-    Observable<AttributeListRes> checkCompanyPhone(@Query("random") String random, @Query("desUserId") String desUserId, @Query("phone") String phone);
+    Observable<CheckCompanyPhoneRes> checkCompanyPhone(@Query("random") String random, @Query("desUserId") String desUserId, @Query("phone") String phone);
 
+
+    @GET("AddCompany")
+    Observable<AttributeListRes> addCompany(@Query("random") String random, @Query("desUserId") String desUserId, @Query("phone") String phone, @Query("name") String name, @Query("charge") String charge, @Query("address") String address);
 
 
 

@@ -14,4 +14,6 @@ public class Constants {
     public static final String TAG = "yxy";
 
     public static final String BASE_URL = "http://122.114.102.73:8090/WebService.asmx/";
+
+    public static final String BASE_URL_CASE = "http://api.ljyhm.com/WebService_CASE.asmx";
 }

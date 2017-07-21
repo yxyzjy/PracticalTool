@@ -141,7 +141,7 @@
             android:layout_marginBottom="20dp"
             android:background="@drawable/btn_green_alpha"
             android:gravity="center"
-            android:text="下一步"
+            android:text="保存"
             android:textColor="@color/white"
             android:textSize="18dp" />
     </LinearLayout>
