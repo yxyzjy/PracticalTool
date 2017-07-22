@@ -1,10 +1,14 @@
 package com.yxy.practicaltool.gen;
 
+import com.yxy.practicaltool.bean.PicInfo;
 import com.yxy.practicaltool.entity.resulte.AttributeListRes;
 import com.yxy.practicaltool.entity.resulte.CompanyListRes;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by yxy on 2017/7/19 0019.
@@ -25,6 +29,20 @@ public class UploadResourcesDao {
     private int H_State;
     private int attributeId;
     private String attributeName;
+    private String picInfos;
+    private String currentTime;
+    public String getCurrentTime() {
+        return this.currentTime;
+    }
+    public void setCurrentTime(String currentTime) {
+        this.currentTime = currentTime;
+    }
+    public String getPicInfos() {
+        return this.picInfos;
+    }
+    public void setPicInfos(String picInfos) {
+        this.picInfos = picInfos;
+    }
     public String getAttributeName() {
         return this.attributeName;
     }
@@ -97,11 +115,11 @@ public class UploadResourcesDao {
     public void setUnitsId(int unitsId) {
         this.unitsId = unitsId;
     }
-    @Generated(hash = 1389302706)
+    @Generated(hash = 509139139)
     public UploadResourcesDao(int unitsId, String unitsName, String phone,
             String name2, int pinzhongId, String pinzhongName, String num4,
             String des5, String tip6, int H_State, int attributeId,
-            String attributeName) {
+            String attributeName, String picInfos, String currentTime) {
         this.unitsId = unitsId;
         this.unitsName = unitsName;
         this.phone = phone;
@@ -114,11 +132,12 @@ public class UploadResourcesDao {
         this.H_State = H_State;
         this.attributeId = attributeId;
         this.attributeName = attributeName;
+        this.picInfos = picInfos;
+        this.currentTime = currentTime;
     }
     @Generated(hash = 91416941)
     public UploadResourcesDao() {
     }
-
 
 
 }

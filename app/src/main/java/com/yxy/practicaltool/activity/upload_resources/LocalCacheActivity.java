@@ -28,7 +28,6 @@ public class LocalCacheActivity extends BaseActivity {
     private LocalCacheAdapter cacheAdapter;
     private ArrayList<UploadResourcesDao> list = new ArrayList<>();
     private UploadResourcesDaoDao dao;
-    private UploadResourcesDaoDao testDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,21 +43,14 @@ public class LocalCacheActivity extends BaseActivity {
         rvLocalCache.setItemAnimator(new DefaultItemAnimator());
         cacheAdapter = new LocalCacheAdapter(this, R.layout.item_local_cache, list);
         rvLocalCache.setAdapter(cacheAdapter);
-
     }
 
     @Override
     public void initData() {
         super.initData();
         dao = MyApplication.getInstances().getDaoSession().getUploadResourcesDaoDao();
-
-        testDao = MyApplication.getInstances().getDaoSession().getUploadResourcesDaoDao();
-
-        List<UploadResourcesDao> tests = testDao.loadAll();
-        L.e(tests.size()+"=======");
-
-        list= (ArrayList<UploadResourcesDao>) dao.loadAll();
-
+        list.addAll((ArrayList<UploadResourcesDao>) dao.loadAll());
+        L.e("=====list===" + list.size());
         cacheAdapter.notifyDataSetChanged();
     }
 }

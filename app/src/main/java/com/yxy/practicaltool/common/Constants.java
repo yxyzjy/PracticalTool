@@ -14,4 +14,8 @@ public class Constants {
     public static final String TAG = "yxy";
 
     public static final String BASE_URL = "http://122.114.102.73:8090/";
+
+    public static int CAMERA_REQUEST=18;//拍照权限
+
+    public static final String DATA_DIR = "/practicalTool/";
 }

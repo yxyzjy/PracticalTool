@@ -9,6 +9,10 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- 读写sdcard，storage等等 -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- 读写sdcard，storage等等 -->
     <uses-permission android:name="android.permission.RECORD_AUDIO" /> <!-- 允许程序录制音频 -->
+    <!--拍照权限 -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
     <!-- 可选 -->
     <uses-permission android:name="android.permission.READ_LOGS" />
 
@@ -31,26 +35,46 @@
         <activity
             android:name=".activity.BaseActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.MainActivity" />
-        <activity android:name=".activity.upload_resources.UploadResourcesActivity" />
+        <activity
+            android:name=".activity.MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.upload_resources.UploadResourcesActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.upload_resources.SubordinateUnitsActivity"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activity.upload_resources.SubordinatePinZhongActivity"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activity.common.ActivitySimpleEditLines"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible" />
         <activity
             android:name=".activity.common.ActivitySimpleEdit"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible" />
-        <activity android:name=".activity.upload_resources.SubordinateAttributeActivity" />
-        <activity android:name=".activity.upload_resources.LocalCacheActivity" />
-        <activity android:name=".activity.release_case.ReleaseCaseActivity" />
-        <activity android:name=".activity.release_case.CaseTypeActivity" />
-        <activity android:name=".activity.upload_resources.AddUnitsTypeOneActivity" />
-        <activity android:name=".activity.upload_resources.AddUnitsTypeTwoActivity" />
+        <activity
+            android:name=".activity.upload_resources.SubordinateAttributeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.upload_resources.LocalCacheActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.release_case.ReleaseCaseActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.release_case.CaseTypeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.upload_resources.AddUnitsTypeOneActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.upload_resources.AddUnitsTypeTwoActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

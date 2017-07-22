@@ -11,20 +11,20 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:layout_marginTop="1dp"
             android:id="@+id/ll_upload_1"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:gravity="center_vertical"
-            android:background="@color/white">
+            android:layout_marginTop="1dp"
+            android:background="@color/white"
+            android:gravity="center_vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
                 android:gravity="center_vertical"
-                android:textColor="@color/text_color"
-                android:text="所属单位：" />
+                android:text="所属单位："
+                android:textColor="@color/text_color" />
 
             <TextView
                 android:id="@+id/tv_content_1"
@@ -33,29 +33,30 @@
                 android:layout_marginLeft="10dp"
                 android:layout_weight="1"
                 android:gravity="center_vertical|right"
-                android:textColor="@color/text_color"
-                android:hint="选择所属单位" />
+                android:hint="选择所属单位"
+                android:textColor="@color/text_color" />
 
             <ImageView
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/enter_right"/>
+                android:src="@mipmap/enter_right" />
         </LinearLayout>
+
         <LinearLayout
-            android:layout_marginTop="1dp"
             android:id="@+id/ll_upload_2"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:gravity="center_vertical"
-            android:background="@color/white">
+            android:layout_marginTop="1dp"
+            android:background="@color/white"
+            android:gravity="center_vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
                 android:gravity="center_vertical"
-                android:textColor="@color/text_color"
-                android:text="产品名称：" />
+                android:text="产品名称："
+                android:textColor="@color/text_color" />
 
             <TextView
                 android:id="@+id/tv_content_2"
@@ -64,29 +65,30 @@
                 android:layout_marginLeft="10dp"
                 android:layout_weight="1"
                 android:gravity="center_vertical|right"
-                android:textColor="@color/text_color"
-                android:hint="输入产品名称" />
+                android:hint="输入产品名称"
+                android:textColor="@color/text_color" />
 
             <ImageView
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/enter_right"/>
+                android:src="@mipmap/enter_right" />
         </LinearLayout>
+
         <LinearLayout
-            android:layout_marginTop="1dp"
             android:id="@+id/ll_upload_3"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:gravity="center_vertical"
-            android:background="@color/white">
+            android:layout_marginTop="1dp"
+            android:background="@color/white"
+            android:gravity="center_vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
                 android:gravity="center_vertical"
-                android:textColor="@color/text_color"
-                android:text="所属品种：" />
+                android:text="所属品种："
+                android:textColor="@color/text_color" />
 
             <TextView
                 android:id="@+id/tv_content_3"
@@ -95,29 +97,30 @@
                 android:layout_marginLeft="10dp"
                 android:layout_weight="1"
                 android:gravity="center_vertical|right"
-                android:textColor="@color/text_color"
-                android:hint="选择所属品种" />
+                android:hint="选择所属品种"
+                android:textColor="@color/text_color" />
 
             <ImageView
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/enter_right"/>
+                android:src="@mipmap/enter_right" />
         </LinearLayout>
+
         <LinearLayout
-            android:layout_marginTop="1dp"
             android:id="@+id/ll_upload_4"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:gravity="center_vertical"
-            android:background="@color/white">
+            android:layout_marginTop="1dp"
+            android:background="@color/white"
+            android:gravity="center_vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
                 android:gravity="center_vertical"
-                android:textColor="@color/text_color"
-                android:text="产品数量：" />
+                android:text="产品数量："
+                android:textColor="@color/text_color" />
 
             <TextView
                 android:id="@+id/tv_content_4"
@@ -126,29 +129,30 @@
                 android:layout_marginLeft="10dp"
                 android:layout_weight="1"
                 android:gravity="center_vertical|right"
-                android:textColor="@color/text_color"
-                android:hint="输入产品数量" />
+                android:hint="输入产品数量"
+                android:textColor="@color/text_color" />
 
             <ImageView
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/enter_right"/>
+                android:src="@mipmap/enter_right" />
         </LinearLayout>
+
         <LinearLayout
-            android:layout_marginTop="1dp"
             android:id="@+id/ll_upload_5"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:gravity="center_vertical"
-            android:background="@color/white">
+            android:layout_marginTop="1dp"
+            android:background="@color/white"
+            android:gravity="center_vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
                 android:gravity="center_vertical"
-                android:textColor="@color/text_color"
-                android:text="质量描述：" />
+                android:text="质量描述："
+                android:textColor="@color/text_color" />
 
             <TextView
                 android:id="@+id/tv_content_5"
@@ -157,29 +161,30 @@
                 android:layout_marginLeft="10dp"
                 android:layout_weight="1"
                 android:gravity="center_vertical|right"
-                android:textColor="@color/text_color"
-                android:hint="输入质量描述" />
+                android:hint="输入质量描述"
+                android:textColor="@color/text_color" />
 
             <ImageView
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/enter_right"/>
+                android:src="@mipmap/enter_right" />
         </LinearLayout>
+
         <LinearLayout
-            android:layout_marginTop="1dp"
             android:id="@+id/ll_upload_6"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:gravity="center_vertical"
-            android:background="@color/white">
+            android:layout_marginTop="1dp"
+            android:background="@color/white"
+            android:gravity="center_vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
                 android:gravity="center_vertical"
-                android:textColor="@color/text_color"
-                android:text="产品备注：" />
+                android:text="产品备注："
+                android:textColor="@color/text_color" />
 
             <TextView
                 android:id="@+id/tv_content_6"
@@ -188,29 +193,30 @@
                 android:layout_marginLeft="10dp"
                 android:layout_weight="1"
                 android:gravity="center_vertical|right"
-                android:textColor="@color/text_color"
-                android:hint="输入产品备注" />
+                android:hint="输入产品备注"
+                android:textColor="@color/text_color" />
 
             <ImageView
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/enter_right"/>
+                android:src="@mipmap/enter_right" />
         </LinearLayout>
+
         <LinearLayout
-            android:layout_marginTop="1dp"
             android:id="@+id/ll_upload_7"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:gravity="center_vertical"
-            android:background="@color/white">
+            android:layout_marginTop="1dp"
+            android:background="@color/white"
+            android:gravity="center_vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
                 android:gravity="center_vertical"
-                android:textColor="@color/text_color"
-                android:text="产品属性：" />
+                android:text="产品属性："
+                android:textColor="@color/text_color" />
 
             <TextView
                 android:id="@+id/tv_content_7"
@@ -219,13 +225,13 @@
                 android:layout_marginLeft="10dp"
                 android:layout_weight="1"
                 android:gravity="center_vertical|right"
-                android:textColor="@color/text_color"
-                android:hint="选择产品属性" />
+                android:hint="选择产品属性"
+                android:textColor="@color/text_color" />
 
             <ImageView
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/enter_right"/>
+                android:src="@mipmap/enter_right" />
         </LinearLayout>
 
         <LinearLayout
@@ -238,8 +244,8 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
                 android:gravity="center_vertical"
-                android:textColor="@color/text_color"
-                android:text="售卖状态：" />
+                android:text="售卖状态："
+                android:textColor="@color/text_color" />
 
             <RadioGroup
                 android:id="@+id/rg_upload"
@@ -252,27 +258,28 @@
                     android:id="@+id/rb_1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/text_color"
-                    android:text="急售"/>
+                    android:text="急售"
+                    android:textColor="@color/text_color" />
+
                 <RadioButton
                     android:id="@+id/rb_2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/text_color"
-                    android:text="正常"/>
+                    android:text="正常"
+                    android:textColor="@color/text_color" />
             </RadioGroup>
-         </LinearLayout>
+        </LinearLayout>
 
         <GridView
             android:id="@+id/gv_select_pic"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="wrap_content"
             android:background="@color/white"
             android:horizontalSpacing="6dp"
             android:listSelector="@color/transparent"
             android:numColumns="5"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp" />
+            android:padding="10dp" />
+
     </LinearLayout>
 
 </com.yxy.practicaltool.myview.NoConfilictScrollView>
