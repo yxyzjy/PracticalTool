@@ -22,7 +22,7 @@ import butterknife.ButterKnife;
 /**
  * @author yxy Create at 17/7/14 14:10
  */
-public class ActivitySimpleEditLines extends BaseActivity implements View.OnClickListener {
+public class ActivitySimpleEditLines extends BaseActivity  {
     private EditText et_phone;
     private Button btn_save;
     private TextView titleTv, tv_enture;
@@ -74,7 +74,6 @@ public class ActivitySimpleEditLines extends BaseActivity implements View.OnClic
 
     @Override
     public void initView() {
-        this.findViewById(R.id.ll_title_bar_right).setOnClickListener(this);
         et_phone = (EditText) this.findViewById(R.id.et_phone);
         et_phone.setHint(hintStr);
         et_phone.setSingleLine(true);
@@ -89,21 +88,19 @@ public class ActivitySimpleEditLines extends BaseActivity implements View.OnClic
     }
 
 
+
     @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.ll_title_bar_right:
-                result = et_phone.getText().toString();
-                if (TextUtils.isEmpty(result)) {
-                    ToastUtils.showToast(this, getResources().getString(R.string.bnwk));
-                    return;
-                } else {
-                    Intent intent = new Intent();
-                    intent.putExtra("result", result);
-                    setResult(RESULT_OK, intent);
-                    finish();
-                }
-                break;
+    public void rightClickSave(View view) {
+        super.rightClickSave(view);
+        result = et_phone.getText().toString();
+        if (TextUtils.isEmpty(result)) {
+            ToastUtils.showToast(this, getResources().getString(R.string.bnwk));
+            return;
+        } else {
+            Intent intent = new Intent();
+            intent.putExtra("result", result);
+            setResult(RESULT_OK, intent);
+            finish();
         }
     }
 }
