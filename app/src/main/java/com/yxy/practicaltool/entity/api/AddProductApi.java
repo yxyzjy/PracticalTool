@@ -15,9 +15,9 @@ import rx.Observable;
 
 public class AddProductApi extends PCBaseApi {
 
-    public String CName, Num, Describe, Remarks;
+    public String CName, Num, Describe, Remarks,PhotoDetail;
     public int Vid, Cid, H_State;
-    private List<String> ProductAttr, RemarkArray, FocusPhoto, PhotoDetail;
+    public List<String> ProductAttr, RemarkArray, FocusPhoto;
 
     public AddProductApi() {
         super();

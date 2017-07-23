@@ -1,6 +1,8 @@
 package com.yxy.practicaltool.entity;
 
 
+import com.yxy.practicaltool.bean.EmptyBean;
+import com.yxy.practicaltool.entity.api.CheckCompanyPhoneApi;
 import com.yxy.practicaltool.entity.resulte.AttributeListRes;
 import com.yxy.practicaltool.entity.resulte.CheckCompanyPhoneRes;
 import com.yxy.practicaltool.entity.resulte.CompanyListRes;
@@ -9,6 +11,8 @@ import com.yxy.practicaltool.entity.resulte.LoginRes;
 import java.util.List;
 
 import retrofit2.http.GET;
+import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Query;
 import rx.Observable;
 
@@ -39,12 +43,26 @@ public interface HttpService {
     @GET("AddCompany")
     Observable<AttributeListRes> addCompany(@Query("random") String random, @Query("desUserId") String desUserId, @Query("phone") String phone, @Query("name") String name, @Query("charge") String charge, @Query("address") String address);
 
+    @POST("UpImgBase64")
+    Observable<AttributeListRes> upImgBase64(@Query("random") String random, @Query("desUserId") String desUserId,
+                                             @Query("txtFileName") String phone, @Query("sign") String name);
+
+
+//    @GET("UpImgBase64")
+//    Observable<CheckCompanyPhoneApi> upImgBase64(@Query("random") String random, @Query("desUserId") String desUserId, @Query("txtFileName") String txtFileName, @Query("sign") String sign);
+
+
+    @GET("Get_Case")
+    Observable<AttributeListRes> getCase(@Query("_lan") String _lan, @Query("secret_key") String secret_key);
+
+
+
 
     @GET("AddProduct")
     Observable<AttributeListRes> addProduct(@Query("random") String random, @Query("desUserId") String desUserId, @Query("CName") String CName,
                                             @Query("Vid") int Vid, @Query("Cid") int Cid, @Query("H_State") int H_State,
                                             @Query("Num") String Num, @Query("Describe") String Describe, @Query("Remarks") String Remarks,
-                                            @Query("ProductAttr") List ProductAttr, @Query("PhotoDetail") List PhotoDetail, @Query("RemarkArray") List RemarkArray,
+                                            @Query("ProductAttr") List ProductAttr, @Query("PhotoDetail") String PhotoDetail, @Query("RemarkArray") List RemarkArray,
                                             @Query("FocusPhoto") List FocusPhoto);
 
 

@@ -143,6 +143,7 @@
             android:horizontalSpacing="6dp"
             android:listSelector="@color/transparent"
             android:numColumns="2"
+            android:paddingBottom="10dp"
             android:paddingLeft="10dp"
             android:paddingRight="10dp" />
     </LinearLayout>

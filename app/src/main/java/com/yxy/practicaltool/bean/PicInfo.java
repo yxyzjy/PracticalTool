@@ -9,4 +9,6 @@ public class PicInfo {
     public String pic;
     public String latValue;
     public String lngValue;
+    public boolean isFengmian;
+    public String picDes;
 }

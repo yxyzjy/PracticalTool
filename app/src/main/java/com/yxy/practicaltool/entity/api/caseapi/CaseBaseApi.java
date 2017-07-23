@@ -1,4 +1,4 @@
-package com.yxy.practicaltool.entity.api;
+package com.yxy.practicaltool.entity.api.caseapi;
 
 import com.wzgiceman.rxretrofitlibrary.retrofit_rx.Api.BaseApi;
 import com.wzgiceman.rxretrofitlibrary.retrofit_rx.common.Constants;

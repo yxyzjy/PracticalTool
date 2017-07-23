@@ -8,5 +8,5 @@ public class UseDemoBean {
     public String name;
     public String tel;
     public String pic;
-    public int select;
+    public boolean isSelect;
 }

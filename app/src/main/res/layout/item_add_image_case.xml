@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:background="@color/white"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/iv_release_pic"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:scaleType="fitXY"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center_vertical"
+        tools:background="@mipmap/icon_add" />
+
+    <TextView
+        android:id="@+id/iv_delete_pic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_gravity="center_vertical"
+        android:text="设为封面"
+        android:paddingLeft="10dp"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
+        android:paddingRight="10dp"
+        android:textSize="16dp"
+        android:background="@drawable/rec_bg_gray_alpha" />
+
+    <TextView
+        android:id="@+id/tv_fengmian"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_gravity="center_vertical"
+        android:paddingLeft="20dp"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
+        android:paddingRight="20dp"
+        android:textSize="16dp"
+        android:textColor="@color/white"
+        android:text="封面"
+        android:background="@drawable/btn_green_alpha"
+        android:visibility="gone"
+     />
+
+
+    <TextView
+        android:layout_below="@+id/iv_release_pic"
+        android:id="@+id/tv_case_des"
+        android:hint="请输入说明（可以为空）"
+        android:gravity="center"
+        android:padding="5dp"
+        android:layout_width="170dp"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>
