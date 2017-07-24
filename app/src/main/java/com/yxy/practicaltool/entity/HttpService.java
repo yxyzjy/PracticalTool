@@ -43,7 +43,7 @@ public interface HttpService {
     @GET("AddCompany")
     Observable<AttributeListRes> addCompany(@Query("random") String random, @Query("desUserId") String desUserId, @Query("phone") String phone, @Query("name") String name, @Query("charge") String charge, @Query("address") String address);
 
-    @POST("UpImgBase64")
+    @GET("UpImgBase64")
     Observable<AttributeListRes> upImgBase64(@Query("random") String random, @Query("desUserId") String desUserId,
                                              @Query("txtFileName") String phone, @Query("sign") String name);
 

@@ -7,5 +7,7 @@ package com.yxy.practicaltool.bean;
 public class PicLoadBean {
 
     public String base64Url;
-    public String url;
+    public String serverFileName;
+    public String serverThumbnailFileName;
+    public int sign;
 }
