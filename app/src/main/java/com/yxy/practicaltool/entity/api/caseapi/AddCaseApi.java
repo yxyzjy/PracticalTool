@@ -23,7 +23,7 @@ public class AddCaseApi extends CaseBaseApi {
     @Override
     public Observable getObservable(Retrofit retrofit) {
         HttpService service = retrofit.create(HttpService.class);
-        return service.getCase(_lan,secret_key);
+        return service.getCase(_lan,secret_key,"1");
     }
 
     @Override

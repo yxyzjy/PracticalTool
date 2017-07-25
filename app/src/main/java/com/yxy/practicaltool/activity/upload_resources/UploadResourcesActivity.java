@@ -282,7 +282,9 @@ public class UploadResourcesActivity extends BaseActivity implements RadioGroup.
     public void rightClickSave(View view) {
         super.rightClickSave(view);
 
-        if (checkEditAll()) {
+        commitPic(picList.get(0).pic, 0);
+
+        /*if (checkEditAll()) {
 
             for (int i = 0; i < picList.size(); i++) {
                 PicInfo picInfo = picList.get(i);
@@ -299,7 +301,7 @@ public class UploadResourcesActivity extends BaseActivity implements RadioGroup.
                 } catch (Exception e) {
                 }
             }
-        }
+        }*/
     }
 
     private void submitData() {

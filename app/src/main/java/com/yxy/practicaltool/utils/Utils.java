@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Environment;
+import android.text.TextUtils;
 import android.util.Base64;
 
 import java.io.BufferedInputStream;
@@ -15,6 +16,8 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -80,6 +83,13 @@ public class Utils {
         return currentTime;
     }
 
+    public static String getCurrentDay() {
+        Date date = new Date();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String currentTime = simpleDateFormat.format(date.getTime());
+        return currentTime;
+    }
+
     public static String bitmapToBase64(Bitmap bitmap) {
         String result = null;
         ByteArrayOutputStream baos = null;
@@ -130,5 +140,33 @@ public class Utils {
             e.printStackTrace();
         }
         return bm;
+    }
+
+    /**
+     * MD5 加密
+     * @param string
+     * @return
+     */
+    public static String md5(String string) {
+        if (TextUtils.isEmpty(string)) {
+            return "";
+        }
+        MessageDigest md5 = null;
+        try {
+            md5 = MessageDigest.getInstance("MD5");
+            byte[] bytes = md5.digest(string.getBytes());
+            String result = "";
+            for (byte b : bytes) {
+                String temp = Integer.toHexString(b & 0xff);
+                if (temp.length() == 1) {
+                    temp = "0" + temp;
+                }
+                result += temp;
+            }
+            return result;
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 }
