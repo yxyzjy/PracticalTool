@@ -18,7 +18,7 @@ public class UpImgBase64Api extends PCBaseApi {
 
     public UpImgBase64Api() {
         super();
-        setMethod("UpImgBase64");
+        setMethod("UpImgBase64Post");
     }
 
 

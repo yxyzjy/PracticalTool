@@ -48,7 +48,7 @@ public interface HttpService {
     Observable<AttributeListRes> upImgBase64(@Query("random") String random, @Query("desUserId") String desUserId,
                                              @Query("txtFileName") String phone, @Query("sign") String name);
 
-    @POST("/UpImgBase64Post")
+    @POST("UpImgBase64Post")
     Observable<AttributeListRes> upImgBase64(@Body LoadImgReq loadImgReq);
 
 //    @GET("UpImgBase64")
