@@ -226,7 +226,7 @@ public class ImageUtils {
         if (image != null) {
             image.compress(Bitmap.CompressFormat.JPEG, 100, baos);//质量压缩方法，这里100表示不压缩，把图像数据存放到baos中
             int options = 90;
-            if (baos.toByteArray().length / 1024 <= 300) {
+            if (baos.toByteArray().length / 1024 <= 200) {
                 //写入本地后保存
                 try {
                     fos = new FileOutputStream(filePath);

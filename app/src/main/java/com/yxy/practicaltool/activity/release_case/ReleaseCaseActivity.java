@@ -26,6 +26,8 @@ import com.yxy.practicaltool.adapter.GridViewImgAdapter;
 import com.yxy.practicaltool.bean.PicInfo;
 import com.yxy.practicaltool.common.Constants;
 import com.yxy.practicaltool.dialog.SelectPhotoDialog;
+import com.yxy.practicaltool.entity.resulte.AttributeListRes;
+import com.yxy.practicaltool.entity.resulte.CaseTypeRes;
 import com.yxy.practicaltool.entity.resulte.CompanyListRes;
 import com.yxy.practicaltool.utils.FileUtil;
 import com.yxy.practicaltool.utils.ImageUtils;
@@ -61,10 +63,11 @@ public class ReleaseCaseActivity extends BaseActivity implements AdapterView.OnI
     GridView gvSelectPic;
 
     private SelectPhotoDialog selectPhotoDialog;
-    private String title,key,des,fileName,filePath,imageToPath;
+    private String title, key, des, fileName, filePath, imageToPath;
     private GridViewCaseImgAdapter viewImgAdapter;
     private ArrayList<PicInfo> picList = new ArrayList<>();
     ImageUtils imageUtils;
+    private CaseTypeRes.DataBean caseTypeRes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +79,7 @@ public class ReleaseCaseActivity extends BaseActivity implements AdapterView.OnI
     @Override
     public void initData() {
         super.initData();
-        viewImgAdapter = new GridViewCaseImgAdapter(this, picList,this);
+        viewImgAdapter = new GridViewCaseImgAdapter(this, picList, this);
         gvSelectPic.setAdapter(viewImgAdapter);
         gvSelectPic.setOnItemClickListener(this);
         imageUtils = new ImageUtils(mContext);
@@ -86,16 +89,16 @@ public class ReleaseCaseActivity extends BaseActivity implements AdapterView.OnI
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_upload_1:
-                startActivity(new Intent(mContext,CaseTypeActivity.class));
+                startActivityForResult(new Intent(mContext, CaseTypeActivity.class), 204);
                 break;
             case R.id.ll_upload_2:
-                ActivitySimpleEdit.startSimpleEdit(ReleaseCaseActivity.this,"案例标题","输入案例标题","",ActivitySimpleEdit.INPUT_NAME,20,201);
+                ActivitySimpleEdit.startSimpleEdit(ReleaseCaseActivity.this, "案例标题", "输入案例标题", "", ActivitySimpleEdit.INPUT_NAME, 20, 201);
                 break;
             case R.id.ll_upload_3:
-                ActivitySimpleEdit.startSimpleEdit(ReleaseCaseActivity.this,"关键字","输入关键字","",ActivitySimpleEdit.INPUT_NAME,20,202);
+                ActivitySimpleEdit.startSimpleEdit(ReleaseCaseActivity.this, "关键字", "输入关键字", "", ActivitySimpleEdit.INPUT_NAME, 20, 202);
                 break;
             case R.id.ll_upload_4:
-                ActivitySimpleEditLines.startSimpleEdit(ReleaseCaseActivity.this,"页面描述","输入页面描述","",ActivitySimpleEdit.INPUT_NAME,200,203);
+                ActivitySimpleEditLines.startSimpleEdit(ReleaseCaseActivity.this, "页面描述", "输入页面描述", "", ActivitySimpleEdit.INPUT_NAME, 200, 203);
                 break;
         }
     }
@@ -138,6 +141,10 @@ public class ReleaseCaseActivity extends BaseActivity implements AdapterView.OnI
             if (requestCode == 203) {
                 des = data.getStringExtra("result");
                 tvContent4.setText(key);
+            }
+            if (requestCode == 204) {
+                caseTypeRes = (CaseTypeRes.DataBean) data.getSerializableExtra("attribute");
+                tvContent1.setText(caseTypeRes.Title);
             }
 
             if (requestCode == 112) {//从相册选
@@ -227,7 +234,7 @@ public class ReleaseCaseActivity extends BaseActivity implements AdapterView.OnI
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.tv_case_des:
 
                 break;

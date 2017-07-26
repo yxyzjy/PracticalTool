@@ -5,6 +5,7 @@ import com.yxy.practicaltool.bean.EmptyBean;
 import com.yxy.practicaltool.entity.api.CheckCompanyPhoneApi;
 import com.yxy.practicaltool.entity.request.LoadImgReq;
 import com.yxy.practicaltool.entity.resulte.AttributeListRes;
+import com.yxy.practicaltool.entity.resulte.CaseTypeRes;
 import com.yxy.practicaltool.entity.resulte.CheckCompanyPhoneRes;
 import com.yxy.practicaltool.entity.resulte.CompanyListRes;
 import com.yxy.practicaltool.entity.resulte.LoginRes;
@@ -44,7 +45,8 @@ public interface HttpService {
 
     @GET("AddCompany")
     Observable<AttributeListRes> addCompany(@Query("random") String random, @Query("desUserId") String desUserId, @Query("phone") String phone, @Query("name") String name, @Query("charge") String charge, @Query("address") String address);
-    @POST("/UpImgBase64Post")
+
+    @POST("/UpImgBase64")
     Observable<AttributeListRes> upImgBase64(@Query("random") String random, @Query("desUserId") String desUserId,
                                              @Query("txtFileName") String phone, @Query("sign") String name);
 
@@ -56,7 +58,7 @@ public interface HttpService {
 
 
     @GET("Get_Case")
-    Observable<AttributeListRes> getCase(@Query("_lan") String _lan, @Query("secret_key") String secret_key, @Query("key_type") String key_type);
+    Observable<CaseTypeRes> getCase(@Query("_lan") String _lan, @Query("secret_key") String secret_key, @Query("key_type") String key_type);
 
 
 

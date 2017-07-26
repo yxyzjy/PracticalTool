@@ -16,12 +16,16 @@ import com.yxy.practicaltool.adapter.SubordinateUnitsTestAdapter;
 import com.yxy.practicaltool.bean.CaseTypeSelectBean;
 import com.yxy.practicaltool.bean.UseDemoBean;
 import com.yxy.practicaltool.common.L;
+import com.yxy.practicaltool.common.ToastUtils;
 import com.yxy.practicaltool.entity.api.caseapi.GetCaseApi;
 import com.yxy.practicaltool.entity.resulte.AttributeListRes;
 import com.yxy.practicaltool.entity.resulte.CaseTypeRes;
 import com.yxy.practicaltool.entity.resulte.CompanyListRes;
 import com.yxy.practicaltool.myview.CustomRecyclerView;
+import com.yxy.practicaltool.utils.JsonUtils;
 import com.zhy.base.adapter.recyclerview.OnItemClickListener;
+
+import org.json.JSONException;
 
 import java.util.ArrayList;
 
@@ -33,7 +37,7 @@ public class CaseTypeActivity extends BaseActivity {
     @Bind(R.id.rv_subordinate_unit)
     CustomRecyclerView rvSubordinateUnit;
     private CaseTypeAdapter adapter;
-    private ArrayList<CaseTypeSelectBean> list = new ArrayList<>();
+    private ArrayList<CaseTypeRes.DataBean> list = new ArrayList<>();
 
     private GetCaseApi getCaseApi;
     private int lastClickPos = -1;
@@ -55,16 +59,20 @@ public class CaseTypeActivity extends BaseActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        httpManager.doHttpDeal(getCaseApi);
+    }
+
+    @Override
     public void initData() {
         super.initData();
 
         getCaseApi = new GetCaseApi();
-        httpManager.doHttpDeal(getCaseApi);
-
         adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(ViewGroup parent, View view, Object o, int position) {
-                if (position == list.size()) {
+                if (position == list.size()-1) {
                     ActivitySimpleEdit.startSimpleEdit(CaseTypeActivity.this, "案例分类", "输入案例分类名称", "", ActivitySimpleEdit.INPUT_NAME, 20, 201);
                     return;
                 }
@@ -87,15 +95,24 @@ public class CaseTypeActivity extends BaseActivity {
     protected void processSuccessResult(String resulte, String mothead) {
         super.processSuccessResult(resulte, mothead);
         if (mothead.equals(getCaseApi.getMethod())) {
-            CaseTypeRes res = JSONObject.parseObject(resulte, CaseTypeRes.class);
-            String[] split = res.data.split("|");
-
-            for (int i = 0; i < split.length; i++) {
-                CaseTypeSelectBean bean = new CaseTypeSelectBean();
-                bean.name = split[i];
-                list.add(bean);
+            org.json.JSONObject jsonObject = JsonUtils.parseFromJson(resulte);
+            org.json.JSONArray dataJsonObject = JsonUtils.getJsonArry(jsonObject, "data");
+            list.clear();
+            for (int i = 0; i < dataJsonObject.length(); i++) {
+                try {
+                    org.json.JSONObject itemObject = dataJsonObject.getJSONObject(i);
+                    CaseTypeRes.DataBean bean = new CaseTypeRes.DataBean();
+                    bean.Id = JsonUtils.getJsonInt(itemObject, "Id");
+                    bean.Title = JsonUtils.getJsonString(itemObject, "Title");
+                    list.add(bean);
+                } catch (JSONException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
             }
-            CaseTypeSelectBean bean = new CaseTypeSelectBean();
+//            CaseTypeRes res = JSONObject.parseObject(resulte, CaseTypeRes.class);
+//            list.addAll(res.data);
+            CaseTypeRes.DataBean bean = new CaseTypeRes.DataBean();
             list.add(bean);
             adapter.notifyDataSetChanged();
         }
@@ -106,9 +123,23 @@ public class CaseTypeActivity extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && data != null) {
             if (requestCode == 101) {
-
                 httpManager.doHttpDeal(getCaseApi);
             }
         }
+    }
+
+    @Override
+    public void rightClickSave(View view) {
+        if (lastClickPos == -1) {
+            ToastUtils.showToast(mContext, "请选择所属单位");
+            return;
+        }
+        super.rightClickSave(view);
+        Intent intent = new Intent();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("case_type", list.get(lastClickPos));
+        intent.putExtras(bundle);
+        setResult(RESULT_OK, intent);
+        finish();
     }
 }

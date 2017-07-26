@@ -18,7 +18,7 @@ public class UpImgBase64Api extends PCBaseApi {
 
     public UpImgBase64Api() {
         super();
-        setMethod("UpImgBase64Post");
+        setMethod("UpImgBase64");
     }
 
 
@@ -30,9 +30,9 @@ public class UpImgBase64Api extends PCBaseApi {
         loadImgReq.desUserId = SPUtil.getString("desUserId", "");
         loadImgReq.txtFileName = txtFileName;
         loadImgReq.sign = sign;
-//        return service.upImgBase64(SPUtil.getString("random",""),
-//                SPUtil.getString("desUserId",""),txtFileName,sign);
-        return service.upImgBase64(loadImgReq);
+        return service.upImgBase64(SPUtil.getString("random",""),
+                SPUtil.getString("desUserId",""),txtFileName,sign);
+//        return service.upImgBase64(loadImgReq);
     }
 
     @Override

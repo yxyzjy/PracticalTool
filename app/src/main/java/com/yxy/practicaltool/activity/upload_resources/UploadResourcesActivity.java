@@ -273,7 +273,7 @@ public class UploadResourcesActivity extends BaseActivity implements RadioGroup.
 
     private void commitPic(String path, int sign) {
         upImgBase64Api.txtFileName =
-                Utils.bitmapToBase64(BitmapFactory.decodeFile(path, opt));
+                Utils.bitmapToBase64(BitmapHelper.getImage(path,100));
         upImgBase64Api.sign = sign + "";
         httpManager.doHttpDeal(upImgBase64Api);
     }
@@ -291,7 +291,6 @@ public class UploadResourcesActivity extends BaseActivity implements RadioGroup.
                 piclists = "0|" + picInfo.pic + "|" + picInfo.latValue + "|" + picInfo.lngValue + ",";
             }
             if (Utils.isWifiConnected(mContext)) {
-
                 commitPic(picList.get(0).pic, 0);
 //            提交数据
             } else {
