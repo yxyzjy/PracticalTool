@@ -40,7 +40,7 @@ public class CaseTypeAdapter extends CommonAdapter<CaseTypeRes.DataBean> {
         if (infoBean.isSelect){
             iv_duihao.setVisibility(View.VISIBLE);
         }else {
-            iv_duihao.setVisibility(View.GONE);
+            iv_duihao.setVisibility(View.INVISIBLE);
         }
     }
 }

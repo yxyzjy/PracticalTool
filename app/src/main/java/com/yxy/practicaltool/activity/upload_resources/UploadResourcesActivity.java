@@ -3,18 +3,15 @@ package com.yxy.practicaltool.activity.upload_resources;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.BitmapFactory;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.IdRes;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.content.FileProvider;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
@@ -25,6 +22,9 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
+import com.yolanda.nohttp.NoHttp;
+import com.yolanda.nohttp.RequestMethod;
+import com.yolanda.nohttp.rest.Request;
 import com.yxy.practicaltool.MyApplication;
 import com.yxy.practicaltool.R;
 import com.yxy.practicaltool.activity.BaseActivity;
@@ -44,17 +44,19 @@ import com.yxy.practicaltool.entity.api.UpImgBase64Api;
 import com.yxy.practicaltool.entity.resulte.AddCaseRes;
 import com.yxy.practicaltool.entity.resulte.AttributeListRes;
 import com.yxy.practicaltool.entity.resulte.CompanyListRes;
-import com.yxy.practicaltool.gen.Test;
+import com.yxy.practicaltool.entity.resulte.Uploadbase64Res;
 import com.yxy.practicaltool.gen.UploadResourcesDao;
+import com.yxy.practicaltool.nohttp.CallServer;
+import com.yxy.practicaltool.nohttp.CustomHttpListener;
 import com.yxy.practicaltool.utils.BitmapHelper;
 import com.yxy.practicaltool.utils.FileUtil;
 import com.yxy.practicaltool.utils.ImageUtils;
+import com.yxy.practicaltool.utils.SPUtil;
 import com.yxy.practicaltool.utils.Utils;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -108,7 +110,6 @@ public class UploadResourcesActivity extends BaseActivity implements RadioGroup.
     private int sallState = -1;
     private CompanyListRes.DataBean pinzhongData;
     private UploadResourcesDaoDao dao;
-    private TestDao testDao;
     private GridViewImgAdapter viewImgAdapter;
     private ArrayList<PicInfo> picList = new ArrayList<>();
     private SelectPhotoDialog selectPhotoDialog;
@@ -122,6 +123,8 @@ public class UploadResourcesActivity extends BaseActivity implements RadioGroup.
     private ArrayList<PicLoadBean> picLoadBeanArrayList = new ArrayList<>();
     BitmapFactory.Options opt;
     ImageUtils imageUtils;
+    private Request<String> request;
+    private String attributeId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,7 +139,6 @@ public class UploadResourcesActivity extends BaseActivity implements RadioGroup.
 
         imageUtils = new ImageUtils(mContext);
         dao = MyApplication.getInstances().getDaoSession().getUploadResourcesDaoDao();
-        testDao = MyApplication.getInstances().getDaoSession().getTestDao();
 
         viewImgAdapter = new GridViewImgAdapter(this, picList);
         gvSelectPic.setAdapter(viewImgAdapter);
@@ -230,7 +232,10 @@ public class UploadResourcesActivity extends BaseActivity implements RadioGroup.
             }
             if (requestCode == 107) {
                 attributeData = (AttributeListRes.DataBean) data.getSerializableExtra("attribute");
-                tvContent7.setText(attributeData.Cname);
+                String selectName = data.getStringExtra("selectName");
+                attributeId = data.getStringExtra("selectId");
+
+                tvContent7.setText(selectName);
             }
 
 
@@ -272,24 +277,49 @@ public class UploadResourcesActivity extends BaseActivity implements RadioGroup.
     }
 
     private void commitPic(String path, int sign) {
-        upImgBase64Api.txtFileName =
-                Utils.bitmapToBase64(BitmapHelper.getImage(path,100));
-        upImgBase64Api.sign = sign + "";
-        httpManager.doHttpDeal(upImgBase64Api);
+//        upImgBase64Api.txtFileName =
+//                Utils.bitmapToBase64(BitmapHelper.getImage(path,100));
+//        upImgBase64Api.sign = sign + "";
+
+        request = NoHttp.createStringRequest(Constants.UpImgBase64, RequestMethod.POST);
+        request.add("random", SPUtil.getString("random", ""));
+        request.add("desUserId", SPUtil.getString("desUserId", ""));
+        request.add("sign", sign);
+        request.add("txtFileName", Utils.bitmapToBase64(BitmapHelper.getImage(path, 100)));
+
+        CallServer.getRequestInstance().add(UploadResourcesActivity.this, 1, request, new CustomHttpListener(this, true, Uploadbase64Res.class) {
+            @Override
+            public void doWork(int what, Object data, boolean isSuccess) {
+                if (isSuccess) {
+                    Uploadbase64Res res = (Uploadbase64Res) data;
+                    picList.get(res.data.sign).serverFileName = res.data.serverFileName;
+                    picList.get(res.data.sign).serverThumbnailFileName = res.data.serverThumbnailFileName;
+                    /*PicLoadBean picLoadBean = new PicLoadBean();
+                    picLoadBean.serverFileName = res.data.serverFileName;
+                    picLoadBean.serverThumbnailFileName = res.data.serverThumbnailFileName;
+                    picLoadBeanArrayList.add(picLoadBean);*/
+                    if (res.data.sign < picList.size() - 1) {
+                        int num = res.data.sign + 1;
+                        commitPic(picList.get(num).pic, num);
+                    } else {
+                        submitData();
+                    }
+                } else {
+//                    CommonUtil.showToast(PersonalInfoActivity.this,(String)data);
+                }
+            }
+        }, true, true);
+
+//        httpManager.doHttpDeal(upImgBase64Api);
     }
 
     @Override
     public void rightClickSave(View view) {
         super.rightClickSave(view);
 
-        commitPic(picList.get(0).pic, 0);
+//        commitPic(picList.get(0).pic, 0);
 
-        /*if (checkEditAll()) {
-
-            for (int i = 0; i < picList.size(); i++) {
-                PicInfo picInfo = picList.get(i);
-                piclists = "0|" + picInfo.pic + "|" + picInfo.latValue + "|" + picInfo.lngValue + ",";
-            }
+        if (checkEditAll()) {
             if (Utils.isWifiConnected(mContext)) {
                 commitPic(picList.get(0).pic, 0);
 //            提交数据
@@ -300,10 +330,14 @@ public class UploadResourcesActivity extends BaseActivity implements RadioGroup.
                 } catch (Exception e) {
                 }
             }
-        }*/
+        }
     }
 
     private void submitData() {
+        for (int i = 0; i < picList.size(); i++) {
+            PicInfo picInfo = picList.get(i);
+            piclists = "0|" + picInfo.serverFileName + "|" + picInfo.serverThumbnailFileName + "|" + picInfo.lngValue + ";"+picInfo.latValue+",";
+        }
         addProductApi.CName = name2;
         addProductApi.Vid = pinzhongData.ID;
         addProductApi.Cid = unitsData.ID;
@@ -312,6 +346,7 @@ public class UploadResourcesActivity extends BaseActivity implements RadioGroup.
         addProductApi.Describe = des5;
         addProductApi.Remarks = tip6;
         addProductApi.PhotoDetail = piclists;
+        addProductApi.ProductAttr = attributeId;
         httpManager.doHttpDeal(addProductApi);
     }
 

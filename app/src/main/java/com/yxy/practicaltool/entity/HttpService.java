@@ -67,8 +67,7 @@ public interface HttpService {
     Observable<AttributeListRes> addProduct(@Query("random") String random, @Query("desUserId") String desUserId, @Query("CName") String CName,
                                             @Query("Vid") int Vid, @Query("Cid") int Cid, @Query("H_State") int H_State,
                                             @Query("Num") String Num, @Query("Describe") String Describe, @Query("Remarks") String Remarks,
-                                            @Query("ProductAttr") List ProductAttr, @Query("PhotoDetail") String PhotoDetail, @Query("RemarkArray") List RemarkArray,
-                                            @Query("FocusPhoto") List FocusPhoto);
+                                            @Query("ProductAttr") String ProductAttr, @Query("PhotoDetail") String PhotoDetail);
 
 
 }

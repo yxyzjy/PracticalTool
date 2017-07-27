@@ -11,4 +11,8 @@ public class PicInfo {
     public String lngValue;
     public boolean isFengmian;
     public String picDes;
+    public String base64Url;
+    public String serverFileName;
+    public String serverThumbnailFileName;
+    public int sign;
 }

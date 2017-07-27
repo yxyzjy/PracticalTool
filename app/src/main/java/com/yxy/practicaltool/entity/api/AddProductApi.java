@@ -15,9 +15,8 @@ import rx.Observable;
 
 public class AddProductApi extends PCBaseApi {
 
-    public String CName, Num, Describe, Remarks,PhotoDetail;
+    public String CName, Num, Describe, Remarks,PhotoDetail,ProductAttr;
     public int Vid, Cid, H_State;
-    public List<String> ProductAttr, RemarkArray, FocusPhoto;
 
     public AddProductApi() {
         super();
@@ -29,7 +28,7 @@ public class AddProductApi extends PCBaseApi {
     public Observable getObservable(Retrofit retrofit) {
         HttpService service = retrofit.create(HttpService.class);
         return service.addProduct(SPUtil.getString("random", ""), SPUtil.getString("desUserId", ""),
-                CName, Vid, Cid, H_State, Num, Describe, Remarks, ProductAttr, PhotoDetail, RemarkArray, FocusPhoto);
+                CName, Vid, Cid, H_State, Num, Describe, Remarks, ProductAttr, PhotoDetail);
     }
 
     @Override

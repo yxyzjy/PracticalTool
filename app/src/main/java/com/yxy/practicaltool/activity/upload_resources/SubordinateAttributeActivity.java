@@ -66,13 +66,11 @@ public class SubordinateAttributeActivity extends BaseActivity {
         leftAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(ViewGroup parent, View view, Object o, int position) {
-                liftList.get(position).isSelect = true;
                 if (leftLastClickPos != -1) {
                     liftList.get(leftLastClickPos).isSelect = false;
                 }
                 leftLastClickPos = position;
                 leftAdapter.notifyDataSetChanged();
-
                 parentId = liftList.get(position).ID + "";
                 doHttp();
             }
@@ -86,15 +84,15 @@ public class SubordinateAttributeActivity extends BaseActivity {
         rightAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(ViewGroup parent, View view, Object o, int position) {
-                rightList.get(position).isSelect = true;
+                rightList.get(position).isSelect = !rightList.get(position).isSelect;
+                /*rightList.get(position).isSelect = true;
                 if (rightLastPos != -1) {
                     rightList.get(rightLastPos).isSelect = false;
                 }
-                rightLastPos = position;
+                rightLastPos = position;*/
                 rightAdapter.notifyDataSetChanged();
-
                 parentId = rightList.get(position).ID + "";
-                doHttp();
+//                doHttp();
             }
 
             @Override
@@ -130,9 +128,29 @@ public class SubordinateAttributeActivity extends BaseActivity {
             ToastUtils.showToast(mContext, "请选择产品属性");
             return;
         }
+        ArrayList<AttributeListRes.DataBean> selectList = new ArrayList<>();
+        for (int i = 0; i < rightList.size(); i++) {
+            if (rightList.get(i).isSelect) {
+                selectList.add(rightList.get(i));
+            }
+        }
+        if (selectList.size() < 1) {
+            ToastUtils.showToast(mContext, "请选择产品属性");
+            return;
+        }
+        String[] seleName = new String[64];
+        int[] seleId = new int[64];
+        for (int i = 0; i < selectList.size(); i++) {
+
+            seleName[i] = rightList.get(i).Cname;
+            seleId[i] = rightList.get(i).ID;
+        }
+
         Intent intent = new Intent();
         Bundle bundle = new Bundle();
-        bundle.putSerializable("attribute", rightList.get(rightLastPos));
+//        bundle.putSerializable("attribute", rightList.get(rightLastPos));
+        bundle.putSerializable("selectName", seleName.toString());
+        bundle.putSerializable("selectId", seleId.toString());
         intent.putExtras(bundle);
         setResult(RESULT_OK, intent);
         finish();

@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.wzgiceman.rxretrofitlibrary.BuildConfig;
 import com.wzgiceman.rxretrofitlibrary.retrofit_rx.RxRetrofitApp;
+import com.yolanda.nohttp.NoHttp;
 import com.yxy.practicaltool.dao.DaoMaster;
 import com.yxy.practicaltool.dao.DaoSession;
 
@@ -29,6 +30,7 @@ public class MyApplication extends Application {
         instances = this;
         RxRetrofitApp.init(this, BuildConfig.DEBUG);
         setDatabase();
+        NoHttp.initialize(this);
     }
 
     public static MyApplication getInstances(){
