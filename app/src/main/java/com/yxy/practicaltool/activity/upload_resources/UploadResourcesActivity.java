@@ -42,6 +42,7 @@ import com.yxy.practicaltool.dialog.SelectPhotoDialog;
 import com.yxy.practicaltool.entity.api.AddProductApi;
 import com.yxy.practicaltool.entity.api.UpImgBase64Api;
 import com.yxy.practicaltool.entity.resulte.AddCaseRes;
+import com.yxy.practicaltool.entity.resulte.AddProduceRes;
 import com.yxy.practicaltool.entity.resulte.AttributeListRes;
 import com.yxy.practicaltool.entity.resulte.CompanyListRes;
 import com.yxy.practicaltool.entity.resulte.Uploadbase64Res;
@@ -277,10 +278,6 @@ public class UploadResourcesActivity extends BaseActivity implements RadioGroup.
     }
 
     private void commitPic(String path, int sign) {
-//        upImgBase64Api.txtFileName =
-//                Utils.bitmapToBase64(BitmapHelper.getImage(path,100));
-//        upImgBase64Api.sign = sign + "";
-
         request = NoHttp.createStringRequest(Constants.UpImgBase64, RequestMethod.POST);
         request.add("random", SPUtil.getString("random", ""));
         request.add("desUserId", SPUtil.getString("desUserId", ""));
@@ -294,10 +291,6 @@ public class UploadResourcesActivity extends BaseActivity implements RadioGroup.
                     Uploadbase64Res res = (Uploadbase64Res) data;
                     picList.get(res.data.sign).serverFileName = res.data.serverFileName;
                     picList.get(res.data.sign).serverThumbnailFileName = res.data.serverThumbnailFileName;
-                    /*PicLoadBean picLoadBean = new PicLoadBean();
-                    picLoadBean.serverFileName = res.data.serverFileName;
-                    picLoadBean.serverThumbnailFileName = res.data.serverThumbnailFileName;
-                    picLoadBeanArrayList.add(picLoadBean);*/
                     if (res.data.sign < picList.size() - 1) {
                         int num = res.data.sign + 1;
                         commitPic(picList.get(num).pic, num);
@@ -305,20 +298,12 @@ public class UploadResourcesActivity extends BaseActivity implements RadioGroup.
                         submitData();
                     }
                 } else {
-//                    CommonUtil.showToast(PersonalInfoActivity.this,(String)data);
                 }
             }
         }, true, true);
-
-//        httpManager.doHttpDeal(upImgBase64Api);
     }
 
-    @Override
     public void rightClickSave(View view) {
-        super.rightClickSave(view);
-
-//        commitPic(picList.get(0).pic, 0);
-
         if (checkEditAll()) {
             if (Utils.isWifiConnected(mContext)) {
                 commitPic(picList.get(0).pic, 0);
@@ -336,7 +321,11 @@ public class UploadResourcesActivity extends BaseActivity implements RadioGroup.
     private void submitData() {
         for (int i = 0; i < picList.size(); i++) {
             PicInfo picInfo = picList.get(i);
-            piclists = "0|" + picInfo.serverFileName + "|" + picInfo.serverThumbnailFileName + "|" + picInfo.lngValue + ";"+picInfo.latValue+",";
+            if (i == 0) {
+                piclists = "0|" + picInfo.serverFileName + "|" + picInfo.serverThumbnailFileName + "|" + picInfo.lngValue + ";" + picInfo.latValue;
+            } else {
+                piclists = ",0|" + picInfo.serverFileName + "|" + picInfo.serverThumbnailFileName + "|" + picInfo.lngValue + ";" + picInfo.latValue;
+            }
         }
         addProductApi.CName = name2;
         addProductApi.Vid = pinzhongData.ID;
@@ -383,7 +372,7 @@ public class UploadResourcesActivity extends BaseActivity implements RadioGroup.
             ToastUtils.showToast(mContext, "请输入产品备注");
             return false;
         }
-        if (attributeData == null) {
+        if (TextUtils.isEmpty(attributeId)) {
             ToastUtils.showToast(mContext, "请选择产品属性");
             return false;
         }
@@ -457,17 +446,11 @@ public class UploadResourcesActivity extends BaseActivity implements RadioGroup.
     @Override
     protected void processSuccessResult(String resulte, String mothead) {
         super.processSuccessResult(resulte, mothead);
-        if (mothead.equals(upImgBase64Api.getMethod())) {
-            AddCaseRes res = JSONObject.parseObject(resulte, AddCaseRes.class);
-            PicLoadBean picLoadBean = new PicLoadBean();
-            picLoadBean.serverFileName = res.data.serverFileName;
-            picLoadBean.serverThumbnailFileName = res.data.serverThumbnailFileName;
-            picLoadBeanArrayList.add(picLoadBean);
-            if (res.data.sign < picList.size() - 1) {
-                int num = res.data.sign + 1;
-                commitPic(picList.get(num).pic, num);
-            } else {
-                submitData();
+        if (mothead.equals(addProductApi.getMethod())) {
+            AddProduceRes res = JSONObject.parseObject(resulte, AddProduceRes.class);
+            if (res.ret == 200) {
+                ToastUtils.showToast(mContext, res.msg);
+                finish();
             }
         }
     }

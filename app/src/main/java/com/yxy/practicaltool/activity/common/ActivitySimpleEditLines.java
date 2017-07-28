@@ -89,9 +89,7 @@ public class ActivitySimpleEditLines extends BaseActivity  {
 
 
 
-    @Override
     public void rightClickSave(View view) {
-        super.rightClickSave(view);
         result = et_phone.getText().toString();
         if (TextUtils.isEmpty(result)) {
             ToastUtils.showToast(this, getResources().getString(R.string.bnwk));

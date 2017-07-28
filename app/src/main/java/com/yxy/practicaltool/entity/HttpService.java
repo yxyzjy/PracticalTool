@@ -63,11 +63,15 @@ public interface HttpService {
 
 
 
-    @GET("AddProduct")
+       @GET("AddProduct")
     Observable<AttributeListRes> addProduct(@Query("random") String random, @Query("desUserId") String desUserId, @Query("CName") String CName,
                                             @Query("Vid") int Vid, @Query("Cid") int Cid, @Query("H_State") int H_State,
                                             @Query("Num") String Num, @Query("Describe") String Describe, @Query("Remarks") String Remarks,
                                             @Query("ProductAttr") String ProductAttr, @Query("PhotoDetail") String PhotoDetail);
 
+    @GET("Add_ShipmentCase")
+    Observable<AttributeListRes> String(@Query("_lan") String _lan, @Query("secret_key") String secret_key, @Query("ParentId") int ParentId,
+                                            @Query("_Title") String _Title, @Query("_Img") String _Img, @Query("Content") String Content,
+                                            @Query("Seo_key") String Seo_key, @Query("Seo_Description") String Seo_Description, @Query("key_type") String key_type);
 
 }

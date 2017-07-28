@@ -33,6 +33,7 @@ public class ActivitySimpleEdit extends BaseActivity {
     public static final int INPUT_PRICE = 2;
     public static final int INPUT_DETAIL = 3;
     private String result;
+    private int pos;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -46,6 +47,7 @@ public class ActivitySimpleEdit extends BaseActivity {
             inputType = bundle.getInt("input_type");
             maxLength = bundle.getInt("maxLength");
             orderNum = bundle.getString("orderNum");
+            pos = bundle.getInt("pos");
         }
         setTopBar(R.layout.activity_simple_edit, titleStr);
         ButterKnife.bind(this);
@@ -68,7 +70,18 @@ public class ActivitySimpleEdit extends BaseActivity {
         intent.putExtra("old_text", oldText);
         intent.putExtra("input_type", inputType);
         intent.putExtra("maxLength", maxLength);
-        context.startActivityForResult(intent,requestCode);
+        context.startActivityForResult(intent, requestCode);
+    }
+
+    public static void startSimpleEdit(Activity context, String titleStr, String hintStr, String oldText, int inputType, int maxLength, int requestCode, int pos) {
+        Intent intent = new Intent(context, ActivitySimpleEdit.class);
+        intent.putExtra("title", titleStr);
+        intent.putExtra("hint", hintStr);
+        intent.putExtra("old_text", oldText);
+        intent.putExtra("input_type", inputType);
+        intent.putExtra("maxLength", maxLength);
+        intent.putExtra("pos", pos);
+        context.startActivityForResult(intent, requestCode);
     }
 
     @Override
@@ -105,9 +118,7 @@ public class ActivitySimpleEdit extends BaseActivity {
         }
     }*/
 
-    @Override
     public void rightClickSave(View view) {
-        super.rightClickSave(view);
         result = et_phone.getText().toString();
         if (TextUtils.isEmpty(result)) {
             ToastUtils.showToast(this, getResources().getString(R.string.bnwk));
@@ -115,6 +126,7 @@ public class ActivitySimpleEdit extends BaseActivity {
         } else {
             Intent intent = new Intent();
             intent.putExtra("result", result);
+            intent.putExtra("pos", pos);
             setResult(RESULT_OK, intent);
             finish();
         }

@@ -125,11 +125,6 @@ public class BaseActivity extends RxAppCompatActivity implements HttpOnNextListe
         onBackPressed();
     }
 
-
-    public void rightClickSave(View view){
-
-    }
-
     @Override
     public void onNext(String resulte, String mothead) {
         processSuccessResult(resulte, mothead);

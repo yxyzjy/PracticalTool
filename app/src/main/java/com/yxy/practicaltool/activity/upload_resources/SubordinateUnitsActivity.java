@@ -105,13 +105,11 @@ public class SubordinateUnitsActivity extends BaseActivity {
         }
     }
 
-    @Override
     public void rightClickSave(View view) {
         if (lastClickPos == -1) {
             ToastUtils.showToast(mContext, "请选择所属单位");
             return;
         }
-        super.rightClickSave(view);
         Intent intent = new Intent();
         Bundle bundle = new Bundle();
         bundle.putSerializable("units", list.get(lastClickPos));

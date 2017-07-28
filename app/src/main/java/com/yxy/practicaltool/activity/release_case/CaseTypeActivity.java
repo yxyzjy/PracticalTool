@@ -128,13 +128,11 @@ public class CaseTypeActivity extends BaseActivity {
         }
     }
 
-    @Override
     public void rightClickSave(View view) {
         if (lastClickPos == -1) {
             ToastUtils.showToast(mContext, "请选择所属单位");
             return;
         }
-        super.rightClickSave(view);
         Intent intent = new Intent();
         Bundle bundle = new Bundle();
         bundle.putSerializable("case_type", list.get(lastClickPos));

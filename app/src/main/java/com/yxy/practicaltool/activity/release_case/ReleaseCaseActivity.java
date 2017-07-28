@@ -1,6 +1,7 @@
 package com.yxy.practicaltool.activity.release_case;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.media.ExifInterface;
@@ -10,27 +11,46 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONObject;
+import com.bumptech.glide.Glide;
+import com.yolanda.nohttp.NoHttp;
+import com.yolanda.nohttp.RequestMethod;
+import com.yolanda.nohttp.rest.Request;
 import com.yxy.practicaltool.R;
 import com.yxy.practicaltool.activity.BaseActivity;
 import com.yxy.practicaltool.activity.common.ActivitySimpleEdit;
 import com.yxy.practicaltool.activity.common.ActivitySimpleEditLines;
+import com.yxy.practicaltool.activity.upload_resources.UploadResourcesActivity;
 import com.yxy.practicaltool.adapter.GridViewCaseImgAdapter;
 import com.yxy.practicaltool.adapter.GridViewImgAdapter;
 import com.yxy.practicaltool.bean.PicInfo;
 import com.yxy.practicaltool.common.Constants;
+import com.yxy.practicaltool.common.ToastUtils;
 import com.yxy.practicaltool.dialog.SelectPhotoDialog;
+import com.yxy.practicaltool.entity.api.caseapi.AddShipmentCaseApi;
+import com.yxy.practicaltool.entity.resulte.AddProduceRes;
 import com.yxy.practicaltool.entity.resulte.AttributeListRes;
 import com.yxy.practicaltool.entity.resulte.CaseTypeRes;
 import com.yxy.practicaltool.entity.resulte.CompanyListRes;
+import com.yxy.practicaltool.entity.resulte.Uploadbase64Res;
+import com.yxy.practicaltool.nohttp.CallServer;
+import com.yxy.practicaltool.nohttp.CustomHttpListener;
+import com.yxy.practicaltool.utils.BitmapHelper;
 import com.yxy.practicaltool.utils.FileUtil;
 import com.yxy.practicaltool.utils.ImageUtils;
+import com.yxy.practicaltool.utils.SPUtil;
 import com.yxy.practicaltool.utils.Utils;
 
 import java.io.File;
@@ -41,7 +61,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class ReleaseCaseActivity extends BaseActivity implements AdapterView.OnItemClickListener, View.OnClickListener {
+public class ReleaseCaseActivity extends BaseActivity implements AdapterView.OnItemClickListener {
 
     @Bind(R.id.tv_content_1)
     TextView tvContent1;
@@ -68,6 +88,9 @@ public class ReleaseCaseActivity extends BaseActivity implements AdapterView.OnI
     private ArrayList<PicInfo> picList = new ArrayList<>();
     ImageUtils imageUtils;
     private CaseTypeRes.DataBean caseTypeRes;
+    private int pos;
+    private String piclists;
+    private AddShipmentCaseApi shipmentCaseApi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,10 +102,11 @@ public class ReleaseCaseActivity extends BaseActivity implements AdapterView.OnI
     @Override
     public void initData() {
         super.initData();
-        viewImgAdapter = new GridViewCaseImgAdapter(this, picList, this);
+        viewImgAdapter = new GridViewCaseImgAdapter(this);
         gvSelectPic.setAdapter(viewImgAdapter);
         gvSelectPic.setOnItemClickListener(this);
         imageUtils = new ImageUtils(mContext);
+        shipmentCaseApi = new AddShipmentCaseApi();
     }
 
     @OnClick({R.id.ll_upload_1, R.id.ll_upload_2, R.id.ll_upload_3, R.id.ll_upload_4})
@@ -140,10 +164,10 @@ public class ReleaseCaseActivity extends BaseActivity implements AdapterView.OnI
             }
             if (requestCode == 203) {
                 des = data.getStringExtra("result");
-                tvContent4.setText(key);
+                tvContent4.setText(des);
             }
             if (requestCode == 204) {
-                caseTypeRes = (CaseTypeRes.DataBean) data.getSerializableExtra("attribute");
+                caseTypeRes = (CaseTypeRes.DataBean) data.getSerializableExtra("case_type");
                 tvContent1.setText(caseTypeRes.Title);
             }
 
@@ -168,6 +192,15 @@ public class ReleaseCaseActivity extends BaseActivity implements AdapterView.OnI
                     picInfo.lngValue = "";
                     picList.add(picInfo);
                 }
+            }
+
+            if (requestCode == 222) {
+                key = data.getStringExtra("result");
+                pos = data.getIntExtra("pos", -1);
+                if (pos != -1) {
+                    picList.get(pos).picDes = key;
+                }
+                viewImgAdapter.notifyDataSetChanged();
             }
         }
     }
@@ -232,12 +265,172 @@ public class ReleaseCaseActivity extends BaseActivity implements AdapterView.OnI
         }
     }
 
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.tv_case_des:
 
-                break;
+    class GridViewCaseImgAdapter extends BaseAdapter {
+
+        private Context context;
+        private int lastPos = -1;
+
+        public GridViewCaseImgAdapter(Context context) {
+            // TODO Auto-generated constructor stub
+            this.context = context;
+        }
+
+        @Override
+        public int getCount() {
+            return picList.size() + 1;
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return null;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        @Override
+        public View getView(final int position, View convertView, ViewGroup parent) {
+            LayoutInflater layoutInflater = LayoutInflater.from(context);
+            convertView = layoutInflater.inflate(R.layout.item_add_image_case, null);
+            ImageView iv_release_pic = (ImageView) convertView.findViewById(R.id.iv_release_pic);
+            TextView iv_delete_pic = (TextView) convertView.findViewById(R.id.iv_delete_pic);
+            TextView tv_fengmian = (TextView) convertView.findViewById(R.id.tv_fengmian);
+            TextView tv_case_des = (TextView) convertView.findViewById(R.id.tv_case_des);
+
+            tv_fengmian.setVisibility(View.GONE);
+            iv_delete_pic.setVisibility(View.GONE);
+            if (position >= picList.size()) {
+                Glide.with(context)
+                        .load(R.mipmap.icon_add)
+                        .into(iv_release_pic);
+                tv_case_des.setVisibility(View.GONE);
+            } else {
+                Glide.with(context)
+                        .load(picList.get(position).pic)
+                        .into(iv_release_pic);
+                tv_case_des.setVisibility(View.VISIBLE);
+                if (!TextUtils.isEmpty(picList.get(position).picDes)) {
+                    tv_case_des.setText(picList.get(position).picDes);
+                } else {
+                    tv_case_des.setText("");
+                }
+                if (picList.get(position).isFengmian) {
+                    tv_fengmian.setVisibility(View.VISIBLE);
+                    iv_delete_pic.setVisibility(View.GONE);
+                } else {
+                    tv_fengmian.setVisibility(View.GONE);
+                    iv_delete_pic.setVisibility(View.VISIBLE);
+                }
+            }
+
+            iv_delete_pic.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (lastPos != -1) {
+                        picList.get(lastPos).isFengmian = false;
+                    }
+                    picList.get(position).isFengmian = true;
+                    lastPos = position;
+                    notifyDataSetChanged();
+                }
+            });
+            tv_case_des.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ActivitySimpleEdit.startSimpleEdit(ReleaseCaseActivity.this, "案例图片说明", "输入案例图片说明", "", ActivitySimpleEdit.INPUT_NAME, 20, 222, position);
+                }
+            });
+            return convertView;
+        }
+    }
+
+    public void rightClickSave(View view) {
+        if (checkEditAll()) {
+                commitPic(picList.get(0).pic, 0);
+        }
+    }
+
+    private boolean checkEditAll() {
+        if (caseTypeRes == null) {
+            ToastUtils.showToast(mContext, "请选择案例分类");
+            return false;
+        }
+        if (TextUtils.isEmpty(title)) {
+            ToastUtils.showToast(mContext, "请输入案例标题");
+            return false;
+        }
+        if (TextUtils.isEmpty(key)) {
+            ToastUtils.showToast(mContext, "请输入关键字");
+            return false;
+        }
+        if (TextUtils.isEmpty(des)) {
+            ToastUtils.showToast(mContext, "请输入页面描述");
+            return false;
+        }
+        if (picList.size()<1){
+            ToastUtils.showToast(mContext, "请选择图片");
+            return false;
+        }
+        return true;
+    }
+    private Request<String> request;
+
+    private void commitPic(String path, int sign) {
+        request = NoHttp.createStringRequest(Constants.UpImgBase64, RequestMethod.POST);
+        request.add("random", SPUtil.getString("random", ""));
+        request.add("desUserId", SPUtil.getString("desUserId", ""));
+        request.add("sign", sign);
+        request.add("txtFileName", Utils.bitmapToBase64(BitmapHelper.getImage(path, 100)));
+
+        CallServer.getRequestInstance().add(ReleaseCaseActivity.this, 1, request, new CustomHttpListener(this, true, Uploadbase64Res.class) {
+            @Override
+            public void doWork(int what, Object data, boolean isSuccess) {
+                if (isSuccess) {
+                    Uploadbase64Res res = (Uploadbase64Res) data;
+                    picList.get(res.data.sign).serverFileName = res.data.serverFileName;
+                    picList.get(res.data.sign).serverThumbnailFileName = res.data.serverThumbnailFileName;
+                    if (res.data.sign < picList.size() - 1) {
+                        int num = res.data.sign + 1;
+                        commitPic(picList.get(num).pic, num);
+                    } else {
+                        submitData();
+                    }
+                } else {
+                }
+            }
+        }, true, true);
+    }
+
+    private void submitData() {
+        for (int i = 0; i < picList.size(); i++) {
+            PicInfo picInfo = picList.get(i);
+            if (i == 0) {
+                piclists = "0|" + picInfo.serverFileName + "|" + picInfo.serverThumbnailFileName + "|" + picInfo.lngValue + ";" + picInfo.latValue;
+            } else {
+                piclists = ",0|" + picInfo.serverFileName + "|" + picInfo.serverThumbnailFileName + "|" + picInfo.lngValue + ";" + picInfo.latValue;
+            }
+        }
+        shipmentCaseApi.id = caseTypeRes.Id;
+        shipmentCaseApi.title = title;
+        shipmentCaseApi.image = piclists;
+        shipmentCaseApi.des = des;
+        shipmentCaseApi.Seo_key = "aaa";
+        shipmentCaseApi.Seo_Description = "aaaa";
+        httpManager.doHttpDeal(shipmentCaseApi);
+    }
+
+    @Override
+    protected void processSuccessResult(String resulte, String mothead) {
+        super.processSuccessResult(resulte, mothead);
+        if (mothead.equals(shipmentCaseApi.getMethod())){
+            AddProduceRes res = JSONObject.parseObject(resulte, AddProduceRes.class);
+            if (res.ret == 200) {
+                ToastUtils.showToast(mContext, res.msg);
+                finish();
+            }
         }
     }
 }

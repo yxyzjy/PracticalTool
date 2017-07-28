@@ -1,6 +1,7 @@
 package com.yxy.practicaltool.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +20,7 @@ public class GridViewCaseImgAdapter extends BaseAdapter {
 
     private Context context;
     private ArrayList<PicInfo> list;
-    private int lastPos=-1;
+    private int lastPos = -1;
     View.OnClickListener clickListener;
 
     public GridViewCaseImgAdapter(Context context, ArrayList<PicInfo> list, View.OnClickListener clickListener) {
@@ -65,10 +66,15 @@ public class GridViewCaseImgAdapter extends BaseAdapter {
                     .load(list.get(position).pic)
                     .into(iv_release_pic);
             tv_case_des.setVisibility(View.VISIBLE);
-            if (list.get(position).isFengmian){
+            if (!TextUtils.isEmpty(list.get(position).picDes)) {
+                tv_case_des.setText(list.get(position).picDes);
+            } else {
+                tv_case_des.setText("");
+            }
+            if (list.get(position).isFengmian) {
                 tv_fengmian.setVisibility(View.VISIBLE);
                 iv_delete_pic.setVisibility(View.GONE);
-            }else {
+            } else {
                 tv_fengmian.setVisibility(View.GONE);
                 iv_delete_pic.setVisibility(View.VISIBLE);
             }
@@ -77,10 +83,10 @@ public class GridViewCaseImgAdapter extends BaseAdapter {
         iv_delete_pic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (lastPos != -1){
+                if (lastPos != -1) {
                     list.get(lastPos).isFengmian = false;
                 }
-                list.get(position).isFengmian =true;
+                list.get(position).isFengmian = true;
                 lastPos = position;
                 notifyDataSetChanged();
             }

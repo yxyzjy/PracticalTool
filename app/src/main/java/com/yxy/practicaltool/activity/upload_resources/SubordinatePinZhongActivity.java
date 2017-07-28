@@ -98,9 +98,7 @@ public class SubordinatePinZhongActivity extends BaseActivity {
         }
     }
 
-    @Override
     public void rightClickSave(View view) {
-        super.rightClickSave(view);
         if (lastClickPos == -1) {
             ToastUtils.showToast(mContext, "请选择所属品种");
             return;

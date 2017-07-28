@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.yxy.practicaltool.R;
 import com.yxy.practicaltool.activity.BaseActivity;
@@ -31,7 +32,6 @@ public class SubordinateAttributeActivity extends BaseActivity {
     private AttributeAdapter leftAdapter, rightAdapter;
     private ArrayList<AttributeListRes.DataBean> liftList;
     private ArrayList<AttributeListRes.DataBean> rightList;
-    private GetAttributeListApi attributeListApi;
     private String parentId = "0";
     private int leftLastClickPos = -1, rightLastPos = -1;
 
@@ -66,6 +66,7 @@ public class SubordinateAttributeActivity extends BaseActivity {
         leftAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(ViewGroup parent, View view, Object o, int position) {
+                liftList.get(position).isSelect = true;
                 if (leftLastClickPos != -1) {
                     liftList.get(leftLastClickPos).isSelect = false;
                 }
@@ -85,14 +86,8 @@ public class SubordinateAttributeActivity extends BaseActivity {
             @Override
             public void onItemClick(ViewGroup parent, View view, Object o, int position) {
                 rightList.get(position).isSelect = !rightList.get(position).isSelect;
-                /*rightList.get(position).isSelect = true;
-                if (rightLastPos != -1) {
-                    rightList.get(rightLastPos).isSelect = false;
-                }
-                rightLastPos = position;*/
                 rightAdapter.notifyDataSetChanged();
                 parentId = rightList.get(position).ID + "";
-//                doHttp();
             }
 
             @Override
@@ -115,19 +110,14 @@ public class SubordinateAttributeActivity extends BaseActivity {
             liftList.addAll(res.data);
             leftAdapter.notifyDataSetChanged();
         } else {
+            rightList.clear();
             AttributeListRes res = JSONObject.parseObject(resulte, AttributeListRes.class);
             rightList.addAll(res.data);
             rightAdapter.notifyDataSetChanged();
         }
     }
 
-    @Override
     public void rightClickSave(View view) {
-        super.rightClickSave(view);
-        if (rightLastPos == -1) {
-            ToastUtils.showToast(mContext, "请选择产品属性");
-            return;
-        }
         ArrayList<AttributeListRes.DataBean> selectList = new ArrayList<>();
         for (int i = 0; i < rightList.size(); i++) {
             if (rightList.get(i).isSelect) {
@@ -138,14 +128,21 @@ public class SubordinateAttributeActivity extends BaseActivity {
             ToastUtils.showToast(mContext, "请选择产品属性");
             return;
         }
-        String[] seleName = new String[64];
-        int[] seleId = new int[64];
+//        String[] seleName = new String[64];
+//        int[] seleId = new int[64];
+        String seleName = "";
+        String seleId = "";
         for (int i = 0; i < selectList.size(); i++) {
-
-            seleName[i] = rightList.get(i).Cname;
-            seleId[i] = rightList.get(i).ID;
+//            seleName[i] = rightList.get(i).Cname;
+//            seleId[i] = rightList.get(i).ID;
+            if (i == 0) {
+                seleName = seleName + rightList.get(i).Cname;
+                seleId = seleId + rightList.get(i).ID;
+            } else {
+                seleName = "," + seleName + rightList.get(i).Cname;
+                seleId = "," + seleId + rightList.get(i).ID;
+            }
         }
-
         Intent intent = new Intent();
         Bundle bundle = new Bundle();
 //        bundle.putSerializable("attribute", rightList.get(rightLastPos));
