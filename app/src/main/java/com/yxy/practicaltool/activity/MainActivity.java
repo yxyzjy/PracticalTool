@@ -5,10 +5,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.yxy.practicaltool.MyApplication;
 import com.yxy.practicaltool.R;
 import com.yxy.practicaltool.activity.release_case.ReleaseCaseActivity;
 import com.yxy.practicaltool.activity.upload_resources.LocalCacheActivity;
 import com.yxy.practicaltool.activity.upload_resources.UploadResourcesActivity;
+import com.yxy.practicaltool.dao.UploadResourcesDaoDao;
 import com.yxy.practicaltool.utils.SPUtil;
 
 import butterknife.Bind;
@@ -25,6 +27,7 @@ public class MainActivity extends BaseActivity {
     TextView tvMain3;
     @Bind(R.id.tv_main_4)
     TextView tvMain4;
+    private UploadResourcesDaoDao dao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +49,8 @@ public class MainActivity extends BaseActivity {
                 startActivity(new Intent(mContext, ReleaseCaseActivity.class));
                 break;
             case R.id.tv_main_4:
+                dao = MyApplication.getInstances().getDaoSession().getUploadResourcesDaoDao();
+                dao.deleteAll();
                 SPUtil.clear();
                 startActivity(new Intent(mContext,LoginActivity.class));
                 finish();

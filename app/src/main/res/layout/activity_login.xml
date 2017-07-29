@@ -35,6 +35,7 @@
         android:layout_marginLeft="20dp"
         android:hint="登录密码"
         android:padding="10dp"
+        android:inputType="textPassword"
         android:layout_marginRight="20dp"
         android:layout_height="50dp" />
 

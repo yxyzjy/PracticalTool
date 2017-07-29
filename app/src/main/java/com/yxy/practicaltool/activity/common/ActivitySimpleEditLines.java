@@ -76,7 +76,6 @@ public class ActivitySimpleEditLines extends BaseActivity  {
     public void initView() {
         et_phone = (EditText) this.findViewById(R.id.et_phone);
         et_phone.setHint(hintStr);
-        et_phone.setSingleLine(true);
         et_phone.setFilters(new InputFilter[]{new InputFilter.LengthFilter(maxLength)});
         if (inputType == INPUT_NUM || inputType == INPUT_PRICE) {
             et_phone.setInputType(InputType.TYPE_CLASS_NUMBER);

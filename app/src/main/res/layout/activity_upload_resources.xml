@@ -32,6 +32,8 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
                 android:layout_weight="1"
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:gravity="center_vertical|right"
                 android:hint="选择所属单位"
                 android:textColor="@color/text_color" />
@@ -66,6 +68,8 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical|right"
                 android:hint="输入产品名称"
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:textColor="@color/text_color" />
 
             <ImageView
@@ -98,6 +102,8 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical|right"
                 android:hint="选择所属品种"
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:textColor="@color/text_color" />
 
             <ImageView
@@ -130,6 +136,8 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical|right"
                 android:hint="输入产品数量"
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:textColor="@color/text_color" />
 
             <ImageView
@@ -162,6 +170,8 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical|right"
                 android:hint="输入质量描述"
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:textColor="@color/text_color" />
 
             <ImageView
@@ -194,6 +204,8 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical|right"
                 android:hint="输入产品备注"
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:textColor="@color/text_color" />
 
             <ImageView
@@ -224,6 +236,8 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
                 android:layout_weight="1"
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:gravity="center_vertical|right"
                 android:hint="选择产品属性"
                 android:textColor="@color/text_color" />

@@ -6,6 +6,7 @@ import com.yxy.practicaltool.entity.resulte.CompanyListRes;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
+import org.greenrobot.greendao.annotation.Id;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +17,6 @@ import java.util.List;
 
 @Entity
 public class UploadResourcesDao {
-
     private int unitsId;
     private String unitsName;
     private String phone;
@@ -27,9 +27,10 @@ public class UploadResourcesDao {
     private String des5;
     private String tip6;
     private int H_State;
-    private int attributeId;
+    private String attributeId;
     private String attributeName;
     private String picInfos;
+    @Id
     private String currentTime;
     public String getCurrentTime() {
         return this.currentTime;
@@ -49,10 +50,10 @@ public class UploadResourcesDao {
     public void setAttributeName(String attributeName) {
         this.attributeName = attributeName;
     }
-    public int getAttributeId() {
+    public String getAttributeId() {
         return this.attributeId;
     }
-    public void setAttributeId(int attributeId) {
+    public void setAttributeId(String attributeId) {
         this.attributeId = attributeId;
     }
     public int getH_State() {
@@ -115,10 +116,10 @@ public class UploadResourcesDao {
     public void setUnitsId(int unitsId) {
         this.unitsId = unitsId;
     }
-    @Generated(hash = 509139139)
+    @Generated(hash = 441649763)
     public UploadResourcesDao(int unitsId, String unitsName, String phone,
             String name2, int pinzhongId, String pinzhongName, String num4,
-            String des5, String tip6, int H_State, int attributeId,
+            String des5, String tip6, int H_State, String attributeId,
             String attributeName, String picInfos, String currentTime) {
         this.unitsId = unitsId;
         this.unitsName = unitsName;
@@ -138,6 +139,4 @@ public class UploadResourcesDao {
     @Generated(hash = 91416941)
     public UploadResourcesDao() {
     }
-
-
 }

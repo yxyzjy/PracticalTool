@@ -324,7 +324,7 @@ public class UploadResourcesActivity extends BaseActivity implements RadioGroup.
             if (i == 0) {
                 piclists = "0|" + picInfo.serverFileName + "|" + picInfo.serverThumbnailFileName + "|" + picInfo.lngValue + ";" + picInfo.latValue;
             } else {
-                piclists = ",0|" + picInfo.serverFileName + "|" + picInfo.serverThumbnailFileName + "|" + picInfo.lngValue + ";" + picInfo.latValue;
+                piclists = piclists+",0|" + picInfo.serverFileName + "|" + picInfo.serverThumbnailFileName + "|" + picInfo.lngValue + ";" + picInfo.latValue;
             }
         }
         addProductApi.CName = name2;
@@ -344,8 +344,18 @@ public class UploadResourcesActivity extends BaseActivity implements RadioGroup.
      */
 
     private void insertData() {
+        for (int i = 0; i < picList.size(); i++) {
+            PicInfo picInfo = picList.get(i);
+            if (i == 0) {
+                piclists = picInfo.pic +"|" + picInfo.lngValue + ";" + picInfo.latValue;
+            } else {
+                piclists = piclists+"," + picInfo.pic + "|" + picInfo.lngValue + ";" + picInfo.latValue;
+            }
+        }
+
+
         UploadResourcesDao usdao = new UploadResourcesDao(unitsData.ID, unitsData.CName, unitsData.Phone,
-                name2, pinzhongData.ID, pinzhongData.CName, num4, des5, tip6, sallState, attributeData.ID,
+                name2, pinzhongData.ID, pinzhongData.CName, num4, des5, tip6, sallState, attributeId,
                 tvContent7.getText().toString(), piclists, Utils.getCurrentTime());
 
         dao.insert(usdao);

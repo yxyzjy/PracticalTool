@@ -128,24 +128,19 @@ public class SubordinateAttributeActivity extends BaseActivity {
             ToastUtils.showToast(mContext, "请选择产品属性");
             return;
         }
-//        String[] seleName = new String[64];
-//        int[] seleId = new int[64];
         String seleName = "";
         String seleId = "";
         for (int i = 0; i < selectList.size(); i++) {
-//            seleName[i] = rightList.get(i).Cname;
-//            seleId[i] = rightList.get(i).ID;
             if (i == 0) {
-                seleName = seleName + rightList.get(i).Cname;
-                seleId = seleId + rightList.get(i).ID;
+                seleName = seleName + selectList.get(i).Cname;
+                seleId = seleId + selectList.get(i).ID;
             } else {
-                seleName = "," + seleName + rightList.get(i).Cname;
-                seleId = "," + seleId + rightList.get(i).ID;
+                seleName = seleName + "," + selectList.get(i).Cname;
+                seleId = seleId + "," + selectList.get(i).ID;
             }
         }
         Intent intent = new Intent();
         Bundle bundle = new Bundle();
-//        bundle.putSerializable("attribute", rightList.get(rightLastPos));
         bundle.putSerializable("selectName", seleName.toString());
         bundle.putSerializable("selectId", seleId.toString());
         intent.putExtras(bundle);
