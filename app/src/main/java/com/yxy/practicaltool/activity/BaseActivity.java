@@ -39,7 +39,7 @@ import retrofit2.adapter.rxjava.HttpException;
 
 public class BaseActivity extends RxAppCompatActivity implements HttpOnNextListener{
 
-    TextView tv_title;
+    TextView tv_title,tv_title_right;
     LinearLayout ll_title_bar_left,ll_empty_content,ll_title_bar_right;
     RelativeLayout title_bar;
     public Context mContext;
@@ -65,6 +65,8 @@ public class BaseActivity extends RxAppCompatActivity implements HttpOnNextListe
         super.setContentView(layoutResID);
         ButterKnife.bind(this);
     }
+
+
 
     public void setTopBar(int layoutResID, String title) {
         View v = LayoutInflater.from(this).inflate(
@@ -107,12 +109,33 @@ public class BaseActivity extends RxAppCompatActivity implements HttpOnNextListe
         initData();
     }
 
+
+    public void setTopBar(int layoutResID, String title,String  rightDes) {
+        View v = LayoutInflater.from(this).inflate(
+                R.layout.activity_base, null);
+        initMyView(v);
+        if (TextUtils.isEmpty(title)){
+            title_bar.setVisibility(View.GONE);
+        }
+        tv_title_right.setText(rightDes);
+        RelativeLayout.LayoutParams p1 = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        p1.addRule(RelativeLayout.BELOW,v.getId());
+        View contentView = LayoutInflater.from(this).inflate(layoutResID, null);
+        ll_empty_content.addView(contentView, p1);
+        setContentView(v);
+        tv_title.setText(title);
+        ButterKnife.bind(this);
+        initView();
+        initData();
+    }
+
     public void initMyView(View v) {
         title_bar = (RelativeLayout) v.findViewById(R.id.title_bar);
         tv_title = (TextView) v.findViewById(R.id.tv_title_bar_center);
         ll_title_bar_left = (LinearLayout) v.findViewById(R.id.ll_title_bar_left);
         ll_title_bar_right = (LinearLayout) v.findViewById(R.id.ll_title_bar_right);
         ll_empty_content  = (LinearLayout) v.findViewById(R.id.ll_empty_content);
+        tv_title_right= (TextView) v.findViewById(R.id.tv_title_right);
         ll_title_bar_left.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

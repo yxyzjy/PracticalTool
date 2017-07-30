@@ -21,6 +21,7 @@ public class AddProductApi extends PCBaseApi {
     public AddProductApi() {
         super();
         setMethod("AddProduct");
+        setShowProgress(false);
     }
 
 
