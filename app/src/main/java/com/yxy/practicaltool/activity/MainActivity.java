@@ -10,7 +10,9 @@ import com.yxy.practicaltool.R;
 import com.yxy.practicaltool.activity.release_case.ReleaseCaseActivity;
 import com.yxy.practicaltool.activity.upload_resources.LocalCacheActivity;
 import com.yxy.practicaltool.activity.upload_resources.UploadResourcesActivity;
+import com.yxy.practicaltool.common.Constants;
 import com.yxy.practicaltool.dao.UploadResourcesDaoDao;
+import com.yxy.practicaltool.utils.FileUtil;
 import com.yxy.practicaltool.utils.SPUtil;
 
 import butterknife.Bind;
@@ -34,6 +36,9 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setTopBar(R.layout.activity_main, "");
         ButterKnife.bind(this);
+
+        FileUtil ft = new FileUtil();
+        ft.creatSDDir(Constants.DATA_DIR);
     }
 
     @OnClick({R.id.tv_main_1, R.id.tv_main_2, R.id.tv_main_3, R.id.tv_main_4})

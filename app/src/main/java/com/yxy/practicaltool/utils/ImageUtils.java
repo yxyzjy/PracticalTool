@@ -105,9 +105,9 @@ public class ImageUtils {
     }
     //获取无旋转的bitmap
     public Bitmap getBitmapByPathNoRotate(String srcPath) {
-
+        FileUtil ft = new FileUtil();
+        ft.creatSDDir(Constants.DATA_DIR);
         Bitmap bm = getBitmapByPath(srcPath);
-
         return bm;
     }
 
@@ -295,7 +295,6 @@ public class ImageUtils {
 //            ByteArrayInputStream isBm = new ByteArrayInputStream(baos.toByteArray());//把压缩后的数据baos存放到ByteArrayInputStream中
 //            bitmap = BitmapFactory.decodeStream(isBm, null, null);//把ByteArrayInputStream数据生成图片
 //            L.e("======================压缩 后bitmap.getByteCount()=" + bitmap.getByteCount());
-
             try {
                 fos = new FileOutputStream(filePath);
                 fos.write(baos.toByteArray());
@@ -354,7 +353,6 @@ public class ImageUtils {
     /**
      * 加载hashName加载本地图片
      *
-     * @param filePahtAndName
      * @return
      */
    /* public Bitmap loadHashNameImage(String filePahtAndName) {

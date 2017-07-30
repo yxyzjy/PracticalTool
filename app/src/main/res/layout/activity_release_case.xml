@@ -26,6 +26,8 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
             android:layout_weight="1"
+            android:maxLines="1"
+            android:ellipsize="end"
             android:gravity="center_vertical|right"
             android:hint="选择案例分类"
             android:textColor="@color/text_color" />
@@ -58,6 +60,8 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
             android:layout_weight="1"
+            android:maxLines="1"
+            android:ellipsize="end"
             android:gravity="center_vertical|right"
             android:hint="输入案例标题"
             android:textColor="@color/text_color" />
@@ -91,6 +95,8 @@
             android:layout_marginLeft="10dp"
             android:layout_weight="1"
             android:gravity="center_vertical|right"
+            android:maxLines="1"
+            android:ellipsize="end"
             android:hint="输入关键字"
             android:textColor="@color/text_color" />
 
@@ -124,6 +130,8 @@
             android:layout_weight="1"
             android:gravity="center_vertical|right"
             android:hint="输入页面描述"
+            android:maxLines="1"
+            android:ellipsize="end"
             android:textColor="@color/text_color" />
 
         <ImageView

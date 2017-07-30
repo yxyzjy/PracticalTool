@@ -247,6 +247,7 @@ public class UploadResourcesActivity extends BaseActivity implements RadioGroup.
                     String latValue = exifInterface.getAttribute(ExifInterface.TAG_GPS_LATITUDE);
                     String lngValue = exifInterface.getAttribute(ExifInterface.TAG_GPS_LONGITUDE);
                     imageToPath = imageUtils.compressImageToPath(imageUtils.getBitmapByPathNoRotate(path));
+//                    imageToPath = imageUtils.compressImageToPath(BitmapFactory.decodeFile(filePath));
                     PicInfo picInfo = new PicInfo();
                     picInfo.pic = imageToPath;
                     picInfo.latValue = latValue;

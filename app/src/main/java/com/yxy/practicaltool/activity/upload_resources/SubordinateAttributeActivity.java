@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -19,6 +20,8 @@ import com.yxy.practicaltool.myview.CustomRecyclerView;
 import com.zhy.base.adapter.recyclerview.OnItemClickListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -32,6 +35,7 @@ public class SubordinateAttributeActivity extends BaseActivity {
     private AttributeAdapter leftAdapter, rightAdapter;
     private ArrayList<AttributeListRes.DataBean> liftList;
     private ArrayList<AttributeListRes.DataBean> rightList;
+    private Map<Integer, AttributeListRes.DataBean> selectList;
     private String parentId = "0";
     private int leftLastClickPos = -1, rightLastPos = -1;
 
@@ -45,6 +49,7 @@ public class SubordinateAttributeActivity extends BaseActivity {
     @Override
     public void initView() {
         super.initView();
+        selectList = new HashMap<>();
         rightList = new ArrayList<>();
         liftList = new ArrayList<>();
         rvLeft.setLayoutManager(new LinearLayoutManager(this));
@@ -86,6 +91,11 @@ public class SubordinateAttributeActivity extends BaseActivity {
             @Override
             public void onItemClick(ViewGroup parent, View view, Object o, int position) {
                 rightList.get(position).isSelect = !rightList.get(position).isSelect;
+                if (rightList.get(position).isSelect) {
+                    selectList.put(rightList.get(position).ID, rightList.get(position));
+                } else {
+                    selectList.remove(rightList.get(position).ID);
+                }
                 rightAdapter.notifyDataSetChanged();
                 parentId = rightList.get(position).ID + "";
             }
@@ -112,31 +122,32 @@ public class SubordinateAttributeActivity extends BaseActivity {
         } else {
             rightList.clear();
             AttributeListRes res = JSONObject.parseObject(resulte, AttributeListRes.class);
+            for (int i = 0; i < res.data.size(); i++) {
+                if (selectList.containsKey(res.data.get(i).ID)) {
+                    res.data.get(i).isSelect = true;
+                }
+            }
             rightList.addAll(res.data);
             rightAdapter.notifyDataSetChanged();
         }
     }
 
     public void rightClickSave(View view) {
-        ArrayList<AttributeListRes.DataBean> selectList = new ArrayList<>();
-        for (int i = 0; i < rightList.size(); i++) {
-            if (rightList.get(i).isSelect) {
-                selectList.add(rightList.get(i));
-            }
-        }
         if (selectList.size() < 1) {
             ToastUtils.showToast(mContext, "请选择产品属性");
             return;
         }
         String seleName = "";
         String seleId = "";
-        for (int i = 0; i < selectList.size(); i++) {
-            if (i == 0) {
-                seleName = seleName + selectList.get(i).Cname;
-                seleId = seleId + selectList.get(i).ID;
+
+        for (Map.Entry<Integer, AttributeListRes.DataBean> entry : selectList.entrySet()) {
+            AttributeListRes.DataBean value = entry.getValue();
+            if (TextUtils.isEmpty(seleName)) {
+                seleName = value.Cname;
+                seleId = value.ID + "";
             } else {
-                seleName = seleName + "," + selectList.get(i).Cname;
-                seleId = seleId + "," + selectList.get(i).ID;
+                seleName = seleName + "," + value.Cname;
+                seleId = seleId + "," + value.ID;
             }
         }
         Intent intent = new Intent();
