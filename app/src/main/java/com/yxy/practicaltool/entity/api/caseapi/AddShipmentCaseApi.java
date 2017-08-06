@@ -15,7 +15,7 @@ import rx.Observable;
 
 public class AddShipmentCaseApi extends CaseBaseApi {
 
-    public String title, image, des, Seo_key,Seo_Description,ProductAttr;
+    public String title, image, content, Seo_key,Seo_Description,ProductAttr;
     public int id, Cid, H_State;
 
     public AddShipmentCaseApi() {
@@ -28,8 +28,8 @@ public class AddShipmentCaseApi extends CaseBaseApi {
     public Observable getObservable(Retrofit retrofit) {
         HttpService service = retrofit.create(HttpService.class);
         String data = Utils.getCurrentDay();
-        return service.String("cn",Utils.md5(data),
-                id, title, image,  des, Seo_key, Seo_Description, "1");
+        return service.addShipmentCase("cn",Utils.md5(data),
+                id, title, image,  content, Seo_key, Seo_Description, "1");
     }
 
     @Override

@@ -305,6 +305,7 @@ public class UploadResourcesActivity extends BaseActivity implements RadioGroup.
     }
 
     public void rightClickSave(View view) {
+        commitPic(picList.get(0).pic, 0);
         if (checkEditAll()) {
             if (Utils.isWifiConnected(mContext)) {
                 commitPic(picList.get(0).pic, 0);

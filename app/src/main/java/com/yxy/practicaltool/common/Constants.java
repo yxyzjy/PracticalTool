@@ -20,4 +20,5 @@ public class Constants {
     public static final String DATA_DIR = "/practicalTool/";
 
     public static final String  UpImgBase64= "http://122.114.102.73:8090/WebService.asmx/UpImgBase64";
+    public static final String  UpImgBase64Post= "http://api.ljyhm.com/WebService_CASE.asmx/UpImgBase64";
 }

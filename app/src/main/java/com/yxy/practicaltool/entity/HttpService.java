@@ -70,7 +70,7 @@ public interface HttpService {
                                             @Query("ProductAttr") String ProductAttr, @Query("PhotoDetail") String PhotoDetail);
 
     @GET("Add_ShipmentCase")
-    Observable<AttributeListRes> String(@Query("_lan") String _lan, @Query("secret_key") String secret_key, @Query("ParentId") int ParentId,
+    Observable<AttributeListRes> addShipmentCase(@Query("_lan") String _lan, @Query("secret_key") String secret_key, @Query("ParentId") int ParentId,
                                             @Query("_Title") String _Title, @Query("_Img") String _Img, @Query("Content") String Content,
                                             @Query("Seo_key") String Seo_key, @Query("Seo_Description") String Seo_Description, @Query("key_type") String key_type);
 

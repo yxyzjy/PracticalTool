@@ -79,16 +79,20 @@ public class ReleaseCaseActivity extends BaseActivity implements AdapterView.OnI
     TextView tvContent4;
     @Bind(R.id.ll_upload_4)
     LinearLayout llUpload4;
+    @Bind(R.id.tv_content_5)
+    TextView tvContent5;
+    @Bind(R.id.ll_upload_5)
+    LinearLayout llUpload5;
     @Bind(R.id.gv_select_pic)
     GridView gvSelectPic;
 
     private SelectPhotoDialog selectPhotoDialog;
-    private String title, key, des, fileName, filePath, imageToPath;
+    private String title, key, des, fileName, filePath, imageToPath,neirong;
     private GridViewCaseImgAdapter viewImgAdapter;
     private ArrayList<PicInfo> picList = new ArrayList<>();
     ImageUtils imageUtils;
     private CaseTypeRes.DataBean caseTypeRes;
-    private int pos;
+    private int pos,fengmianPos=-1;
     private String piclists;
     private AddShipmentCaseApi shipmentCaseApi;
 
@@ -109,7 +113,7 @@ public class ReleaseCaseActivity extends BaseActivity implements AdapterView.OnI
         shipmentCaseApi = new AddShipmentCaseApi();
     }
 
-    @OnClick({R.id.ll_upload_1, R.id.ll_upload_2, R.id.ll_upload_3, R.id.ll_upload_4})
+    @OnClick({R.id.ll_upload_1, R.id.ll_upload_2, R.id.ll_upload_3, R.id.ll_upload_4,R.id.ll_upload_5})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_upload_1:
@@ -123,6 +127,9 @@ public class ReleaseCaseActivity extends BaseActivity implements AdapterView.OnI
                 break;
             case R.id.ll_upload_4:
                 ActivitySimpleEditLines.startSimpleEdit(ReleaseCaseActivity.this, "页面描述", "输入页面描述", "", ActivitySimpleEdit.INPUT_NAME, 200, 203);
+                break;
+            case R.id.ll_upload_5:
+                ActivitySimpleEditLines.startSimpleEdit(ReleaseCaseActivity.this, "内容", "输入内容", "", ActivitySimpleEdit.INPUT_NAME, 200, 205);
                 break;
         }
     }
@@ -170,6 +177,10 @@ public class ReleaseCaseActivity extends BaseActivity implements AdapterView.OnI
                 caseTypeRes = (CaseTypeRes.DataBean) data.getSerializableExtra("case_type");
                 tvContent1.setText(caseTypeRes.Title);
             }
+            if (requestCode == 205) {
+                neirong = data.getStringExtra("result");
+                tvContent5.setText(des);
+            }
 
             if (requestCode == 112) {//从相册选
                 try {
@@ -198,7 +209,11 @@ public class ReleaseCaseActivity extends BaseActivity implements AdapterView.OnI
                 key = data.getStringExtra("result");
                 pos = data.getIntExtra("pos", -1);
                 if (pos != -1) {
-                    picList.get(pos).picDes = key;
+                    if (TextUtils.isEmpty(key)){
+                        picList.get(pos).picDes = "";
+                    }else {
+                        picList.get(pos).picDes = key;
+                    }
                 }
                 viewImgAdapter.notifyDataSetChanged();
             }
@@ -333,6 +348,7 @@ public class ReleaseCaseActivity extends BaseActivity implements AdapterView.OnI
                         picList.get(lastPos).isFengmian = false;
                     }
                     picList.get(position).isFengmian = true;
+                    fengmianPos = position;
                     lastPos = position;
                     notifyDataSetChanged();
                 }
@@ -374,16 +390,26 @@ public class ReleaseCaseActivity extends BaseActivity implements AdapterView.OnI
             ToastUtils.showToast(mContext, "请选择图片");
             return false;
         }
+        if (fengmianPos == -1){
+            ToastUtils.showToast(mContext,"请设置图片封面");
+            return false;
+        }
         return true;
     }
     private Request<String> request;
 
+    String data = Utils.getCurrentDay();
     private void commitPic(String path, int sign) {
         request = NoHttp.createStringRequest(Constants.UpImgBase64, RequestMethod.POST);
+        /*request.add("secret_key", Utils.md5(data));
+        request.add("key_type", "1");
+        request.add("sign", sign);*/
+
         request.add("random", SPUtil.getString("random", ""));
         request.add("desUserId", SPUtil.getString("desUserId", ""));
         request.add("sign", sign);
         request.add("txtFileName", Utils.bitmapToBase64(BitmapHelper.getImage(path, 100)));
+//        request.add("IntxtFileName", Utils.bitmapToBase64(BitmapHelper.getImage(path, 100)));
 
         CallServer.getRequestInstance().add(ReleaseCaseActivity.this, 1, request, new CustomHttpListener(this, true, Uploadbase64Res.class) {
             @Override
@@ -405,20 +431,24 @@ public class ReleaseCaseActivity extends BaseActivity implements AdapterView.OnI
     }
 
     private void submitData() {
+
+        String topDes = neirong+"</br>";
+        String centerDes = "";
         for (int i = 0; i < picList.size(); i++) {
             PicInfo picInfo = picList.get(i);
-            if (i == 0) {
-                piclists = "0|" + picInfo.serverFileName + "|" + picInfo.serverThumbnailFileName + "|" + picInfo.lngValue + ";" + picInfo.latValue;
-            } else {
-                piclists = ",0|" + picInfo.serverFileName + "|" + picInfo.serverThumbnailFileName + "|" + picInfo.lngValue + ";" + picInfo.latValue;
-            }
+            centerDes = centerDes +"<img "+picInfo.serverFileName+"/></br>"+picInfo.picDes+"</br>";
+//            if (i == 0) {
+//                piclists = "0|" + picInfo.serverFileName + "|" + picInfo.serverThumbnailFileName + "|" + picInfo.lngValue + ";" + picInfo.latValue;
+//            } else {
+//                piclists = ",0|" + picInfo.serverFileName + "|" + picInfo.serverThumbnailFileName + "|" + picInfo.lngValue + ";" + picInfo.latValue;
+//            }
         }
         shipmentCaseApi.id = caseTypeRes.Id;
         shipmentCaseApi.title = title;
-        shipmentCaseApi.image = piclists;
-        shipmentCaseApi.des = des;
-        shipmentCaseApi.Seo_key = "aaa";
-        shipmentCaseApi.Seo_Description = "aaaa";
+        shipmentCaseApi.image = picList.get(fengmianPos).serverFileName;
+        shipmentCaseApi.content = topDes+centerDes;
+        shipmentCaseApi.Seo_key = key;
+        shipmentCaseApi.Seo_Description = des;
         httpManager.doHttpDeal(shipmentCaseApi);
     }
 

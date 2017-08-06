@@ -76,10 +76,10 @@ public class CaseTypeActivity extends BaseActivity {
                     ActivitySimpleEdit.startSimpleEdit(CaseTypeActivity.this, "案例分类", "输入案例分类名称", "", ActivitySimpleEdit.INPUT_NAME, 20, 201);
                     return;
                 }
-                list.get(position).isSelect = true;
                 if (lastClickPos != -1) {
                     list.get(lastClickPos).isSelect = false;
                 }
+                list.get(position).isSelect = true;
                 lastClickPos = position;
                 adapter.notifyDataSetChanged();
             }
@@ -123,6 +123,7 @@ public class CaseTypeActivity extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && data != null) {
             if (requestCode == 101) {
+                lastClickPos = -1;
                 httpManager.doHttpDeal(getCaseApi);
             }
         }
