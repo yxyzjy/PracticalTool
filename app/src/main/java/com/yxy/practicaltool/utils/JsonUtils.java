@@ -19,7 +19,6 @@ public class JsonUtils {
 			object = new JSONObject(json);
 			return object;
 		} catch (JSONException e) {
-
 			e.printStackTrace();
 		}
 		return object;

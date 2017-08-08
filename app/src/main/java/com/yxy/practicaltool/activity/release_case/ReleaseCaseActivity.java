@@ -35,6 +35,7 @@ import com.yxy.practicaltool.activity.common.ActivitySimpleEditLines;
 import com.yxy.practicaltool.activity.upload_resources.UploadResourcesActivity;
 import com.yxy.practicaltool.adapter.GridViewCaseImgAdapter;
 import com.yxy.practicaltool.adapter.GridViewImgAdapter;
+import com.yxy.practicaltool.bean.EmptyBean;
 import com.yxy.practicaltool.bean.PicInfo;
 import com.yxy.practicaltool.common.Constants;
 import com.yxy.practicaltool.common.ToastUtils;
@@ -44,14 +45,18 @@ import com.yxy.practicaltool.entity.resulte.AddProduceRes;
 import com.yxy.practicaltool.entity.resulte.AttributeListRes;
 import com.yxy.practicaltool.entity.resulte.CaseTypeRes;
 import com.yxy.practicaltool.entity.resulte.CompanyListRes;
+import com.yxy.practicaltool.entity.resulte.UpLoadbase64PostRes;
 import com.yxy.practicaltool.entity.resulte.Uploadbase64Res;
 import com.yxy.practicaltool.nohttp.CallServer;
 import com.yxy.practicaltool.nohttp.CustomHttpListener;
 import com.yxy.practicaltool.utils.BitmapHelper;
 import com.yxy.practicaltool.utils.FileUtil;
 import com.yxy.practicaltool.utils.ImageUtils;
+import com.yxy.practicaltool.utils.JsonUtils;
 import com.yxy.practicaltool.utils.SPUtil;
 import com.yxy.practicaltool.utils.Utils;
+
+import org.json.JSONException;
 
 import java.io.File;
 import java.io.IOException;
@@ -87,12 +92,12 @@ public class ReleaseCaseActivity extends BaseActivity implements AdapterView.OnI
     GridView gvSelectPic;
 
     private SelectPhotoDialog selectPhotoDialog;
-    private String title, key, des, fileName, filePath, imageToPath,neirong;
+    private String title, key, des, fileName, filePath, imageToPath, neirong;
     private GridViewCaseImgAdapter viewImgAdapter;
     private ArrayList<PicInfo> picList = new ArrayList<>();
     ImageUtils imageUtils;
     private CaseTypeRes.DataBean caseTypeRes;
-    private int pos,fengmianPos=-1;
+    private int pos, fengmianPos = -1, sign;
     private String piclists;
     private AddShipmentCaseApi shipmentCaseApi;
 
@@ -113,7 +118,7 @@ public class ReleaseCaseActivity extends BaseActivity implements AdapterView.OnI
         shipmentCaseApi = new AddShipmentCaseApi();
     }
 
-    @OnClick({R.id.ll_upload_1, R.id.ll_upload_2, R.id.ll_upload_3, R.id.ll_upload_4,R.id.ll_upload_5})
+    @OnClick({R.id.ll_upload_1, R.id.ll_upload_2, R.id.ll_upload_3, R.id.ll_upload_4, R.id.ll_upload_5})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_upload_1:
@@ -209,9 +214,9 @@ public class ReleaseCaseActivity extends BaseActivity implements AdapterView.OnI
                 key = data.getStringExtra("result");
                 pos = data.getIntExtra("pos", -1);
                 if (pos != -1) {
-                    if (TextUtils.isEmpty(key)){
+                    if (TextUtils.isEmpty(key)) {
                         picList.get(pos).picDes = "";
-                    }else {
+                    } else {
                         picList.get(pos).picDes = key;
                     }
                 }
@@ -364,9 +369,9 @@ public class ReleaseCaseActivity extends BaseActivity implements AdapterView.OnI
     }
 
     public void rightClickSave(View view) {
-        if (checkEditAll()) {
-                commitPic(picList.get(0).pic, 0);
-        }
+//        if (checkEditAll()) {
+            commitPic(picList.get(0).pic, 0);
+//        }
     }
 
     private boolean checkEditAll() {
@@ -386,45 +391,64 @@ public class ReleaseCaseActivity extends BaseActivity implements AdapterView.OnI
             ToastUtils.showToast(mContext, "请输入页面描述");
             return false;
         }
-        if (picList.size()<1){
+        if (picList.size() < 1) {
             ToastUtils.showToast(mContext, "请选择图片");
             return false;
         }
-        if (fengmianPos == -1){
-            ToastUtils.showToast(mContext,"请设置图片封面");
+        if (fengmianPos == -1) {
+            ToastUtils.showToast(mContext, "请设置图片封面");
             return false;
         }
         return true;
     }
+
     private Request<String> request;
 
     String data = Utils.getCurrentDay();
-    private void commitPic(String path, int sign) {
-        request = NoHttp.createStringRequest(Constants.UpImgBase64, RequestMethod.POST);
-        /*request.add("secret_key", Utils.md5(data));
+
+    private void commitPic(String path, final int sign) {
+        this.sign = sign;
+        request = NoHttp.createStringRequest(Constants.UpImgBase64Post, RequestMethod.POST);
+        request.add("secret_key", Utils.md5(data));
         request.add("key_type", "1");
-        request.add("sign", sign);*/
-
-        request.add("random", SPUtil.getString("random", ""));
-        request.add("desUserId", SPUtil.getString("desUserId", ""));
-        request.add("sign", sign);
         request.add("txtFileName", Utils.bitmapToBase64(BitmapHelper.getImage(path, 100)));
-//        request.add("IntxtFileName", Utils.bitmapToBase64(BitmapHelper.getImage(path, 100)));
 
-        CallServer.getRequestInstance().add(ReleaseCaseActivity.this, 1, request, new CustomHttpListener(this, true, Uploadbase64Res.class) {
+//        request.add("random", SPUtil.getString("random", ""));
+//        request.add("desUserId", SPUtil.getString("desUserId", ""));
+//        request.add("sign", sign);
+//        request.add("txtFileName", Utils.bitmapToBase64(BitmapHelper.getImage(path, 100)));
+
+
+        CallServer.getRequestInstance().add(ReleaseCaseActivity.this, 1, request, new CustomHttpListener(this, true, EmptyBean.class) {
             @Override
             public void doWork(int what, Object data, boolean isSuccess) {
                 if (isSuccess) {
-                    Uploadbase64Res res = (Uploadbase64Res) data;
-                    picList.get(res.data.sign).serverFileName = res.data.serverFileName;
-                    picList.get(res.data.sign).serverThumbnailFileName = res.data.serverThumbnailFileName;
-                    if (res.data.sign < picList.size() - 1) {
-                        int num = res.data.sign + 1;
+                    org.json.JSONObject jsonObject = JsonUtils.parseFromJson(data.toString());
+                    org.json.JSONArray dataJsonObject = JsonUtils.getJsonArry(jsonObject, "data");
+                    try {
+                        org.json.JSONObject itemObject = dataJsonObject.getJSONObject(0);
+                        String ImgUrl = JsonUtils.getJsonString(itemObject, "ImgUrl");
+                        picList.get(sign).serverFileName = ImgUrl;
+                        if (sign < picList.size() - 1) {
+                            int num = sign + 1;
+                            commitPic(picList.get(num).pic, num);
+                        } else {
+                            submitData();
+                        }
+                    } catch (JSONException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+//            CaseTypeRes res = JSONObject.parseObject(resulte, CaseTypeRes.class);
+//            list.addAll(res.data);
+                   /* UpLoadbase64PostRes res = (UpLoadbase64PostRes) data;
+                    picList.get(sign).serverFileName = res.data.get(0).ImgUrl;
+                    if (sign < picList.size() - 1) {
+                        int num = sign + 1;
                         commitPic(picList.get(num).pic, num);
                     } else {
                         submitData();
-                    }
-                } else {
+                    }*/
                 }
             }
         }, true, true);
@@ -432,21 +456,16 @@ public class ReleaseCaseActivity extends BaseActivity implements AdapterView.OnI
 
     private void submitData() {
 
-        String topDes = neirong+"</br>";
+        String topDes = neirong + "</br>";
         String centerDes = "";
         for (int i = 0; i < picList.size(); i++) {
             PicInfo picInfo = picList.get(i);
-            centerDes = centerDes +"<img "+picInfo.serverFileName+"/></br>"+picInfo.picDes+"</br>";
-//            if (i == 0) {
-//                piclists = "0|" + picInfo.serverFileName + "|" + picInfo.serverThumbnailFileName + "|" + picInfo.lngValue + ";" + picInfo.latValue;
-//            } else {
-//                piclists = ",0|" + picInfo.serverFileName + "|" + picInfo.serverThumbnailFileName + "|" + picInfo.lngValue + ";" + picInfo.latValue;
-//            }
+            centerDes = centerDes + "<img " + picInfo.serverFileName + "/></br>" + picInfo.picDes + "</br>";
         }
         shipmentCaseApi.id = caseTypeRes.Id;
         shipmentCaseApi.title = title;
         shipmentCaseApi.image = picList.get(fengmianPos).serverFileName;
-        shipmentCaseApi.content = topDes+centerDes;
+        shipmentCaseApi.content = topDes + centerDes;
         shipmentCaseApi.Seo_key = key;
         shipmentCaseApi.Seo_Description = des;
         httpManager.doHttpDeal(shipmentCaseApi);
@@ -455,7 +474,7 @@ public class ReleaseCaseActivity extends BaseActivity implements AdapterView.OnI
     @Override
     protected void processSuccessResult(String resulte, String mothead) {
         super.processSuccessResult(resulte, mothead);
-        if (mothead.equals(shipmentCaseApi.getMethod())){
+        if (mothead.equals(shipmentCaseApi.getMethod())) {
             AddProduceRes res = JSONObject.parseObject(resulte, AddProduceRes.class);
             if (res.ret == 200) {
                 ToastUtils.showToast(mContext, res.msg);

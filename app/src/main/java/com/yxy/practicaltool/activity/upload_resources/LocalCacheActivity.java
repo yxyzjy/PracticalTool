@@ -178,11 +178,12 @@ public class LocalCacheActivity extends BaseActivity {
             public void doWork(int what, Object data, boolean isSuccess) {
                 if (isSuccess) {
                     Uploadbase64Res res = (Uploadbase64Res) data;
-                    picInfos.get(res.data.sign).serverFileName = res.data.serverFileName;
-                    picInfos.get(res.data.sign).serverThumbnailFileName = res.data.serverThumbnailFileName;
+                    int sign = Integer.parseInt(res.data.sign);
+                    picInfos.get(sign).serverFileName = res.data.serverFileName;
+                    picInfos.get(sign).serverThumbnailFileName = res.data.serverThumbnailFileName;
                     L.e("==res.data.sign==" + res.data.sign + "=picInfos.size()=" + picInfos.size());
-                    if (res.data.sign < picInfos.size() - 1) {
-                        int num = res.data.sign + 1;
+                    if (sign < picInfos.size() - 1) {
+                        int num = sign + 1;
                         commitPic(picInfos.get(num).pic, num);
                     } else {
                         submitData();

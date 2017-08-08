@@ -4,11 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.yxy.practicaltool.R;
@@ -32,8 +32,6 @@ public class SubordinatePinZhongActivity extends BaseActivity {
     EditText etSubUnitsSearch;
     @Bind(R.id.btn_sub_units_search)
     ImageView btnSubUnitsSearch;
-    @Bind(R.id.tv_add_units)
-    TextView tvAddUnits;
     @Bind(R.id.rv_subordinate_unit)
     CustomRecyclerView rvSubordinateUnit;
     private SubordinateUnitsAdapter adapter;
@@ -45,7 +43,7 @@ public class SubordinatePinZhongActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTopBar(R.layout.activity_subordinate_units, "所属品种");
+        setTopBar(R.layout.activity_subordinate_pinzhong, "所属品种");
         ButterKnife.bind(this);
     }
 
@@ -91,7 +89,7 @@ public class SubordinatePinZhongActivity extends BaseActivity {
         super.processSuccessResult(resulte, mothead);
         if (mothead.equals(varietiesListApi.getMethod())) {
             list.clear();
-            lastClickPos =-1;
+            lastClickPos = -1;
             CompanyListRes res = JSONObject.parseObject(resulte, CompanyListRes.class);
             list.addAll(res.data);
             adapter.notifyDataSetChanged();
@@ -109,5 +107,15 @@ public class SubordinatePinZhongActivity extends BaseActivity {
         intent.putExtras(bundle);
         setResult(RESULT_OK, intent);
         finish();
+    }
+
+    @OnClick(R.id.btn_sub_units_search)
+    public void onViewClicked() {
+        if (TextUtils.isEmpty(etSubUnitsSearch.getText().toString())) {
+            ToastUtils.showToast(mContext, "请输入搜索内容");
+        } else {
+            varietiesSearch = etSubUnitsSearch.getText().toString();
+            doHttp();
+        }
     }
 }

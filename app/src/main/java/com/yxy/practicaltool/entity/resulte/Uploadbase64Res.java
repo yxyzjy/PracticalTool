@@ -17,7 +17,7 @@ public class Uploadbase64Res {
     public DataBean data;
     public String msg;
 
-    public static class DataBean {
+    public class DataBean {
         /**
          * serverFileName : /upload/201707/27/201707271703414843
          * serverThumbnailFileName : /upload/201707/27/small_201707271703414843
@@ -26,6 +26,6 @@ public class Uploadbase64Res {
 
         public String serverFileName;
         public String serverThumbnailFileName;
-        public int sign;
+        public String sign;
     }
 }

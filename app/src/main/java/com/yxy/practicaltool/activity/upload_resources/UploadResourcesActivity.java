@@ -290,10 +290,11 @@ public class UploadResourcesActivity extends BaseActivity implements RadioGroup.
             public void doWork(int what, Object data, boolean isSuccess) {
                 if (isSuccess) {
                     Uploadbase64Res res = (Uploadbase64Res) data;
-                    picList.get(res.data.sign).serverFileName = res.data.serverFileName;
-                    picList.get(res.data.sign).serverThumbnailFileName = res.data.serverThumbnailFileName;
-                    if (res.data.sign < picList.size() - 1) {
-                        int num = res.data.sign + 1;
+                    int sign = Integer.parseInt(res.data.sign);
+                    picList.get(sign).serverFileName = res.data.serverFileName;
+                    picList.get(sign).serverThumbnailFileName = res.data.serverThumbnailFileName;
+                    if (sign < picList.size() - 1) {
+                        int num = sign + 1;
                         commitPic(picList.get(num).pic, num);
                     } else {
                         submitData();
@@ -305,7 +306,7 @@ public class UploadResourcesActivity extends BaseActivity implements RadioGroup.
     }
 
     public void rightClickSave(View view) {
-        commitPic(picList.get(0).pic, 0);
+//        commitPic(picList.get(0).pic, 0);
         if (checkEditAll()) {
             if (Utils.isWifiConnected(mContext)) {
                 commitPic(picList.get(0).pic, 0);
