@@ -11,17 +11,17 @@ public class UpLoadbase64PostRes {
 
     /**
      * ret : 200
-     * data : [{"ImgUrl":" /uploadfiles/news/170808201708081753147656_thumbs.jpg"}]
-     * msg : 登录成功
+     * data : [{"ImgUrl":"/uploadfiles/news/170810201708101813532500_thumbs.jpg"}]
+     * msg : 图片上传成功!
      */
 
-    public int ret;
+    public String ret;
     public String msg;
     public List<DataBean> data;
 
     public static class DataBean {
         /**
-         * ImgUrl :  /uploadfiles/news/170808201708081753147656_thumbs.jpg
+         * ImgUrl : /uploadfiles/news/170810201708101813532500_thumbs.jpg
          */
 
         public String ImgUrl;

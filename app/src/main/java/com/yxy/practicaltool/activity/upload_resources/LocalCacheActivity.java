@@ -205,9 +205,9 @@ public class LocalCacheActivity extends BaseActivity {
             }
         }
         addProductApi.CName = list.get(posI).getName2();
-        addProductApi.Vid = list.get(posI).getPinzhongId();
-        addProductApi.Cid = list.get(posI).getUnitsId();
-        addProductApi.H_State = list.get(posI).getH_State();
+        addProductApi.Vid = list.get(posI).getPinzhongId()+"";
+        addProductApi.Cid = list.get(posI).getUnitsId()+"";
+        addProductApi.H_State = list.get(posI).getH_State()+"";
         addProductApi.Num = list.get(posI).getNum4();
         addProductApi.Describe = list.get(posI).getDes5();
         addProductApi.Remarks = list.get(posI).getTip6();

@@ -369,9 +369,9 @@ public class ReleaseCaseActivity extends BaseActivity implements AdapterView.OnI
     }
 
     public void rightClickSave(View view) {
-//        if (checkEditAll()) {
+        if (checkEditAll()) {
             commitPic(picList.get(0).pic, 0);
-//        }
+        }
     }
 
     private boolean checkEditAll() {
@@ -419,36 +419,18 @@ public class ReleaseCaseActivity extends BaseActivity implements AdapterView.OnI
 //        request.add("txtFileName", Utils.bitmapToBase64(BitmapHelper.getImage(path, 100)));
 
 
-        CallServer.getRequestInstance().add(ReleaseCaseActivity.this, 1, request, new CustomHttpListener(this, true, EmptyBean.class) {
+        CallServer.getRequestInstance().add(ReleaseCaseActivity.this, 1, request, new CustomHttpListener(this, true, UpLoadbase64PostRes.class) {
             @Override
             public void doWork(int what, Object data, boolean isSuccess) {
                 if (isSuccess) {
-                    org.json.JSONObject jsonObject = JsonUtils.parseFromJson(data.toString());
-                    org.json.JSONArray dataJsonObject = JsonUtils.getJsonArry(jsonObject, "data");
-                    try {
-                        org.json.JSONObject itemObject = dataJsonObject.getJSONObject(0);
-                        String ImgUrl = JsonUtils.getJsonString(itemObject, "ImgUrl");
-                        picList.get(sign).serverFileName = ImgUrl;
-                        if (sign < picList.size() - 1) {
-                            int num = sign + 1;
-                            commitPic(picList.get(num).pic, num);
-                        } else {
-                            submitData();
-                        }
-                    } catch (JSONException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    }
-//            CaseTypeRes res = JSONObject.parseObject(resulte, CaseTypeRes.class);
-//            list.addAll(res.data);
-                   /* UpLoadbase64PostRes res = (UpLoadbase64PostRes) data;
+                    UpLoadbase64PostRes res = (UpLoadbase64PostRes) data;
                     picList.get(sign).serverFileName = res.data.get(0).ImgUrl;
                     if (sign < picList.size() - 1) {
                         int num = sign + 1;
                         commitPic(picList.get(num).pic, num);
                     } else {
                         submitData();
-                    }*/
+                    }
                 }
             }
         }, true, true);

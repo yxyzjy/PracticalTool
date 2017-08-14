@@ -327,13 +327,13 @@ public class UploadResourcesActivity extends BaseActivity implements RadioGroup.
             if (i == 0) {
                 piclists = "0|" + picInfo.serverFileName + "|" + picInfo.serverThumbnailFileName + "|" + picInfo.lngValue + ";" + picInfo.latValue;
             } else {
-                piclists = piclists+",0|" + picInfo.serverFileName + "|" + picInfo.serverThumbnailFileName + "|" + picInfo.lngValue + ";" + picInfo.latValue;
+                piclists = piclists + ",0|" + picInfo.serverFileName + "|" + picInfo.serverThumbnailFileName + "|" + picInfo.lngValue + ";" + picInfo.latValue;
             }
         }
         addProductApi.CName = name2;
-        addProductApi.Vid = pinzhongData.ID;
-        addProductApi.Cid = unitsData.ID;
-        addProductApi.H_State = sallState;
+        addProductApi.Vid = pinzhongData.ID + "";
+        addProductApi.Cid = unitsData.ID + "";
+        addProductApi.H_State = sallState + "";
         addProductApi.Num = num4;
         addProductApi.Describe = des5;
         addProductApi.Remarks = tip6;
@@ -350,9 +350,9 @@ public class UploadResourcesActivity extends BaseActivity implements RadioGroup.
         for (int i = 0; i < picList.size(); i++) {
             PicInfo picInfo = picList.get(i);
             if (i == 0) {
-                piclists = picInfo.pic +"|" + picInfo.lngValue + ";" + picInfo.latValue;
+                piclists = picInfo.pic + "|" + picInfo.lngValue + ";" + picInfo.latValue;
             } else {
-                piclists = piclists+"," + picInfo.pic + "|" + picInfo.lngValue + ";" + picInfo.latValue;
+                piclists = piclists + "," + picInfo.pic + "|" + picInfo.lngValue + ";" + picInfo.latValue;
             }
         }
 
