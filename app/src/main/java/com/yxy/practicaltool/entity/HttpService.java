@@ -60,10 +60,11 @@ public interface HttpService {
     @GET("Get_Case")
     Observable<CaseTypeRes> getCase(@Query("_lan") String _lan, @Query("secret_key") String secret_key, @Query("key_type") String key_type);
 
+    @GET("Add_Case")
+    Observable<CaseTypeRes> addCase(@Query("_lan") String _lan, @Query("secret_key") String secret_key, @Query("key_type") String key_type, @Query("Title") String Title, @Query("Info") String Info);
 
 
-
-       @GET("AddProduct")
+    @GET("AddProduct")
     Observable<AttributeListRes> addProduct(@Query("random") String random, @Query("desUserId") String desUserId, @Query("CName") String CName,
                                             @Query("Vid") String Vid, @Query("Cid") String Cid, @Query("H_State") String H_State,
                                             @Query("Num") String Num, @Query("Describe") String Describe, @Query("Remarks") String Remarks,
@@ -71,7 +72,8 @@ public interface HttpService {
 
     @GET("Add_ShipmentCase")
     Observable<AttributeListRes> addShipmentCase(@Query("_lan") String _lan, @Query("secret_key") String secret_key, @Query("ParentId") int ParentId,
-                                            @Query("_Title") String _Title, @Query("_Img") String _Img, @Query("Content") String Content,
-                                            @Query("Seo_key") String Seo_key, @Query("Seo_Description") String Seo_Description, @Query("key_type") String key_type);
+                                                 @Query("_Title") String _Title, @Query("_Img") String _Img, @Query("Content") String Content,
+                                                 @Query("Seo_key") String Seo_key, @Query("Seo_Description") String Seo_Description,
+                                                 @Query("key_type") String key_type, @Query("Summary") String Summary);
 
 }

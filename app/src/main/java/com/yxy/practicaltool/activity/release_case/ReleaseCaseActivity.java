@@ -438,18 +438,22 @@ public class ReleaseCaseActivity extends BaseActivity implements AdapterView.OnI
 
     private void submitData() {
 
-        String topDes = neirong + "</br>";
         String centerDes = "";
         for (int i = 0; i < picList.size(); i++) {
             PicInfo picInfo = picList.get(i);
-            centerDes = centerDes + "<img " + picInfo.serverFileName + "/></br>" + picInfo.picDes + "</br>";
+            if (i == picList.size() - 1) {
+                centerDes = centerDes + "<img href=\"" + picInfo.serverFileName + "\"/>|" + picInfo.picDes + "</br>" + neirong;
+            } else {
+                centerDes = centerDes + "<img href=\"" + picInfo.serverFileName + "\"/>|" + picInfo.picDes + "$";
+            }
         }
         shipmentCaseApi.id = caseTypeRes.Id;
         shipmentCaseApi.title = title;
         shipmentCaseApi.image = picList.get(fengmianPos).serverFileName;
-        shipmentCaseApi.content = topDes + centerDes;
+        shipmentCaseApi.content = centerDes;
         shipmentCaseApi.Seo_key = key;
         shipmentCaseApi.Seo_Description = des;
+        shipmentCaseApi.Summary = neirong;
         httpManager.doHttpDeal(shipmentCaseApi);
     }
 

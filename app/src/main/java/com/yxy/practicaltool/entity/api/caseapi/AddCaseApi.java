@@ -1,6 +1,7 @@
 package com.yxy.practicaltool.entity.api.caseapi;
 
 import com.yxy.practicaltool.entity.HttpService;
+import com.yxy.practicaltool.utils.Utils;
 
 import retrofit2.Retrofit;
 import rx.Observable;
@@ -11,19 +12,19 @@ import rx.Observable;
 
 public class AddCaseApi extends CaseBaseApi {
 
-    public String _lan="cn",secret_key="5D5D5ED10FF810510E79E25FF4C82867";
+    public String title, info;
 
     public AddCaseApi() {
         super();
-        setMethod("Get_Case");
+        setMethod("Add_Case");
     }
-
 
 
     @Override
     public Observable getObservable(Retrofit retrofit) {
         HttpService service = retrofit.create(HttpService.class);
-        return service.getCase(_lan,secret_key,"1");
+        String data = Utils.getCurrentDay();
+        return service.addCase("cn", Utils.md5(data), "1", title, info);
     }
 
     @Override

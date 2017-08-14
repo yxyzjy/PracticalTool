@@ -18,6 +18,7 @@ import com.yxy.practicaltool.bean.UseDemoBean;
 import com.yxy.practicaltool.common.L;
 import com.yxy.practicaltool.common.ToastUtils;
 import com.yxy.practicaltool.entity.api.caseapi.GetCaseApi;
+import com.yxy.practicaltool.entity.resulte.AddProduceRes;
 import com.yxy.practicaltool.entity.resulte.AttributeListRes;
 import com.yxy.practicaltool.entity.resulte.CaseTypeRes;
 import com.yxy.practicaltool.entity.resulte.CompanyListRes;
@@ -31,6 +32,7 @@ import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import retrofit2.http.GET;
 
 public class CaseTypeActivity extends BaseActivity {
 
@@ -72,7 +74,7 @@ public class CaseTypeActivity extends BaseActivity {
         adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(ViewGroup parent, View view, Object o, int position) {
-                if (position == list.size()-1) {
+                if (position == list.size() - 1) {
                     ActivitySimpleEdit.startSimpleEdit(CaseTypeActivity.this, "案例分类", "输入案例分类名称", "", ActivitySimpleEdit.INPUT_NAME, 20, 201);
                     return;
                 }
@@ -131,7 +133,7 @@ public class CaseTypeActivity extends BaseActivity {
 
     public void rightClickSave(View view) {
         if (lastClickPos == -1) {
-            ToastUtils.showToast(mContext, "请选择所属单位");
+            ToastUtils.showToast(mContext, "请选择案例分类");
             return;
         }
         Intent intent = new Intent();

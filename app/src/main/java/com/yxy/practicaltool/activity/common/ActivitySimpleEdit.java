@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.yxy.practicaltool.R;
 import com.yxy.practicaltool.activity.BaseActivity;
 import com.yxy.practicaltool.common.ToastUtils;
+import com.yxy.practicaltool.entity.api.caseapi.AddCaseApi;
 
 import butterknife.ButterKnife;
 
@@ -34,6 +35,8 @@ public class ActivitySimpleEdit extends BaseActivity {
     public static final int INPUT_DETAIL = 3;
     private String result;
     private int pos;
+
+    private AddCaseApi addCaseApi;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -124,6 +127,26 @@ public class ActivitySimpleEdit extends BaseActivity {
             ToastUtils.showToast(this, getResources().getString(R.string.bnwk));
             return;
         } else {
+            if (!TextUtils.isEmpty(titleStr) && titleStr.equals("案例分类")) {
+                addCaseApi = new AddCaseApi();
+                addCaseApi.title = result;
+                addCaseApi.info = "";
+                httpManager.doHttpDeal(addCaseApi);
+            } else {
+                Intent intent = new Intent();
+                intent.putExtra("result", result);
+                intent.putExtra("pos", pos);
+                setResult(RESULT_OK, intent);
+                finish();
+            }
+        }
+    }
+
+    @Override
+    protected void processSuccessResult(String resulte, String mothead) {
+        super.processSuccessResult(resulte, mothead);
+        if (mothead.equals(addCaseApi.getMethod())) {
+            ToastUtils.showToast(mContext,"添加成功");
             Intent intent = new Intent();
             intent.putExtra("result", result);
             intent.putExtra("pos", pos);
