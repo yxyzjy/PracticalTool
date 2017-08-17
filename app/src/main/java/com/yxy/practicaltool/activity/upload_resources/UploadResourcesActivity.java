@@ -314,7 +314,7 @@ public class UploadResourcesActivity extends BaseActivity implements RadioGroup.
             } else {
                 try {
                     insertData();
-                    finish();
+
                 } catch (Exception e) {
                 }
             }
@@ -355,13 +355,12 @@ public class UploadResourcesActivity extends BaseActivity implements RadioGroup.
                 piclists = piclists + "," + picInfo.pic + "|" + picInfo.lngValue + ";" + picInfo.latValue;
             }
         }
-
-
         UploadResourcesDao usdao = new UploadResourcesDao(unitsData.ID, unitsData.CName, unitsData.Phone,
                 name2, pinzhongData.ID, pinzhongData.CName, num4, des5, tip6, sallState, attributeId,
                 tvContent7.getText().toString(), piclists, Utils.getCurrentTime());
 
         dao.insert(usdao);
+        finish();
     }
 
     private boolean checkEditAll() {
@@ -460,10 +459,16 @@ public class UploadResourcesActivity extends BaseActivity implements RadioGroup.
     protected void processSuccessResult(String resulte, String mothead) {
         super.processSuccessResult(resulte, mothead);
         if (mothead.equals(addProductApi.getMethod())) {
-            AddProduceRes res = JSONObject.parseObject(resulte, AddProduceRes.class);
-            if (res.ret == 200) {
-                ToastUtils.showToast(mContext, res.msg);
-                finish();
+            try {
+                AddProduceRes res = JSONObject.parseObject(resulte, AddProduceRes.class);
+                if (res.ret == 200) {
+                    ToastUtils.showToast(mContext, res.msg);
+                    finish();
+                } else {
+                    insertData();
+                }
+            } catch (Exception e) {
+                insertData();
             }
         }
     }

@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONObject;
 import com.bumptech.glide.Glide;
 import com.yolanda.nohttp.NoHttp;
 import com.yolanda.nohttp.RequestMethod;
@@ -26,6 +27,8 @@ import com.yxy.practicaltool.common.ToastUtils;
 import com.yxy.practicaltool.dao.TestDao;
 import com.yxy.practicaltool.dao.UploadResourcesDaoDao;
 import com.yxy.practicaltool.entity.api.AddProductApi;
+import com.yxy.practicaltool.entity.resulte.AddProduceRes;
+import com.yxy.practicaltool.entity.resulte.CommontRes;
 import com.yxy.practicaltool.entity.resulte.Uploadbase64Res;
 import com.yxy.practicaltool.gen.Test;
 import com.yxy.practicaltool.gen.UploadResourcesDao;
@@ -164,7 +167,7 @@ public class LocalCacheActivity extends BaseActivity {
     }
 
     private void commitPic(String path, int sign) {
-        if (request!=null) {
+        if (request != null) {
             request.removeAll();
         }
         request = NoHttp.createStringRequest(Constants.UpImgBase64, RequestMethod.POST);
@@ -205,9 +208,9 @@ public class LocalCacheActivity extends BaseActivity {
             }
         }
         addProductApi.CName = list.get(posI).getName2();
-        addProductApi.Vid = list.get(posI).getPinzhongId()+"";
-        addProductApi.Cid = list.get(posI).getUnitsId()+"";
-        addProductApi.H_State = list.get(posI).getH_State()+"";
+        addProductApi.Vid = list.get(posI).getPinzhongId() + "";
+        addProductApi.Cid = list.get(posI).getUnitsId() + "";
+        addProductApi.H_State = list.get(posI).getH_State() + "";
         addProductApi.Num = list.get(posI).getNum4();
         addProductApi.Describe = list.get(posI).getDes5();
         addProductApi.Remarks = list.get(posI).getTip6();
@@ -221,28 +224,47 @@ public class LocalCacheActivity extends BaseActivity {
     protected void processSuccessResult(String resulte, String mothead) {
         super.processSuccessResult(resulte, mothead);
         if (mothead.equals(addProductApi.getMethod())) {
-            dao.deleteByKey(list.get(posI).getCurrentTime());
-            L.e("==addProductApi=posI=" + posI + "==list.size()=" + list.size());
-            if (posI < list.size() - 1) {
-                posI += 1;
-                picInfos.clear();
-                String[] split = list.get(posI).getPicInfos().split(",");
-                for (int j = 0; j < split.length; j++) {
-                    int index = split[j].indexOf("|");
-                    PicInfo picInfo = new PicInfo();
-                    picInfo.pic = split[j].substring(0, index);
-                    int index1 = split[j].indexOf(";");
-                    picInfo.latValue = split[j].substring(index + 1, index1);
-                    picInfo.lngValue = split[j].substring(index1 + 1);
-                    picInfos.add(picInfo);
+            try {
+                CommontRes commontRes = JSONObject.parseObject(resulte, CommontRes.class);
+                if (commontRes.ret == 200) {
+                    dao.deleteByKey(list.get(posI).getCurrentTime());
                 }
-                commitPic(picInfos.get(posI).pic, 0);
-            } else {
+                L.e("==addProductApi=posI=" + posI + "==list.size()=" + list.size());
+                if (posI < list.size() - 1) {
+                    posI += 1;
+                    picInfos.clear();
+                    String[] split = list.get(posI).getPicInfos().split(",");
+                    for (int j = 0; j < split.length; j++) {
+                        int index = split[j].indexOf("|");
+                        PicInfo picInfo = new PicInfo();
+                        picInfo.pic = split[j].substring(0, index);
+                        int index1 = split[j].indexOf(";");
+                        picInfo.latValue = split[j].substring(index + 1, index1);
+                        picInfo.lngValue = split[j].substring(index1 + 1);
+                        picInfos.add(picInfo);
+                    }
+                    commitPic(picInfos.get(posI).pic, 0);
+                } else {
+                    mWaitDialog.dismiss();
+                    if (commontRes.ret == 200) {
+                        list.clear();
+                        ToastUtils.showToast(mContext, "上传完成！");
+                        cacheAdapter.notifyDataSetChanged();
+                    } else {
+                        ToastUtils.showToast(mContext, "上传出错！");
+                    }
+                }
+            } catch (Exception e) {
                 mWaitDialog.dismiss();
-                list.clear();
-                ToastUtils.showToast(mContext,"上传完成！");
-                cacheAdapter.notifyDataSetChanged();
+                ToastUtils.showToast(mContext, "上传出错！");
             }
         }
+    }
+
+    @Override
+    protected void processFalResult(int httpCode, String result, String mothead) {
+        super.processFalResult(httpCode, result, mothead);
+        mWaitDialog.dismiss();
+        ToastUtils.showToast(mContext, "上传出错！");
     }
 }

@@ -453,6 +453,9 @@ public class ReleaseCaseActivity extends BaseActivity implements AdapterView.OnI
         shipmentCaseApi.content = centerDes;
         shipmentCaseApi.Seo_key = key;
         shipmentCaseApi.Seo_Description = des;
+        if (TextUtils.isEmpty(neirong)) {
+            neirong = "";
+        }
         shipmentCaseApi.Summary = neirong;
         httpManager.doHttpDeal(shipmentCaseApi);
     }
