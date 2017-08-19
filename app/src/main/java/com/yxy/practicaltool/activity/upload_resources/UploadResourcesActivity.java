@@ -314,7 +314,6 @@ public class UploadResourcesActivity extends BaseActivity implements RadioGroup.
             } else {
                 try {
                     insertData();
-
                 } catch (Exception e) {
                 }
             }
