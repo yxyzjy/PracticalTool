@@ -148,7 +148,7 @@ public class LocalCacheActivity extends BaseActivity {
         if (Utils.isWifiConnected(mContext)) {
             mWaitDialog.show();
             picInfos.clear();
-            String[] split = list.get(posI).getPicInfos().split(",");
+            String[] split = list.get(posI).getPicInfos().split("@");
             for (int j = 0; j < split.length; j++) {
                 int index = split[j].indexOf("|");
                 PicInfo picInfo = new PicInfo();

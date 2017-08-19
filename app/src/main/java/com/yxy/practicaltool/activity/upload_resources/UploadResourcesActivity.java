@@ -352,7 +352,7 @@ public class UploadResourcesActivity extends BaseActivity implements RadioGroup.
             if (i == 0) {
                 piclists = picInfo.pic + "|" + picInfo.lngValue + ";" + picInfo.latValue;
             } else {
-                piclists = piclists + "," + picInfo.pic + "|" + picInfo.lngValue + ";" + picInfo.latValue;
+                piclists = piclists + "@" + picInfo.pic + "|" + picInfo.lngValue + ";" + picInfo.latValue;
             }
         }
         UploadResourcesDao usdao = new UploadResourcesDao(unitsData.ID, unitsData.CName, unitsData.Phone,
