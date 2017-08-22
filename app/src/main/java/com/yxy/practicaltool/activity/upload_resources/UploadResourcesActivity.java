@@ -189,6 +189,10 @@ public class UploadResourcesActivity extends BaseActivity implements RadioGroup.
                 ExifInterface exifInterface = new ExifInterface(filePath + fileName);
                 String latValue = exifInterface.getAttribute(ExifInterface.TAG_GPS_LATITUDE);
                 String lngValue = exifInterface.getAttribute(ExifInterface.TAG_GPS_LONGITUDE);
+                if (TextUtils.isEmpty(latValue)) {
+                    ToastUtils.showToast(mContext, "图片不合格");
+                    return;
+                }
                 imageToPath = imageUtils.compressImageToPath(imageUtils.getBitmapByPathNoRotate(filePath + fileName));
                 PicInfo picInfo = new PicInfo();
                 picInfo.pic = imageToPath;
@@ -197,13 +201,14 @@ public class UploadResourcesActivity extends BaseActivity implements RadioGroup.
                 picList.add(picInfo);
                 viewImgAdapter.notifyDataSetChanged();
             } catch (IOException e) {
+                ToastUtils.showToast(mContext, "图片不合格");
                 e.printStackTrace();
-                PicInfo picInfo = new PicInfo();
+                /*PicInfo picInfo = new PicInfo();
                 picInfo.pic = imageToPath;
                 picInfo.latValue = "";
                 picInfo.lngValue = "";
                 picList.add(picInfo);
-                viewImgAdapter.notifyDataSetChanged();
+                viewImgAdapter.notifyDataSetChanged();*/
             }
         }
         if (resultCode == RESULT_OK && data != null) {
@@ -246,6 +251,10 @@ public class UploadResourcesActivity extends BaseActivity implements RadioGroup.
                     ExifInterface exifInterface = new ExifInterface(path);
                     String latValue = exifInterface.getAttribute(ExifInterface.TAG_GPS_LATITUDE);
                     String lngValue = exifInterface.getAttribute(ExifInterface.TAG_GPS_LONGITUDE);
+                    if (TextUtils.isEmpty(latValue)) {
+                        ToastUtils.showToast(mContext, "图片不合格");
+                        return;
+                    }
                     imageToPath = imageUtils.compressImageToPath(imageUtils.getBitmapByPathNoRotate(path));
 //                    imageToPath = imageUtils.compressImageToPath(BitmapFactory.decodeFile(filePath));
                     PicInfo picInfo = new PicInfo();
@@ -255,12 +264,13 @@ public class UploadResourcesActivity extends BaseActivity implements RadioGroup.
                     picList.add(picInfo);
                     viewImgAdapter.notifyDataSetChanged();
                 } catch (IOException e) {
+                    ToastUtils.showToast(mContext, "图片不合格");
                     e.printStackTrace();
-                    PicInfo picInfo = new PicInfo();
+                    /*PicInfo picInfo = new PicInfo();
                     picInfo.pic = imageToPath;
                     picInfo.latValue = "";
                     picInfo.lngValue = "";
-                    picList.add(picInfo);
+                    picList.add(picInfo);*/
                 }
             }
         }
@@ -326,7 +336,7 @@ public class UploadResourcesActivity extends BaseActivity implements RadioGroup.
             if (i == 0) {
                 piclists = "0|" + picInfo.serverFileName + "|" + picInfo.serverThumbnailFileName + "|" + picInfo.lngValue + ";" + picInfo.latValue;
             } else {
-                piclists = piclists + ",0|" + picInfo.serverFileName + "|" + picInfo.serverThumbnailFileName + "|" + picInfo.lngValue + ";" + picInfo.latValue;
+                piclists = piclists + "&0|" + picInfo.serverFileName + "|" + picInfo.serverThumbnailFileName + "|" + picInfo.lngValue + ";" + picInfo.latValue;
             }
         }
         addProductApi.CName = name2;
