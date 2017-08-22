@@ -204,7 +204,7 @@ public class LocalCacheActivity extends BaseActivity {
             if (i == 0) {
                 piclists = "0|" + picInfo.serverFileName + "|" + picInfo.serverThumbnailFileName + "|" + picInfo.lngValue + ";" + picInfo.latValue;
             } else {
-                piclists = piclists + ",0|" + picInfo.serverFileName + "|" + picInfo.serverThumbnailFileName + "|" + picInfo.lngValue + ";" + picInfo.latValue;
+                piclists = piclists + "&0|" + picInfo.serverFileName + "|" + picInfo.serverThumbnailFileName + "|" + picInfo.lngValue + ";" + picInfo.latValue;
             }
         }
         addProductApi.CName = list.get(posI).getName2();
