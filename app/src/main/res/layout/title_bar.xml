@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="40dp"
+    android:layout_height="50dp"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/white"
     android:gravity="center"
@@ -56,6 +56,7 @@
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:paddingRight="10dp"
+            android:paddingLeft="10dp"
             android:onClick="rightClickSave"
             android:gravity="center"
             android:orientation="vertical"

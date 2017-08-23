@@ -92,7 +92,6 @@ public class LocalCacheActivity extends BaseActivity {
         addProductApi = new AddProductApi();
         dao = MyApplication.getInstances().getDaoSession().getUploadResourcesDaoDao();
         list.addAll(dao.loadAll());
-        L.e("=====list===" + list.size());
         cacheAdapter = new LocalCacheAdapter(this, R.layout.item_local_cache, list);
         rvLocalCache.setAdapter(cacheAdapter);
     }
