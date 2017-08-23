@@ -54,7 +54,7 @@ public class CaseTypeActivity extends BaseActivity {
     @Override
     public void initView() {
         super.initView();
-        rvSubordinateUnit.setLayoutManager(new GridLayoutManager(mContext, 3));
+        rvSubordinateUnit.setLayoutManager(new GridLayoutManager(mContext, 1));
         rvSubordinateUnit.setItemAnimator(new DefaultItemAnimator());
         adapter = new CaseTypeAdapter(this, R.layout.item_subordinate_units, list);
         rvSubordinateUnit.setAdapter(adapter);
