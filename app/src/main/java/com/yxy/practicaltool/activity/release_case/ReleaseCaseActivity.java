@@ -326,7 +326,7 @@ public class ReleaseCaseActivity extends BaseActivity implements AdapterView.OnI
                 Glide.with(context)
                         .load(R.mipmap.icon_add)
                         .into(iv_release_pic);
-                tv_case_des.setVisibility(View.GONE);
+                tv_case_des.setVisibility(View.INVISIBLE);
             } else {
                 Glide.with(context)
                         .load(picList.get(position).pic)

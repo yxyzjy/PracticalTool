@@ -115,7 +115,7 @@ public class CaseTypeActivity extends BaseActivity {
 //            CaseTypeRes res = JSONObject.parseObject(resulte, CaseTypeRes.class);
 //            list.addAll(res.data);
             CaseTypeRes.DataBean bean = new CaseTypeRes.DataBean();
-            list.add(bean);
+            list.add(0, bean);
             adapter.notifyDataSetChanged();
         }
     }
