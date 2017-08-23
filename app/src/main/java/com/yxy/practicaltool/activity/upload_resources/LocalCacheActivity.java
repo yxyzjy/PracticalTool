@@ -154,15 +154,14 @@ public class LocalCacheActivity extends BaseActivity {
                 PicInfo picInfo = new PicInfo();
                 picInfo.pic = split[j].substring(0, index);
                 int index1 = split[j].indexOf(";");
-                picInfo.latValue = split[j].substring(index + 1, index1);
-                picInfo.lngValue = split[j].substring(index1 + 1);
+                picInfo.lngValue = split[j].substring(index + 1, index1);
+                picInfo.latValue = split[j].substring(index1 + 1);
                 picInfos.add(picInfo);
             }
             commitPic(picInfos.get(0).pic, 0);
 //            提交数据
         } else {
             ToastUtils.showToast(mContext, "请在WIFI网络下上传！");
-
         }
     }
 
@@ -184,7 +183,7 @@ public class LocalCacheActivity extends BaseActivity {
                     int sign = Integer.parseInt(res.data.sign);
                     picInfos.get(sign).serverFileName = res.data.serverFileName;
                     picInfos.get(sign).serverThumbnailFileName = res.data.serverThumbnailFileName;
-                    L.e("==res.data.sign==" + res.data.sign + "=picInfos.size()=" + picInfos.size());
+//                    L.e("==res.data.sign==" + res.data.sign + "=picInfos.size()=" + picInfos.size());
                     if (sign < picInfos.size() - 1) {
                         int num = sign + 1;
                         commitPic(picInfos.get(num).pic, num);
