@@ -123,6 +123,9 @@ public class LocalCacheActivity extends BaseActivity {
             holder.setText(R.id.tv_cache_tel, "电话：" + infoBean.getPhone());
             holder.setText(R.id.tv_cache_shuxing, "属性：" + infoBean.getAttributeName());
             holder.setText(R.id.tv_cache_time, "时间：" + infoBean.getCurrentTime());
+            holder.setText(R.id.tv_cache_zlms,"质量描述："+infoBean.getDes5());
+            holder.setText(R.id.tv_cache_cpbz,"产品备注："+infoBean.getTip6());
+            holder.setText(R.id.tv_cache_cpsl,"产品数量："+infoBean.getNum4());
 
             if (!TextUtils.isEmpty(infoBean.getPicInfos())) {
                 int i = infoBean.getPicInfos().indexOf("|");

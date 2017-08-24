@@ -47,6 +47,7 @@ import com.yxy.practicaltool.entity.resulte.AttributeListRes;
 import com.yxy.practicaltool.entity.resulte.CompanyListRes;
 import com.yxy.practicaltool.entity.resulte.Uploadbase64Res;
 import com.yxy.practicaltool.gen.UploadResourcesDao;
+import com.yxy.practicaltool.myview.NoScrollGridView;
 import com.yxy.practicaltool.nohttp.CallServer;
 import com.yxy.practicaltool.nohttp.CustomHttpListener;
 import com.yxy.practicaltool.utils.BitmapHelper;
@@ -97,7 +98,7 @@ public class UploadResourcesActivity extends BaseActivity implements RadioGroup.
     @Bind(R.id.rb_2)
     RadioButton rb2;
     @Bind(R.id.gv_select_pic)
-    GridView gvSelectPic;
+    NoScrollGridView  gvSelectPic;
     @Bind(R.id.rg_upload)
     RadioGroup rgUpload;
 
@@ -157,19 +158,19 @@ public class UploadResourcesActivity extends BaseActivity implements RadioGroup.
                 startActivityForResult(new Intent(mContext, SubordinateUnitsActivity.class), 101);
                 break;
             case R.id.ll_upload_2:
-                ActivitySimpleEdit.startSimpleEdit(this, "产品名", "输入产品名", "", ActivitySimpleEdit.INPUT_NAME, 20, 102);
+                ActivitySimpleEdit.startSimpleEdit(this, "产品名", "输入产品名", tvContent2.getText().toString(), ActivitySimpleEdit.INPUT_NAME, 20, 102);
                 break;
             case R.id.ll_upload_3:
                 startActivityForResult(new Intent(mContext, SubordinatePinZhongActivity.class), 103);
                 break;
             case R.id.ll_upload_4:
-                ActivitySimpleEdit.startSimpleEdit(this, "产品数量", "输入产品数量", "", ActivitySimpleEdit.INPUT_NUM, 8, 104);
+                ActivitySimpleEdit.startSimpleEdit(this, "产品数量", "输入产品数量", tvContent4.getText().toString(), ActivitySimpleEdit.INPUT_NUM, 8, 104);
                 break;
             case R.id.ll_upload_5:
-                ActivitySimpleEditLines.startSimpleEdit(this, "质量描述", "输入质量描述", "", ActivitySimpleEditLines.INPUT_NAME, 200, 105);
+                ActivitySimpleEditLines.startSimpleEdit(this, "质量描述", "输入质量描述", tvContent5.getText().toString(), ActivitySimpleEditLines.INPUT_NAME, 200, 105);
                 break;
             case R.id.ll_upload_6:
-                ActivitySimpleEditLines.startSimpleEdit(this, "产品备注", "输入产品备注", "", ActivitySimpleEditLines.INPUT_NAME, 200, 106);
+                ActivitySimpleEditLines.startSimpleEdit(this, "产品备注", "输入产品备注", tvContent6.getText().toString(), ActivitySimpleEditLines.INPUT_NAME, 200, 106);
                 break;
             case R.id.ll_upload_7:
                 startActivityForResult(new Intent(this, SubordinateAttributeActivity.class), 107);

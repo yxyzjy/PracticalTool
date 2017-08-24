@@ -19,5 +19,6 @@
     <color name="bg_gray">#eeeeee</color>
     <color name="main_bgColor">#ECF1F4</color>
     <color name="viewfinder_mask">#60000000</color>
+    <color name="red">#ff0000</color>
 
 </resources>

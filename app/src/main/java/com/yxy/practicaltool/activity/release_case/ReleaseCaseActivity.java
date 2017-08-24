@@ -125,16 +125,16 @@ public class ReleaseCaseActivity extends BaseActivity implements AdapterView.OnI
                 startActivityForResult(new Intent(mContext, CaseTypeActivity.class), 204);
                 break;
             case R.id.ll_upload_2:
-                ActivitySimpleEdit.startSimpleEdit(ReleaseCaseActivity.this, "案例标题", "输入案例标题", "", ActivitySimpleEdit.INPUT_NAME, 20, 201);
+                ActivitySimpleEdit.startSimpleEdit(ReleaseCaseActivity.this, "案例标题", "输入案例标题", tvContent2.getText().toString(), ActivitySimpleEdit.INPUT_NAME, 20, 201);
                 break;
             case R.id.ll_upload_3:
-                ActivitySimpleEdit.startSimpleEdit(ReleaseCaseActivity.this, "关键字", "输入关键字", "", ActivitySimpleEdit.INPUT_NAME, 20, 202);
+                ActivitySimpleEdit.startSimpleEdit(ReleaseCaseActivity.this, "关键字", "输入关键字", tvContent3.getText().toString(), ActivitySimpleEdit.INPUT_NAME, 20, 202);
                 break;
             case R.id.ll_upload_4:
-                ActivitySimpleEditLines.startSimpleEdit(ReleaseCaseActivity.this, "页面描述", "输入页面描述", "", ActivitySimpleEdit.INPUT_NAME, 200, 203);
+                ActivitySimpleEditLines.startSimpleEdit(ReleaseCaseActivity.this, "页面描述", "输入页面描述", tvContent4.getText().toString(), ActivitySimpleEdit.INPUT_NAME, 200, 203);
                 break;
             case R.id.ll_upload_5:
-                ActivitySimpleEditLines.startSimpleEdit(ReleaseCaseActivity.this, "内容", "输入内容", "", ActivitySimpleEdit.INPUT_NAME, 200, 205);
+                ActivitySimpleEditLines.startSimpleEdit(ReleaseCaseActivity.this, "内容", "输入内容", tvContent5.getText().toString(), ActivitySimpleEdit.INPUT_NAME, 200, 205);
                 break;
         }
     }
@@ -319,6 +319,7 @@ public class ReleaseCaseActivity extends BaseActivity implements AdapterView.OnI
             TextView iv_delete_pic = (TextView) convertView.findViewById(R.id.iv_delete_pic);
             TextView tv_fengmian = (TextView) convertView.findViewById(R.id.tv_fengmian);
             TextView tv_case_des = (TextView) convertView.findViewById(R.id.tv_case_des);
+            TextView tv_cache_delete = (TextView) convertView.findViewById(R.id.tv_cache_delete);
 
             tv_fengmian.setVisibility(View.GONE);
             iv_delete_pic.setVisibility(View.GONE);
@@ -327,11 +328,13 @@ public class ReleaseCaseActivity extends BaseActivity implements AdapterView.OnI
                         .load(R.mipmap.icon_add)
                         .into(iv_release_pic);
                 tv_case_des.setVisibility(View.INVISIBLE);
+                tv_cache_delete.setVisibility(View.GONE);
             } else {
                 Glide.with(context)
                         .load(picList.get(position).pic)
                         .into(iv_release_pic);
                 tv_case_des.setVisibility(View.VISIBLE);
+                tv_cache_delete.setVisibility(View.VISIBLE);
                 if (!TextUtils.isEmpty(picList.get(position).picDes)) {
                     tv_case_des.setText(picList.get(position).picDes);
                 } else {
@@ -345,7 +348,13 @@ public class ReleaseCaseActivity extends BaseActivity implements AdapterView.OnI
                     iv_delete_pic.setVisibility(View.VISIBLE);
                 }
             }
-
+            tv_cache_delete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    picList.remove(position);
+                    notifyDataSetChanged();
+                }
+            });
             iv_delete_pic.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

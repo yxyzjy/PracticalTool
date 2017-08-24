@@ -6,6 +6,7 @@
     tools:context="com.yxy.practicaltool.activity.upload_resources.UploadResourcesActivity">
 
     <LinearLayout
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -284,14 +285,15 @@
             </RadioGroup>
         </LinearLayout>
 
-        <GridView
+        <com.yxy.practicaltool.myview.NoScrollGridView
             android:id="@+id/gv_select_pic"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:background="@color/white"
             android:horizontalSpacing="6dp"
             android:listSelector="@color/transparent"
             android:numColumns="5"
+            android:layout_marginBottom="10dp"
             android:padding="10dp" />
 
     </LinearLayout>
