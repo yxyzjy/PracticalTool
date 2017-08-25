@@ -15,4 +15,16 @@
         android:padding="10dp" />
 
 
+    <EditText
+        android:id="@+id/et_case_info"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:gravity="top|left"
+        android:hint="输入案例简介"
+        android:padding="10dp"
+        android:visibility="gone" />
+
+
 </LinearLayout>

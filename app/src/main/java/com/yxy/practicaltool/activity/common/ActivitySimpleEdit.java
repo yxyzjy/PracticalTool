@@ -24,7 +24,7 @@ import butterknife.ButterKnife;
  * @author yxy Create at 17/7/14 14:10
  */
 public class ActivitySimpleEdit extends BaseActivity {
-    private EditText et_phone;
+    private EditText et_phone, et_case_info;
     private Button btn_save;
     private TextView titleTv, tv_enture;
     private String hintStr, oldText, titleStr, orderNum;
@@ -54,6 +54,7 @@ public class ActivitySimpleEdit extends BaseActivity {
         }
         setTopBar(R.layout.activity_simple_edit, titleStr);
         ButterKnife.bind(this);
+
     }
 
     public static void startSimpleEdit(Context context, String titleStr, String hintStr, String oldText, int inputType, int maxLength) {
@@ -90,6 +91,7 @@ public class ActivitySimpleEdit extends BaseActivity {
     @Override
     public void initView() {
         et_phone = (EditText) this.findViewById(R.id.et_phone);
+        et_case_info = (EditText) findViewById(R.id.et_case_info);
         et_phone.setHint(hintStr);
         et_phone.setSingleLine(true);
         et_phone.setFilters(new InputFilter[]{new InputFilter.LengthFilter(maxLength)});
@@ -99,6 +101,9 @@ public class ActivitySimpleEdit extends BaseActivity {
         if (!TextUtils.isEmpty(oldText)) {
             et_phone.setText(oldText);
             et_phone.setSelection(oldText.length());
+        }
+        if (!TextUtils.isEmpty(titleStr) && titleStr.equals("案例分类")) {
+            et_case_info.setVisibility(View.VISIBLE);
         }
     }
 
@@ -128,9 +133,13 @@ public class ActivitySimpleEdit extends BaseActivity {
             return;
         } else {
             if (!TextUtils.isEmpty(titleStr) && titleStr.equals("案例分类")) {
+                if (TextUtils.isEmpty(et_case_info.getText().toString().trim())){
+                    ToastUtils.showToast(this, "请输入案例简介");
+                    return;
+                }
                 addCaseApi = new AddCaseApi();
                 addCaseApi.title = result;
-                addCaseApi.info = "";
+                addCaseApi.info = et_case_info.getText().toString().trim();
                 httpManager.doHttpDeal(addCaseApi);
             } else {
                 Intent intent = new Intent();
@@ -146,7 +155,7 @@ public class ActivitySimpleEdit extends BaseActivity {
     protected void processSuccessResult(String resulte, String mothead) {
         super.processSuccessResult(resulte, mothead);
         if (mothead.equals(addCaseApi.getMethod())) {
-            ToastUtils.showToast(mContext,"添加成功");
+            ToastUtils.showToast(mContext, "添加成功");
             Intent intent = new Intent();
             intent.putExtra("result", result);
             intent.putExtra("pos", pos);

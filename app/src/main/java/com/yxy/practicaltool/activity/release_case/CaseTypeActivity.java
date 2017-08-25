@@ -74,7 +74,7 @@ public class CaseTypeActivity extends BaseActivity {
         adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(ViewGroup parent, View view, Object o, int position) {
-                if (position == list.size() - 1) {
+                if (position == 0) {
                     ActivitySimpleEdit.startSimpleEdit(CaseTypeActivity.this, "案例分类", "输入案例分类名称", "", ActivitySimpleEdit.INPUT_NAME, 20, 201);
                     return;
                 }

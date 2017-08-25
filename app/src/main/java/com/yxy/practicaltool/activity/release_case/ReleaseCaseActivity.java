@@ -2,13 +2,16 @@ package com.yxy.practicaltool.activity.release_case;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
@@ -25,6 +28,9 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.bumptech.glide.Glide;
+import com.yanzhenjie.album.Album;
+import com.yanzhenjie.album.AlbumFile;
+import com.yanzhenjie.album.AlbumListener;
 import com.yolanda.nohttp.NoHttp;
 import com.yolanda.nohttp.RequestMethod;
 import com.yolanda.nohttp.rest.Request;
@@ -38,6 +44,7 @@ import com.yxy.practicaltool.adapter.GridViewImgAdapter;
 import com.yxy.practicaltool.bean.EmptyBean;
 import com.yxy.practicaltool.bean.PicInfo;
 import com.yxy.practicaltool.common.Constants;
+import com.yxy.practicaltool.common.L;
 import com.yxy.practicaltool.common.ToastUtils;
 import com.yxy.practicaltool.dialog.SelectPhotoDialog;
 import com.yxy.practicaltool.entity.api.caseapi.AddShipmentCaseApi;
@@ -49,6 +56,7 @@ import com.yxy.practicaltool.entity.resulte.UpLoadbase64PostRes;
 import com.yxy.practicaltool.entity.resulte.Uploadbase64Res;
 import com.yxy.practicaltool.nohttp.CallServer;
 import com.yxy.practicaltool.nohttp.CustomHttpListener;
+import com.yxy.practicaltool.nohttp.WaitDialog;
 import com.yxy.practicaltool.utils.BitmapHelper;
 import com.yxy.practicaltool.utils.FileUtil;
 import com.yxy.practicaltool.utils.ImageUtils;
@@ -90,6 +98,8 @@ public class ReleaseCaseActivity extends BaseActivity implements AdapterView.OnI
     LinearLayout llUpload5;
     @Bind(R.id.gv_select_pic)
     GridView gvSelectPic;
+    @Bind(R.id.ll_title_bar_right)
+    LinearLayout ll_title_bar_right;
 
     private SelectPhotoDialog selectPhotoDialog;
     private String title, key, des, fileName, filePath, imageToPath, neirong;
@@ -100,6 +110,7 @@ public class ReleaseCaseActivity extends BaseActivity implements AdapterView.OnI
     private int pos, fengmianPos = -1, sign;
     private String piclists;
     private AddShipmentCaseApi shipmentCaseApi;
+    private WaitDialog mWaitDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,6 +127,15 @@ public class ReleaseCaseActivity extends BaseActivity implements AdapterView.OnI
         gvSelectPic.setOnItemClickListener(this);
         imageUtils = new ImageUtils(mContext);
         shipmentCaseApi = new AddShipmentCaseApi();
+
+        mWaitDialog = new WaitDialog(mContext);
+        mWaitDialog.setCancelable(false);
+        mWaitDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                request.cancel();
+            }
+        });
     }
 
     @OnClick({R.id.ll_upload_1, R.id.ll_upload_2, R.id.ll_upload_3, R.id.ll_upload_4, R.id.ll_upload_5})
@@ -144,26 +164,11 @@ public class ReleaseCaseActivity extends BaseActivity implements AdapterView.OnI
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 111) {//拍照
 //            String path = FileUtil.getRealFilePath(this, Uri.fromFile(file));
-            try {
-                ExifInterface exifInterface = new ExifInterface(filePath + fileName);
-                String latValue = exifInterface.getAttribute(ExifInterface.TAG_GPS_LATITUDE);
-                String lngValue = exifInterface.getAttribute(ExifInterface.TAG_GPS_LONGITUDE);
-                imageToPath = imageUtils.compressImageToPath(imageUtils.getBitmapByPathNoRotate(filePath + fileName));
-                PicInfo picInfo = new PicInfo();
-                picInfo.pic = imageToPath;
-                picInfo.latValue = latValue;
-                picInfo.lngValue = lngValue;
-                picList.add(picInfo);
-                viewImgAdapter.notifyDataSetChanged();
-            } catch (IOException e) {
-                e.printStackTrace();
-                PicInfo picInfo = new PicInfo();
-                picInfo.pic = imageToPath;
-                picInfo.latValue = "";
-                picInfo.lngValue = "";
-                picList.add(picInfo);
-                viewImgAdapter.notifyDataSetChanged();
-            }
+            imageToPath = imageUtils.compressImageToPath(imageUtils.getBitmapByPathNoRotate(filePath + fileName));
+            PicInfo picInfo = new PicInfo();
+            picInfo.pic = imageToPath;
+            picList.add(picInfo);
+            viewImgAdapter.notifyDataSetChanged();
         }
         if (resultCode == RESULT_OK && data != null) {
             if (requestCode == 201) {
@@ -188,26 +193,12 @@ public class ReleaseCaseActivity extends BaseActivity implements AdapterView.OnI
             }
 
             if (requestCode == 112) {//从相册选
-                try {
-                    String path = FileUtil.getRealFilePath(this, data.getData());
-                    ExifInterface exifInterface = new ExifInterface(path);
-                    String latValue = exifInterface.getAttribute(ExifInterface.TAG_GPS_LATITUDE);
-                    String lngValue = exifInterface.getAttribute(ExifInterface.TAG_GPS_LONGITUDE);
-                    imageToPath = imageUtils.compressImageToPath(imageUtils.getBitmapByPathNoRotate(path));
-                    PicInfo picInfo = new PicInfo();
-                    picInfo.pic = imageToPath;
-                    picInfo.latValue = latValue;
-                    picInfo.lngValue = lngValue;
-                    picList.add(picInfo);
-                    viewImgAdapter.notifyDataSetChanged();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    PicInfo picInfo = new PicInfo();
-                    picInfo.pic = imageToPath;
-                    picInfo.latValue = "";
-                    picInfo.lngValue = "";
-                    picList.add(picInfo);
-                }
+                String path = FileUtil.getRealFilePath(this, data.getData());
+                imageToPath = imageUtils.compressImageToPath(imageUtils.getBitmapByPathNoRotate(path));
+                PicInfo picInfo = new PicInfo();
+                picInfo.pic = imageToPath;
+                picList.add(picInfo);
+                viewImgAdapter.notifyDataSetChanged();
             }
 
             if (requestCode == 222) {
@@ -248,10 +239,35 @@ public class ReleaseCaseActivity extends BaseActivity implements AdapterView.OnI
     }
 
     private void ShowPicDialog() {
+        ArrayList<AlbumFile> mAlbum = new ArrayList<>();
+        Album.album(this).multipleChoice()
+                .requestCode(600)
+                .columnCount(2) // The number of columns in the page list.
+                .camera(true)
+                .selectCount(9)
+                .checkedList(mAlbum)
+                .listener(new AlbumListener<ArrayList<AlbumFile>>() {
+                    @Override
+                    public void onAlbumResult(int requestCode, @NonNull ArrayList<AlbumFile> result) {
+                        for (int i = 0; i < result.size(); i++) {
+                            PicInfo picInfo = new PicInfo();
+                            picInfo.pic = result.get(i).getPath();
+                            picList.add(picInfo);
+                        }
+                        viewImgAdapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onAlbumCancel(int requestCode) {
+
+                    }
+                }).start();
+
+
         //拍照
 // 指定照片保存路径（SD卡），image.jpg为一个临时文件，每次拍照后这个图片都会被替换
 //从相册选择
-        if (selectPhotoDialog == null) {
+        /*if (selectPhotoDialog == null) {
             selectPhotoDialog = new SelectPhotoDialog(mContext, new SelectPhotoDialog.onBtnClickListener() {
                 @Override
                 public void onSure() {
@@ -275,14 +291,14 @@ public class ReleaseCaseActivity extends BaseActivity implements AdapterView.OnI
                 public void onExit() {
                     //从相册选择
                     Intent intent = new Intent(Intent.ACTION_PICK, null);
-                    intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+                    intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image*//*");
                     startActivityForResult(intent, 112);
                 }
             });
             selectPhotoDialog.show();
         } else {
             selectPhotoDialog.show();
-        }
+        }*/
     }
 
 
@@ -379,7 +395,17 @@ public class ReleaseCaseActivity extends BaseActivity implements AdapterView.OnI
 
     public void rightClickSave(View view) {
         if (checkEditAll()) {
-            commitPic(picList.get(0).pic, 0);
+            if (mWaitDialog != null && !mWaitDialog.isShowing())
+                mWaitDialog.show();
+            ll_title_bar_right.setEnabled(false);
+            new Handler().postDelayed(new Runnable(){
+                public void run() {
+                    for (int i = 0; i < picList.size(); i++) {
+                        picList.get(i).pic = imageUtils.compressImageToPath(imageUtils.getBitmapByPathNoRotate(picList.get(i).pic));
+                    }
+                    commitPic(picList.get(0).pic, 0);
+                }
+            }, 500);
         }
     }
 
@@ -440,9 +466,16 @@ public class ReleaseCaseActivity extends BaseActivity implements AdapterView.OnI
                     } else {
                         submitData();
                     }
+                } else {
+                    dimissDialog();
                 }
             }
-        }, true, true);
+        }, true, false);
+    }
+
+    private void dimissDialog(){
+        mWaitDialog.dismiss();
+        ll_title_bar_right.setEnabled(true);
     }
 
     private void submitData() {
@@ -475,9 +508,18 @@ public class ReleaseCaseActivity extends BaseActivity implements AdapterView.OnI
         if (mothead.equals(shipmentCaseApi.getMethod())) {
             AddProduceRes res = JSONObject.parseObject(resulte, AddProduceRes.class);
             if (res.ret == 200) {
+                dimissDialog();
                 ToastUtils.showToast(mContext, res.msg);
                 finish();
+            } else {
+                dimissDialog();
             }
         }
+    }
+
+    @Override
+    protected void processFalResult(int httpCode, String result, String mothead) {
+        super.processFalResult(httpCode, result, mothead);
+        dimissDialog();
     }
 }

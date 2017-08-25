@@ -21,6 +21,7 @@ public class AddShipmentCaseApi extends CaseBaseApi {
     public AddShipmentCaseApi() {
         super();
         setMethod("Add_ShipmentCase");
+        setShowProgress(false);
     }
 
 
