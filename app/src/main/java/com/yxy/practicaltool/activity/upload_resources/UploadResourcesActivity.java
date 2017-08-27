@@ -294,7 +294,7 @@ public class UploadResourcesActivity extends BaseActivity implements RadioGroup.
         request.add("random", SPUtil.getString("random", ""));
         request.add("desUserId", SPUtil.getString("desUserId", ""));
         request.add("sign", sign);
-        request.add("txtFileName", Utils.bitmapToBase64(BitmapHelper.getImage(path, 100)));
+        request.add("txtFileName", Utils.bitmapToBase64(BitmapHelper.getImage(path, 500)));
 
         CallServer.getRequestInstance().add(UploadResourcesActivity.this, 1, request, new CustomHttpListener(this, true, Uploadbase64Res.class) {
             @Override

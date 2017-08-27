@@ -65,12 +65,12 @@
             <TextView
                 android:id="@+id/tv_cache_shuxing"
                 android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
                 android:ellipsize="end"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="2dp"
                 android:gravity="center_vertical"
-                android:maxLines="1"
-                android:text="属性：书籍"
+                android:text="属性：书籍书籍书籍书籍书籍书籍书籍书籍书籍书籍书籍书籍书籍书籍书籍书籍书籍书籍书籍书籍书籍书籍书籍书籍书籍书籍书籍书籍"
                 android:textColor="@color/text_color" />
 
             <TextView
@@ -87,12 +87,12 @@
             <TextView
                 android:id="@+id/tv_cache_zlms"
                 android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:gravity="center_vertical"
-                android:maxLines="1"
-                android:text="质量描述：地址地址地址地址地址地址"
+                android:text="质量描述：地址地址地址地址地址地址啊啊啊 啊啊啊啊啊"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="2dp"
                 android:textColor="@color/text_color" />
 
             <TextView

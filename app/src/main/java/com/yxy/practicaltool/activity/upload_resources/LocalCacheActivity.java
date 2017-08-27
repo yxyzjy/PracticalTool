@@ -175,7 +175,7 @@ public class LocalCacheActivity extends BaseActivity {
         request.add("random", SPUtil.getString("random", ""));
         request.add("desUserId", SPUtil.getString("desUserId", ""));
         request.add("sign", sign);
-        request.add("txtFileName", Utils.bitmapToBase64(BitmapHelper.getImage(path, 100)));
+        request.add("txtFileName", Utils.bitmapToBase64(BitmapHelper.getImage(path,500)));
 
         CallServer.getRequestInstance().add(LocalCacheActivity.this, 1, request, new CustomHttpListener(this, true, Uploadbase64Res.class) {
             @Override

@@ -54,6 +54,7 @@ import com.yxy.practicaltool.entity.resulte.CaseTypeRes;
 import com.yxy.practicaltool.entity.resulte.CompanyListRes;
 import com.yxy.practicaltool.entity.resulte.UpLoadbase64PostRes;
 import com.yxy.practicaltool.entity.resulte.Uploadbase64Res;
+import com.yxy.practicaltool.myview.NoScrollGridView;
 import com.yxy.practicaltool.nohttp.CallServer;
 import com.yxy.practicaltool.nohttp.CustomHttpListener;
 import com.yxy.practicaltool.nohttp.WaitDialog;
@@ -97,7 +98,7 @@ public class ReleaseCaseActivity extends BaseActivity implements AdapterView.OnI
     @Bind(R.id.ll_upload_5)
     LinearLayout llUpload5;
     @Bind(R.id.gv_select_pic)
-    GridView gvSelectPic;
+    NoScrollGridView gvSelectPic;
     @Bind(R.id.ll_title_bar_right)
     LinearLayout ll_title_bar_right;
 
@@ -446,7 +447,7 @@ public class ReleaseCaseActivity extends BaseActivity implements AdapterView.OnI
         request = NoHttp.createStringRequest(Constants.UpImgBase64Post, RequestMethod.POST);
         request.add("secret_key", Utils.md5(data));
         request.add("key_type", "1");
-        request.add("txtFileName", Utils.bitmapToBase64(BitmapHelper.getImage(path, 100)));
+        request.add("txtFileName", Utils.bitmapToBase64(BitmapHelper.getImage(path, 500)));
 
 //        request.add("random", SPUtil.getString("random", ""));
 //        request.add("desUserId", SPUtil.getString("desUserId", ""));
