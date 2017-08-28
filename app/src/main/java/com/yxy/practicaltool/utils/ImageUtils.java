@@ -103,6 +103,7 @@ public class ImageUtils {
 
         return bm;
     }
+
     //获取无旋转的bitmap
     public Bitmap getBitmapByPathNoRotate(String srcPath) {
         FileUtil ft = new FileUtil();
@@ -146,6 +147,7 @@ public class ImageUtils {
         L.e("根据路径获取图片并按比例大小压缩=" + bitmap.getByteCount());
         return compressImageToPath(bitmap);//压缩好比例大小后再进行质量压缩
     }
+
     //根据路径获取图片并按比例大小压缩
     public Bitmap getBitmapByPath(String srcPath) {
         BitmapFactory.Options newOpts = new BitmapFactory.Options();
@@ -177,9 +179,9 @@ public class ImageUtils {
         if (degree != 0) {//旋转照片角度
             bitmap = rotateBitmap(bitmap, degree);
         }
-        L.e("根据路径获取图片并按比例大小压缩=" + bitmap.getByteCount());
         return compressImageToBitmap(bitmap);//压缩好比例大小后再进行质量压缩
     }
+
     //根据Bitmap按比例大小图片压缩
     public String getBitmapByBitmap(Bitmap image) {
 
@@ -226,7 +228,7 @@ public class ImageUtils {
         if (image != null) {
             image.compress(Bitmap.CompressFormat.JPEG, 100, baos);//质量压缩方法，这里100表示不压缩，把图像数据存放到baos中
             int options = 90;
-            if (baos.toByteArray().length / 1024 <= 200) {
+            if (baos.toByteArray().length / 1024 <= 400) {
                 //写入本地后保存
                 try {
                     fos = new FileOutputStream(filePath);
@@ -240,7 +242,7 @@ public class ImageUtils {
                 }
                 return filePath;
             }
-            while (baos.toByteArray().length / 1024 > 300) {    //循环判断如果压缩后图片是否大于300kb,大于继续压缩
+            while (baos.toByteArray().length / 1024 > 400) {    //循环判断如果压缩后图片是否大于300kb,大于继续压缩
                 baos.reset();//重置baos即清空baos
 
                 options -= 10;//每次都减少10
@@ -272,6 +274,7 @@ public class ImageUtils {
         }
 
     }
+
     //质量压缩
     public Bitmap compressImageToBitmap(Bitmap image) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -281,10 +284,10 @@ public class ImageUtils {
         if (image != null) {
             image.compress(Bitmap.CompressFormat.JPEG, 100, baos);//质量压缩方法，这里100表示不压缩，把图像数据存放到baos中
             int options = 90;
-            if (baos.toByteArray().length / 1024 <= 300) {
+            if (baos.toByteArray().length / 1024 <= 400) {
                 return image;
             }
-            while (baos.toByteArray().length / 1024 > 300) {    //循环判断如果压缩后图片是否大于300kb,大于继续压缩
+            while (baos.toByteArray().length / 1024 > 400) {    //循环判断如果压缩后图片是否大于300kb,大于继续压缩
                 baos.reset();//重置baos即清空baos
 
                 options -= 10;//每次都减少10
@@ -305,8 +308,7 @@ public class ImageUtils {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
-            Bitmap bitmap= BitmapFactory.decodeFile(filePath);
+            Bitmap bitmap = BitmapFactory.decodeFile(filePath);
 //            int quality = 100;
 //            bitmap.compress(Bitmap.CompressFormat.PNG, quality, stream);
 //            L.e("bitmap decodeFile 质量压缩====================="+bitmap.getByteCount());
@@ -314,8 +316,8 @@ public class ImageUtils {
         } else {
             return null;
         }
-
     }
+
     /**
      * 函数名称 : toRoundCorner 功能描述 : 图片圆角处理 参数及返回值说明：
      *
@@ -368,8 +370,6 @@ public class ImageUtils {
         return null;
 
     }*/
-
-
     public Bitmap getImageFromAssetFile(String fileName) {
         Bitmap image = null;
         try {

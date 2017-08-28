@@ -146,16 +146,16 @@ public class ReleaseCaseActivity extends BaseActivity implements AdapterView.OnI
                 startActivityForResult(new Intent(mContext, CaseTypeActivity.class), 204);
                 break;
             case R.id.ll_upload_2:
-                ActivitySimpleEdit.startSimpleEdit(ReleaseCaseActivity.this, "案例标题", "输入案例标题", tvContent2.getText().toString(), ActivitySimpleEdit.INPUT_NAME, 20, 201);
+                ActivitySimpleEdit.startSimpleEdit(ReleaseCaseActivity.this, "案例标题", "输入案例标题", title, ActivitySimpleEdit.INPUT_NAME, 20, 201);
                 break;
             case R.id.ll_upload_3:
-                ActivitySimpleEdit.startSimpleEdit(ReleaseCaseActivity.this, "关键字", "输入关键字", tvContent3.getText().toString(), ActivitySimpleEdit.INPUT_NAME, 20, 202);
+                ActivitySimpleEdit.startSimpleEdit(ReleaseCaseActivity.this, "关键字", "输入关键字", key, ActivitySimpleEdit.INPUT_NAME, 20, 202);
                 break;
             case R.id.ll_upload_4:
-                ActivitySimpleEditLines.startSimpleEdit(ReleaseCaseActivity.this, "页面描述", "输入页面描述", tvContent4.getText().toString(), ActivitySimpleEdit.INPUT_NAME, 200, 203);
+                ActivitySimpleEditLines.startSimpleEdit(ReleaseCaseActivity.this, "页面描述", "输入页面描述", des, ActivitySimpleEdit.INPUT_NAME, 200, 203);
                 break;
             case R.id.ll_upload_5:
-                ActivitySimpleEditLines.startSimpleEdit(ReleaseCaseActivity.this, "内容", "输入内容", tvContent5.getText().toString(), ActivitySimpleEdit.INPUT_NAME, 200, 205);
+                ActivitySimpleEditLines.startSimpleEdit(ReleaseCaseActivity.this, "内容", "输入内容", neirong, ActivitySimpleEdit.INPUT_NAME, 200, 205);
                 break;
         }
     }
@@ -190,7 +190,7 @@ public class ReleaseCaseActivity extends BaseActivity implements AdapterView.OnI
             }
             if (requestCode == 205) {
                 neirong = data.getStringExtra("result");
-                tvContent5.setText(des);
+                tvContent5.setText(neirong);
             }
 
             if (requestCode == 112) {//从相册选

@@ -23,7 +23,7 @@ import butterknife.ButterKnife;
  * @author yxy Create at 17/7/14 14:10
  */
 public class ActivitySimpleEditLines extends BaseActivity  {
-    private EditText et_phone;
+    private EditText et_phone1;
     private Button btn_save;
     private TextView titleTv, tv_enture;
     private String hintStr, oldText, titleStr, orderNum;
@@ -74,22 +74,22 @@ public class ActivitySimpleEditLines extends BaseActivity  {
 
     @Override
     public void initView() {
-        et_phone = (EditText) this.findViewById(R.id.et_phone);
-        et_phone.setHint(hintStr);
-        et_phone.setFilters(new InputFilter[]{new InputFilter.LengthFilter(maxLength)});
+        et_phone1 = (EditText) this.findViewById(R.id.et_phone1);
+        et_phone1.setHint(hintStr);
+        et_phone1.setFilters(new InputFilter[]{new InputFilter.LengthFilter(maxLength)});
         if (inputType == INPUT_NUM || inputType == INPUT_PRICE) {
-            et_phone.setInputType(InputType.TYPE_CLASS_NUMBER);
+            et_phone1.setInputType(InputType.TYPE_CLASS_NUMBER);
         }
         if (!TextUtils.isEmpty(oldText)) {
-            et_phone.setText(oldText);
-            et_phone.setSelection(oldText.length());
+            et_phone1.setText(oldText);
+            et_phone1.setSelection(oldText.length());
         }
     }
 
 
 
     public void rightClickSave(View view) {
-        result = et_phone.getText().toString();
+        result = et_phone1.getText().toString();
         if (TextUtils.isEmpty(result)) {
             ToastUtils.showToast(this, getResources().getString(R.string.bnwk));
             return;
