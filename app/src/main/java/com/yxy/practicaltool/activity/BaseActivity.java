@@ -149,7 +149,8 @@ public class BaseActivity extends RxAppCompatActivity implements HttpOnNextListe
 
     @Override
     public void onNext(String resulte, String mothead) {
-        processSuccessResult(resulte, mothead);
+        deliver(resulte,mothead);
+//        processSuccessResult(resulte, mothead);
 //        processSuccessResult(deliver(resulte), mothead);
     }
 
@@ -239,9 +240,11 @@ public class BaseActivity extends RxAppCompatActivity implements HttpOnNextListe
         }
     }
 
-    private String deliver(String resulte) {
+    private String deliver(String resulte,String mothead) {
 
         if (!resulte.startsWith("{")) {
+            ToastUtils.showToast(mContext,"请求错误");
+            processFalResult(100, resulte, mothead);
             return resulte;
         }
         JSONObject jsonObject = JsonUtils.parseFromJson(resulte);
@@ -254,13 +257,19 @@ public class BaseActivity extends RxAppCompatActivity implements HttpOnNextListe
             }
             boolean containsRet = keyListstr.contains("ret");
             boolean containsMsg = keyListstr.contains("msg");
-            if (containsRet && JsonUtils.getJsonInt(jsonObject, "ret") != 200) {
+            if (containsRet){
+                processSuccessResult(resulte, mothead);
+            }else{
+                processFalResult(100, resulte, mothead);
+            }
+           /* if (containsRet && JsonUtils.getJsonInt(jsonObject, "ret") != 200) {
                 if (containsMsg && !TextUtils.isEmpty(JsonUtils.getJsonString(jsonObject, "msg"))) {
                     ToastUtils.showToast(mContext, JsonUtils.getJsonString(jsonObject, "msg"));
                 }
-            }
+            }*/
             return resulte;
         } else {
+            processFalResult(100, resulte, mothead);
             return resulte;
         }
     }

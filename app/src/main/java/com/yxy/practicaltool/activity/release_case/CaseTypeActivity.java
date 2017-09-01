@@ -121,6 +121,17 @@ public class CaseTypeActivity extends BaseActivity {
     }
 
     @Override
+    protected void processFalResult(int httpCode, String result, String mothead) {
+        super.processFalResult(httpCode, result, mothead);
+        if (mothead.equals(getCaseApi.getMethod())) {
+            list.clear();
+            CaseTypeRes.DataBean bean = new CaseTypeRes.DataBean();
+            list.add(0, bean);
+            adapter.notifyDataSetChanged();
+        }
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && data != null) {

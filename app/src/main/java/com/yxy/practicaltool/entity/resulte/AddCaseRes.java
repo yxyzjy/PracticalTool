@@ -23,9 +23,8 @@ public class AddCaseRes {
          * serverThumbnailFileName : /upload/201707/24/small_201707241823272031
          * sign : 0
          */
-
-        public String serverFileName;
+        /*public String serverFileName;
         public String serverThumbnailFileName;
-        public int sign;
+        public int sign;*/
     }
 }
