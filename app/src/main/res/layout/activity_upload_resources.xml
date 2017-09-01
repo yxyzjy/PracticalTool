@@ -241,7 +241,7 @@
                 android:layout_weight="1"
                 android:ellipsize="end"
                 android:gravity="center_vertical|right"
-                android:hint="选择产品选择产品属性选择产品属性"
+                android:hint="选择产品属性"
                 android:textColor="@color/text_color" />
 
             <ImageView

@@ -13,12 +13,12 @@ public class Constants {
 
     public static final String TAG = "yxy";
 
-    public static final String BASE_URL = "http://122.114.102.73:8090/";
+    public static final String BASE_URL = "http://qm.xinwangmm.com/Webservice.asmx/";
 
     public static int CAMERA_REQUEST=18;//拍照权限
 
     public static final String DATA_DIR = "/practicalTool/";
 
-    public static final String  UpImgBase64= "http://122.114.102.73:8090/WebService.asmx/UpImgBase64";
-    public static final String  UpImgBase64Post= "http://api.ljyhm.com/WebService_CASE.asmx/UpImgBase64Post";
+    public static final String  UpImgBase64= "http://qm.xinwangmm.com/Webservice.asmx/UpImgBase64";
+    public static final String  UpImgBase64Post= "http://admin.xinwangmm.com/WebService_CASE.asmx/UpImgBase64Post";
 }
