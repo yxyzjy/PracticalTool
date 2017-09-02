@@ -19,6 +19,8 @@ public class Constants {
 
     public static final String DATA_DIR = "/practicalTool/";
 
-    public static final String  UpImgBase64= "http://qm.xinwangmm.com/Webservice.asmx/UpImgBase64";
+    //上传资源
+    public static final String  UpImgBase64= "http://122.114.102.73:8090/WebService.asmx/UpImgBase64";
+    //发布案例
     public static final String  UpImgBase64Post= "http://admin.xinwangmm.com/WebService_CASE.asmx/UpImgBase64Post";
 }
