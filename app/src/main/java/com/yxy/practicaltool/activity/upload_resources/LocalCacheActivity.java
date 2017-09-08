@@ -123,9 +123,9 @@ public class LocalCacheActivity extends BaseActivity {
             holder.setText(R.id.tv_cache_tel, "电话：" + infoBean.getPhone());
             holder.setText(R.id.tv_cache_shuxing, "属性：" + infoBean.getAttributeName());
             holder.setText(R.id.tv_cache_time, "时间：" + infoBean.getCurrentTime());
-            holder.setText(R.id.tv_cache_zlms,"质量描述："+infoBean.getDes5());
-            holder.setText(R.id.tv_cache_cpbz,"产品备注："+infoBean.getTip6());
-            holder.setText(R.id.tv_cache_cpsl,"产品数量："+infoBean.getNum4());
+            holder.setText(R.id.tv_cache_zlms, "质量描述：" + infoBean.getDes5());
+            holder.setText(R.id.tv_cache_cpbz, "产品备注：" + infoBean.getTip6());
+            holder.setText(R.id.tv_cache_cpsl, "产品数量：" + infoBean.getNum4());
 
             if (!TextUtils.isEmpty(infoBean.getPicInfos())) {
                 int i = infoBean.getPicInfos().indexOf("|");
@@ -147,15 +147,19 @@ public class LocalCacheActivity extends BaseActivity {
     }
 
     public void rightClickSave(View view) {
+        if (list.size() < 1) {
+            ToastUtils.showToast(mContext, "没有可上传数据");
+            return;
+        }
         if (Utils.isWifiConnected(mContext)) {
             mWaitDialog.show();
             picInfos.clear();
             String[] split = list.get(posI).getPicInfos().split("@");
             for (int j = 0; j < split.length; j++) {
                 int index = split[j].indexOf("|");
+                int index1 = split[j].indexOf(";");
                 PicInfo picInfo = new PicInfo();
                 picInfo.pic = split[j].substring(0, index);
-                int index1 = split[j].indexOf(";");
                 picInfo.lngValue = split[j].substring(index + 1, index1);
                 picInfo.latValue = split[j].substring(index1 + 1);
                 picInfos.add(picInfo);
@@ -175,7 +179,7 @@ public class LocalCacheActivity extends BaseActivity {
         request.add("random", SPUtil.getString("random", ""));
         request.add("desUserId", SPUtil.getString("desUserId", ""));
         request.add("sign", sign);
-        request.add("txtFileName", Utils.bitmapToBase64(BitmapHelper.getImage(path,500)));
+        request.add("txtFileName", Utils.bitmapToBase64(BitmapHelper.getImage(path, 500)));
 
         CallServer.getRequestInstance().add(LocalCacheActivity.this, 1, request, new CustomHttpListener(this, true, Uploadbase64Res.class) {
             @Override
